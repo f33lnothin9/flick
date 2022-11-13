@@ -1,4 +1,4 @@
-package ru.resodostudios.movies.ui.theme
+package ru.resodostudios.movies.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
