@@ -38,7 +38,7 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = hiltView
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(movies) { movie ->
-                    MovieCard(movie = movie)
+                    MovieCard(movie = movie, navController = navController)
                 }
             }
         }
