@@ -70,4 +70,9 @@ dependencies {
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+
+    implementation "androidx.core:core-splashscreen:1.0.0"
+
 }

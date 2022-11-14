@@ -4,7 +4,10 @@ import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -84,6 +87,13 @@ fun MoviesTheme(
         }
         darkTheme -> DarkColors
         else -> LightColors
+    }
+
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent
+        )
     }
 
     MaterialTheme(
