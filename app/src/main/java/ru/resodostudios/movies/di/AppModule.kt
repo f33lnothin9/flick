@@ -15,10 +15,13 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
+    fun baseUrl() = Constants.BASE_URL
+
+    @Provides
     @Singleton
-    fun provideRetrofit() : ApiService =
+    fun provideRetrofit(baseUrl: String) : ApiService =
         Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)

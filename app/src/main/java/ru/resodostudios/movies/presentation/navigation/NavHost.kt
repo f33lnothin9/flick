@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ru.resodostudios.movies.presentation.screens.MainScreen
+import ru.resodostudios.movies.presentation.screens.main.MainScreen
 import ru.resodostudios.movies.presentation.screens.MovieScreen
 
 @ExperimentalMaterial3Api
@@ -16,7 +16,7 @@ fun NavHost(navController: NavHostController) {
         startDestination = Screens.Main.route
     ) {
         composable(route = Screens.Main.route) {
-            MainScreen()
+            MainScreen(navController)
         }
 
         composable(route = Screens.Movie.route) {
