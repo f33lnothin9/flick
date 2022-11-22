@@ -90,9 +90,11 @@ fun MoviesTheme(
     }
 
     val systemUiController = rememberSystemUiController()
+    val useDarkIcons = !isSystemInDarkTheme()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color.Transparent
+            color = Color.Transparent,
+            darkIcons = useDarkIcons
         )
     }
 

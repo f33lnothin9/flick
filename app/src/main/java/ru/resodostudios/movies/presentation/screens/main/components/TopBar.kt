@@ -9,7 +9,7 @@ import androidx.compose.ui.text.style.TextOverflow
 
 @ExperimentalMaterial3Api
 @Composable
-fun TobBar(title: String, scrollBehavior: TopAppBarScrollBehavior, navigationIcon: @Composable () -> Unit = {}) {
+fun TobBar(title: String, scrollBehavior: TopAppBarScrollBehavior) {
 
     CenterAlignedTopAppBar(
         title = {
@@ -19,7 +19,6 @@ fun TobBar(title: String, scrollBehavior: TopAppBarScrollBehavior, navigationIco
                 overflow = TextOverflow.Ellipsis
             )
         },
-        navigationIcon = navigationIcon,
         scrollBehavior = scrollBehavior
     )
 
