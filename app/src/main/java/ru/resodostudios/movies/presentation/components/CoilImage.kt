@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import coil.size.Size
 
 @Composable
 fun CoilImage(url: String, width: Dp, height: Dp) {
@@ -17,6 +18,7 @@ fun CoilImage(url: String, width: Dp, height: Dp) {
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
             .crossfade(400)
+            .size(Size.ORIGINAL)
             .build(),
         contentDescription = "Image",
         modifier = Modifier
