@@ -26,7 +26,7 @@ Below you can find the docs for each tehnology that is used in this app:
 ---
 The code in this project is licensed under the Apache License 2.0.
 
-    Copyright 2018 Google LLC
+    Copyright 2022 Resodo Studios
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
