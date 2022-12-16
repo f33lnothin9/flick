@@ -1,8 +1,8 @@
 # Movies
 It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using Jetpack Compose, [Android Architecture Components][2] in MVVM Architecture Pattern. For the UI it uses Jetpack Compose, Android's modern toolkit for building native UI.
 
-![alt text](https://i.ibb.co/qYnyVzy/2.png)
-![alt text](https://i.ibb.co/nwwKWwG/11.png)
+![alt text](https://i.ibb.co/MDvSMWd/2.png)
+![alt text](https://i.ibb.co/7Wrt9FF/1.png)
 
 Below you can find the docs for each tehnology that is used in this app:
 
