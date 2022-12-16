@@ -17,7 +17,7 @@ Below you can find the docs for each tehnology that is used in this app:
 ## Asynchronous Programming:
 * [Kotlin Coroutines][6]
 
-## Other Android Components:
+## Other Components:
 * [Retrofit][9]
 * [Jetpack Compose][7]
 * [Coil][10]
