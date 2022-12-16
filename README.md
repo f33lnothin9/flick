@@ -18,7 +18,9 @@ Below you can find the docs for each tehnology that is used in this app:
 * [Kotlin Coroutines][6]
 
 ## Other Android Components:
+* [Retrofit][9]
 * [Jetpack Compose][7]
+* [Coil][10]
 
 **License**
 ---
@@ -46,3 +48,5 @@ The code in this project is licensed under the Apache License 2.0.
 [6]: https://kotlinlang.org/docs/coroutines-overview.html
 [7]: https://developer.android.com/jetpack/compose
 [8]: https://developer.android.com/guide/navigation
+[9]: https://square.github.io/retrofit/
+[10]: https://coil-kt.github.io/coil/compose/
