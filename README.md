@@ -1,5 +1,5 @@
 # Movies
-It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using Jetpack Compose, [Android Architecture Components][2] in MVVM Architecture Pattern. For the UI it uses Jetpack Compose, Android's modern toolkit for building native UI.
+It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using Jetpack Compose, [Android Architecture Components][2] in MVVM Architecture Pattern. For the UI it uses Jetpack Compose and [Material3 Design][11].
 
 ![alt text](https://i.ibb.co/MDvSMWd/2.png)
 ![alt text](https://i.ibb.co/7Wrt9FF/1.png)
@@ -50,3 +50,4 @@ The code in this project is licensed under the Apache License 2.0.
 [8]: https://developer.android.com/guide/navigation
 [9]: https://square.github.io/retrofit/
 [10]: https://coil-kt.github.io/coil/compose/
+[11]: https://m3.material.io/
