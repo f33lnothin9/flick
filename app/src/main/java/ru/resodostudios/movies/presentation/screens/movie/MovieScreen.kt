@@ -3,6 +3,7 @@ package ru.resodostudios.movies.presentation.screens.movie
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -34,8 +35,13 @@ fun MovieScreen(navController: NavController, viewModel: MainViewModel = hiltVie
             MovieTopBar(
                 title = currentMovie?.name ?: "",
                 scrollBehavior = scrollBehavior,
-                onNavClick = {
+                onNavIconClick = {
                     navController.navigateUp()
+                },
+                actions = {
+                    IconButton(onClick = {  }) {
+                        Icon(imageVector = Icons.Outlined.StarOutline, contentDescription = "Favourites")
+                    }
                 }
             )
         },

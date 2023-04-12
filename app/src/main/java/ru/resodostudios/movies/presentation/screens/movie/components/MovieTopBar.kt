@@ -1,5 +1,6 @@
 package ru.resodostudios.movies.presentation.screens.movie.components
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -8,7 +9,12 @@ import androidx.compose.ui.text.style.TextOverflow
 
 @ExperimentalMaterial3Api
 @Composable
-fun MovieTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior, onNavClick: () -> Unit) {
+fun MovieTopBar(
+    title: String,
+    scrollBehavior: TopAppBarScrollBehavior,
+    onNavIconClick: () -> Unit,
+    actions: @Composable (RowScope.() -> Unit)
+) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -19,12 +25,13 @@ fun MovieTopBar(title: String, scrollBehavior: TopAppBarScrollBehavior, onNavCli
         },
         navigationIcon = {
             IconButton(
-                onClick = onNavClick,
+                onClick = onNavIconClick,
                 content = {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
                 }
             )
         },
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
+        actions = actions
     )
 }

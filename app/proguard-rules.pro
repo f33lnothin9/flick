@@ -1,1 +1,1 @@
--keep class org.genshin.genshinuniverse.data.models.** { *; }
+-keep class ru.resodostudios.movies.data.models.** { *; }
