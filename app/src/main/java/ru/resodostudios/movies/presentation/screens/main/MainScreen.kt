@@ -16,10 +16,13 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Surface
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import ru.resodostudios.movies.presentation.navigation.Screens
 import ru.resodostudios.movies.presentation.screens.main.components.MovieCard
 
 @ExperimentalMaterial3Api
@@ -57,6 +61,7 @@ fun MainScreen(
             Modifier
                 .semantics { isContainer = true }
                 .zIndex(1f)
+                .fillMaxWidth()
         ) {
             SearchBar(
                 modifier = Modifier.align(Alignment.TopCenter),
@@ -69,8 +74,31 @@ fun MainScreen(
                 active = active,
                 onActiveChange = { active = it },
                 placeholder = { Text("Search movies") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+                leadingIcon = {
+                    if (active) {
+                        IconButton(onClick = { active = false }) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = null)
+                        }
+                    } else {
+                        IconButton(onClick = {  }) {
+                            Icon(Icons.Default.Menu, contentDescription = null)
+                        }
+                    }
+                },
+                trailingIcon = {
+                    if (active) {
+                        IconButton(
+                            onClick = {
+                                if (text.isNotBlank()) {
+                                    text = ""
+                                    viewModel.searchMovie("")
+                                }
+                            }
+                        ) {
+                            Icon(Icons.Default.Close, contentDescription = null)
+                        }
+                    }
+                },
                 windowInsets = WindowInsets.statusBars
             ) {
                 LazyColumn(
@@ -78,22 +106,24 @@ fun MainScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    items(movies) { movie ->
-                        ListItem(
-                            headlineContent = { Text(movie.name) },
-                            supportingContent = {
-                                Row {
-                                    movie.genres.take(2).forEach {
-                                        Text(text = "$it ")
+                    if (text.isNotBlank()) {
+                        items(movies) { movie ->
+                            ListItem(
+                                headlineContent = { Text(movie.name) },
+                                supportingContent = {
+                                    Row {
+                                        movie.genres.take(2).forEach {
+                                            Text(text = "$it ")
+                                        }
                                     }
+                                },
+                                leadingContent = { Icon(Icons.Filled.Search, contentDescription = null) },
+                                modifier = Modifier.clickable {
+                                    navController.navigate(Screens.Movie.route + "/${movie.id}")
+                                    active = false
                                 }
-                            },
-                            leadingContent = { Icon(Icons.Filled.Search, contentDescription = null) },
-                            modifier = Modifier.clickable {
-                                text = movie.name
-                                active = false
-                            }
-                        )
+                            )
+                        }
                     }
                 }
             }

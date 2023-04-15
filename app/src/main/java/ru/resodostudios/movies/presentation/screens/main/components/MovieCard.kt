@@ -1,10 +1,17 @@
 package ru.resodostudios.movies.presentation.screens.main.components
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,14 +20,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.resodostudios.movies.data.models.Movie
+import ru.resodostudios.movies.presentation.components.CoilImage
 import ru.resodostudios.movies.presentation.navigation.Screens
 import ru.resodostudios.movies.presentation.ui.theme.Typography
-import ru.resodostudios.movies.presentation.components.CoilImage
 
+@ExperimentalMaterial3Api
 @Composable
 fun MovieCard(movie: Movie, navController: NavController) {
 
-    Card(modifier = Modifier.clickable { navController.navigate(Screens.Movie.route + "/${movie.id}") }) {
+    Card(
+        onClick = { navController.navigate(Screens.Movie.route + "/${movie.id}") }
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -71,5 +81,4 @@ fun MovieCard(movie: Movie, navController: NavController) {
             )
         }
     }
-
 }
