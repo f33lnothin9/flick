@@ -2,13 +2,12 @@ package ru.resodostudios.movies.presentation.screens.main
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.data.models.Movie
@@ -18,23 +17,22 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: ApiRepository): ViewModel() {
 
-    private val _movies = MutableLiveData<List<Movie>>()
+    private val _movies = MutableStateFlow(emptyList<Movie>())
     private val _isLoading = MutableStateFlow(true)
 
-    private var cachedMovies = listOf<Movie>()
-    private var isSearching = mutableStateOf(false)
-    private var isSearchStarting = true
+    private var _cachedMovies = listOf<Movie>()
+    private var _isSearching = mutableStateOf(false)
+    private var _isSearchStarting = true
 
-    val movies: LiveData<List<Movie>>
+    val movies: StateFlow<List<Movie>>
         get() = _movies
     val isLoading = _isLoading.asStateFlow()
-
-
+    
     init {
         viewModelScope.launch {
             repository.getMovies().let {
                 if (it.isSuccessful) {
-                    _movies.postValue(it.body())
+                    _movies.value = it.body()!!
                     _isLoading.value = false
                 } else {
                     Log.d("data", "Error")
@@ -44,27 +42,27 @@ class MainViewModel @Inject constructor(private val repository: ApiRepository): 
     }
 
     fun searchMovie(query: String) {
-        val listToSearch = if (isSearchStarting) {
+        val listToSearch = if (_isSearchStarting) {
             _movies.value
         } else {
-            cachedMovies
+            _cachedMovies
         }
         viewModelScope.launch(Dispatchers.Default) {
             if (query.isEmpty()) {
-                _movies.postValue(cachedMovies)
-                isSearching.value = false
-                isSearchStarting = true
+                _movies.value = _cachedMovies
+                _isSearching.value = false
+                _isSearchStarting = true
                 return@launch
             }
-            val results = listToSearch?.filter {
+            val results = listToSearch.filter {
                 it.name.contains(query.trim(), ignoreCase = true)
             }
-            if (isSearchStarting) {
-                cachedMovies = _movies.value!!
-                isSearchStarting = false
+            if (_isSearchStarting) {
+                _cachedMovies = _movies.value
+                _isSearchStarting = false
             }
-            _movies.postValue(results)
-            isSearching.value = true
+            _movies.value = results
+            _isSearching.value = true
         }
     }
 }

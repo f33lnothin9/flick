@@ -41,7 +41,9 @@ fun MovieCard(movie: Movie, navController: NavController) {
                 height = 128.dp,
                 width = 91.dp
             )
+
             Spacer(modifier = Modifier.width(16.dp))
+
             Column(
                 modifier = Modifier.height(128.dp),
                 content = {
@@ -49,18 +51,22 @@ fun MovieCard(movie: Movie, navController: NavController) {
                         text = movie.name,
                         style = Typography.titleLarge
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = movie.rating.average.toString(),
                             style = Typography.bodyMedium
                         )
+
                         Icon(
                             modifier = Modifier.size(20.dp),
                             imageVector = Icons.Rounded.Star,
                             contentDescription = "Rating"
                         )
                     }
+
                     Row {
                         movie.genres.take(2).forEach {
                             Text(
@@ -69,10 +75,12 @@ fun MovieCard(movie: Movie, navController: NavController) {
                             )
                         }
                     }
+
                     Text(
                         text = movie.language,
                         style = Typography.bodyMedium
                     )
+
                     Text(
                         text = movie.premiered,
                         style = Typography.bodyMedium

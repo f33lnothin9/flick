@@ -67,16 +67,16 @@ dependencies {
     implementation 'androidx.compose.material:material-icons-extended'
     implementation 'androidx.compose.material3:material3-window-size-class'
 
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.activity:activity-compose:1.7.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
-    implementation 'androidx.compose.runtime:runtime-livedata'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.1'
 
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
     // Accompanist
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
-    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

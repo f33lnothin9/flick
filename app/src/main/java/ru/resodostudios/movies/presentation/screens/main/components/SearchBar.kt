@@ -17,9 +17,9 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +42,8 @@ import ru.resodostudios.movies.presentation.screens.main.MainViewModel
 fun SearchBar(
     viewModel: MainViewModel,
     movies: List<Movie>,
-    navController: NavController
+    navController: NavController,
+    onMenuClick: () -> Unit
 ) {
 
     var text by rememberSaveable { mutableStateOf("") }
@@ -71,7 +72,7 @@ fun SearchBar(
                         Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
                 } else {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = onMenuClick) {
                         Icon(Icons.Default.Menu, contentDescription = null)
                     }
                 }

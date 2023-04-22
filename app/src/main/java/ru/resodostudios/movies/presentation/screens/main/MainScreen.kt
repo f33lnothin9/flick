@@ -8,15 +8,18 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import ru.resodostudios.movies.presentation.screens.main.components.MovieCard
 import ru.resodostudios.movies.presentation.screens.main.components.SearchBar
 
@@ -24,16 +27,19 @@ import ru.resodostudios.movies.presentation.screens.main.components.SearchBar
 @Composable
 fun MainScreen(
     navController: NavController,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
+    scope: CoroutineScope,
+    drawerState: DrawerState
 ) {
 
-    val movies by viewModel.movies.observeAsState(listOf())
+    val movies by viewModel.movies.collectAsStateWithLifecycle()
 
     Surface(Modifier.fillMaxSize()) {
         SearchBar(
             viewModel = viewModel,
             movies = movies,
-            navController = navController
+            navController = navController,
+            onMenuClick = { scope.launch { drawerState.open() } }
         )
 
         LazyColumn(

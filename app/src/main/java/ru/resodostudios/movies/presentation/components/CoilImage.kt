@@ -20,7 +20,7 @@ fun CoilImage(url: String, width: Dp, height: Dp) {
             .crossfade(400)
             .size(Size.ORIGINAL)
             .build(),
-        contentDescription = "Image",
+        contentDescription = "Movie Cover",
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .size(height = height, width = width)
