@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.data.models.Movie
@@ -24,8 +23,7 @@ class MainViewModel @Inject constructor(private val repository: ApiRepository): 
     private var _isSearching = mutableStateOf(false)
     private var _isSearchStarting = true
 
-    val movies: StateFlow<List<Movie>>
-        get() = _movies
+    val movies = _movies.asStateFlow()
     val isLoading = _isLoading.asStateFlow()
     
     init {
