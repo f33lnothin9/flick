@@ -4,7 +4,6 @@ It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using J
 ![alt text](https://i.ibb.co/rvDLcDs/Artboard-1.png)
 
 ## Android Architecture Components:
-* [StateFlow][3]
 * [ViewModel][4]
 * [Navigation][8]
 
@@ -14,8 +13,9 @@ It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using J
 ## Asynchronous Programming:
 * [Kotlin Coroutines][6]
 
-## Other Components:
+## Other:
 * [Retrofit][9]
+* [StateFlow][3]
 * [Jetpack Compose][7]
 * [Coil][10]
 
