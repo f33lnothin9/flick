@@ -4,7 +4,7 @@ It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using J
 ![alt text](https://i.ibb.co/rvDLcDs/Artboard-1.png)
 
 ## Android Architecture Components:
-* [LiveData][3]
+* [StateFlow][3]
 * [ViewModel][4]
 * [Navigation][8]
 
@@ -21,7 +21,7 @@ It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using J
 
 [1]: https://kotlinlang.org/
 [2]: https://developer.android.com/topic/libraries/architecture
-[3]: https://developer.android.com/topic/libraries/architecture/livedata
+[3]: https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
 [4]: https://developer.android.com/topic/libraries/architecture/viewmodel
 [5]: https://developer.android.com/training/dependency-injection/hilt-android
 [6]: https://kotlinlang.org/docs/coroutines-overview.html
