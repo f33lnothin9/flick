@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import ru.resodostudios.movies.data.network.ApiService
-import ru.resodostudios.movies.util.Constants
+import okhttp3.OkHttpClient
+import ru.resodostudios.movies.core.Constants.BASE_URL
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -14,14 +14,14 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    fun baseUrl() = Constants.BASE_URL
+    fun baseUrl() = BASE_URL
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl: String) : ApiService =
-        Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
+    fun provideOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
             .build()
-            .create(ApiService::class.java)
+    }
 }
