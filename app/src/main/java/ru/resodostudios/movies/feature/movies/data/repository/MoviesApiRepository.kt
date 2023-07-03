@@ -1,5 +1,6 @@
-package ru.resodostudios.movies.feature.movies.data.network
+package ru.resodostudios.movies.feature.movies.data.repository
 
+import ru.resodostudios.movies.feature.movies.data.network.MoviesApi
 import javax.inject.Inject
 
 class MoviesApiRepository @Inject constructor(

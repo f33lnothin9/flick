@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.feature.movies.data.model.Movie
-import ru.resodostudios.movies.feature.movies.data.network.MoviesApiRepository
+import ru.resodostudios.movies.feature.movies.data.repository.MoviesApiRepository
 import javax.inject.Inject
 
 @HiltViewModel

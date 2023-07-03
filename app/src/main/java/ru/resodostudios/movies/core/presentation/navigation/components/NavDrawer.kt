@@ -21,15 +21,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ru.resodostudios.movies.core.presentation.navigation.NavItem
+import ru.resodostudios.movies.core.presentation.navigation.NavDrawerItem
 
 @Composable
 fun NavDrawer(navController: NavHostController, drawerState: DrawerState, scope: CoroutineScope, content: @Composable () -> Unit) {
 
     val screens = listOf(
-        NavItem.Movies,
-        NavItem.Favorites,
-        NavItem.Settings
+        NavDrawerItem.Movies,
+        NavDrawerItem.Favorites,
+        NavDrawerItem.Settings
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -57,7 +57,7 @@ fun NavDrawer(navController: NavHostController, drawerState: DrawerState, scope:
 
 @Composable
 fun DrawerItem(
-    screen: NavItem,
+    screen: NavDrawerItem,
     currentDestination: NavDestination?,
     navController: NavHostController,
     drawerState: DrawerState,
