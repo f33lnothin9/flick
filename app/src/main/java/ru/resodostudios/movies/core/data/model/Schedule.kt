@@ -1,4 +1,4 @@
-package ru.resodostudios.movies.feature.movie.data.model
+package ru.resodostudios.movies.core.data.model
 
 import kotlinx.serialization.Serializable
 

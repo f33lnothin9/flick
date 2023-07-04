@@ -1,4 +1,6 @@
 -keep class ru.resodostudios.movies.feature.movies.data.model.** { *; }
+-keep class ru.resodostudios.movies.feature.movie.data.model.** { *; }
+-keep class ru.resodostudios.movies.core.data.model.** { *; }
 
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.

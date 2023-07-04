@@ -1,6 +1,8 @@
 package ru.resodostudios.movies.feature.movies.data.model
 
 import kotlinx.serialization.Serializable
+import ru.resodostudios.movies.core.data.model.Image
+import ru.resodostudios.movies.core.data.model.Rating
 
 @Serializable
 data class MovieEntry(

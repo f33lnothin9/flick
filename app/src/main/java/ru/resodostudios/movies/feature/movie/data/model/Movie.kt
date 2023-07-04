@@ -1,8 +1,10 @@
 package ru.resodostudios.movies.feature.movie.data.model
 
 import kotlinx.serialization.Serializable
-import ru.resodostudios.movies.feature.movies.data.model.Image
-import ru.resodostudios.movies.feature.movies.data.model.Rating
+import ru.resodostudios.movies.core.data.model.Image
+import ru.resodostudios.movies.core.data.model.Network
+import ru.resodostudios.movies.core.data.model.Rating
+import ru.resodostudios.movies.core.data.model.Schedule
 
 @Serializable
 data class Movie(
