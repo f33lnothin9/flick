@@ -23,7 +23,6 @@ object MoviesModule {
         val contentType = "application/json".toMediaType()
         val json = Json {
             ignoreUnknownKeys = true
-            coerceInputValues = true
         }
 
         return Retrofit.Builder()

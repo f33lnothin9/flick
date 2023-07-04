@@ -57,7 +57,7 @@ dependencies {
     val retrofit = "2.9.0"
     val okHttp = "4.11.0"
     val room = "2.5.1"
-    val coroutines = "1.7.1"
+    val coroutines = "1.7.2"
     val navigation = "2.6.0"
     val accompanist = "0.30.0"
 

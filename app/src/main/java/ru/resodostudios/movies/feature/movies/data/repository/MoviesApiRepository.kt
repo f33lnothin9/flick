@@ -8,4 +8,6 @@ class MoviesApiRepository @Inject constructor(
 ) {
 
     suspend fun getMovies() = apiRepository.getMovies()
+
+    suspend fun getMovie(id: String) = apiRepository.getMovie(id)
 }

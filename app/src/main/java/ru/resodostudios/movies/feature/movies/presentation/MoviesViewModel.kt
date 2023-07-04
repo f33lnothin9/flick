@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.resodostudios.movies.feature.movies.data.model.Movie
+import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 import ru.resodostudios.movies.feature.movies.data.repository.MoviesApiRepository
 import javax.inject.Inject
 
@@ -18,10 +18,10 @@ class MoviesViewModel @Inject constructor(
     private val repository: MoviesApiRepository
 ) : ViewModel() {
 
-    private val _movies = MutableStateFlow(emptyList<Movie>())
+    private val _movies = MutableStateFlow(emptyList<MovieEntry>())
     private val _isLoading = MutableStateFlow(true)
 
-    private var _cachedMovies = listOf<Movie>()
+    private var _cachedMovies = listOf<MovieEntry>()
     private var _isSearching = mutableStateOf(false)
     private var _isSearchStarting = true
 

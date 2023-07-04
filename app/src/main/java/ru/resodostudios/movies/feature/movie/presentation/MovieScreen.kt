@@ -1,5 +1,7 @@
 package ru.resodostudios.movies.feature.movie.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -32,22 +35,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import ru.resodostudios.movies.core.presentation.components.CoilImage
-import ru.resodostudios.movies.feature.movies.presentation.MoviesViewModel
-import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
 import ru.resodostudios.movies.core.presentation.theme.Typography
-import ru.resodostudios.movies.feature.movies.data.model.Movie
+import ru.resodostudios.movies.feature.movie.data.model.Movie
+import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
 
 @ExperimentalMaterial3Api
 @Composable
 fun MovieScreen(
     navController: NavController,
-    viewModel: MoviesViewModel = hiltViewModel(),
+    viewModel: MovieViewModel = hiltViewModel(),
     movieId: String
 ) {
 
-    val currentMovie = viewModel.movies
-        .collectAsStateWithLifecycle(listOf()).value
-        .firstOrNull { it.id == movieId.toInt() }
+    viewModel.getMovie(movieId)
+
+    val movie by viewModel.movie.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -68,26 +71,28 @@ fun MovieScreen(
         },
         contentWindowInsets = WindowInsets.waterfall,
         content = {
-            LazyColumn(
-                modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp)
-                    .padding(it),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                content = {
-                    item {
-                        Header(movie = currentMovie)
+            AnimatedVisibility(visible = !isLoading, enter = fadeIn()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp)
+                        .padding(it),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    content = {
+                        item {
+                            Header(movie = movie)
+                        }
+                        item {
+                            Text(
+                                text = HtmlCompat.fromHtml(
+                                    movie.summary ?: "",
+                                    HtmlCompat.FROM_HTML_MODE_COMPACT
+                                ).toString(),
+                                style = Typography.bodyLarge
+                            )
+                        }
                     }
-                    item {
-                        Text(
-                            text = HtmlCompat.fromHtml(
-                                currentMovie?.summary ?: "",
-                                HtmlCompat.FROM_HTML_MODE_COMPACT
-                            ).toString(),
-                            style = Typography.bodyLarge
-                        )
-                    }
-                }
-            )
+                )
+            }
         }
     )
 }

@@ -34,14 +34,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import ru.resodostudios.movies.core.presentation.navigation.Screens
-import ru.resodostudios.movies.feature.movies.data.model.Movie
+import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 import ru.resodostudios.movies.feature.movies.presentation.MoviesViewModel
 
 @ExperimentalMaterial3Api
 @Composable
 fun SearchBar(
     viewModel: MoviesViewModel,
-    movies: List<Movie>,
+    movies: List<MovieEntry>,
     navController: NavController,
     onMenuClick: () -> Unit
 ) {

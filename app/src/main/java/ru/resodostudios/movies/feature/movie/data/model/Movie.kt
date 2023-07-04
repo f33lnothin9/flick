@@ -1,11 +1,12 @@
-package ru.resodostudios.movies.feature.movies.data.model
+package ru.resodostudios.movies.feature.movie.data.model
 
 import kotlinx.serialization.Serializable
+import ru.resodostudios.movies.feature.movies.data.model.Image
+import ru.resodostudios.movies.feature.movies.data.model.Rating
 
 @Serializable
 data class Movie(
     val averageRuntime: Int? = null,
-    val dvdCountry: DvdCountry? = null,
     val ended: String? = null,
     val genres: List<String>? = null,
     val id: Int? = null,
@@ -19,10 +20,5 @@ data class Movie(
     val runtime: Int? = null,
     val schedule: Schedule? = null,
     val status: String? = null,
-    val summary: String? = null,
-    val type: String? = null,
-    val updated: Int? = null,
-    val url: String? = null,
-    val webChannel: WebChannel? = null,
-    val weight: Int? = null
+    val summary: String? = null
 )
