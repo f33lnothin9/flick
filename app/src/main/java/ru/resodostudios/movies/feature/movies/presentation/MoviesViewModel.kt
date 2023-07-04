@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
-import ru.resodostudios.movies.feature.movies.data.repository.MoviesApiRepository
+import ru.resodostudios.movies.feature.movies.domain.use_case.GetMoviesUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val repository: MoviesApiRepository
+    private val moviesUseCase: GetMoviesUseCase
 ) : ViewModel() {
 
     private val _movies = MutableStateFlow(emptyList<MovieEntry>())
@@ -30,7 +30,7 @@ class MoviesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.getMovies().let {
+            moviesUseCase.invoke().let {
                 if (it.isSuccessful) {
                     _movies.value = it.body()!!
                     _isLoading.value = false
