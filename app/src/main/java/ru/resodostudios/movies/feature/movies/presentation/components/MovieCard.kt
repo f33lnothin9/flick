@@ -22,8 +22,7 @@ import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 fun MovieCard(movie: MovieEntry, navController: NavController) {
 
     Card(
-        onClick = { navController.navigate(Screens.Movie.route + "/${movie.id}") },
-        shape = RoundedCornerShape(16.dp)
+        onClick = { navController.navigate(Screens.Movie.route + "/${movie.id}") }
     ) {
         Box(
             modifier = Modifier.fillMaxWidth()
