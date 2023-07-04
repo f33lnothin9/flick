@@ -3,8 +3,8 @@ package ru.resodostudios.movies.feature.movies.presentation.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,7 +21,7 @@ import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 @Composable
 fun MovieCard(movie: MovieEntry, navController: NavController) {
 
-    Card(
+    Surface(
         onClick = { navController.navigate(Screens.Movie.route + "/${movie.id}") }
     ) {
         Box(
