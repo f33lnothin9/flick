@@ -3,10 +3,12 @@ package ru.resodostudios.movies.feature.movie.presentation
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
@@ -15,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.StarRate
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -35,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import ru.resodostudios.movies.core.presentation.components.CoilImage
+import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.core.presentation.theme.Typography
 import ru.resodostudios.movies.feature.movie.data.model.Movie
 import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
@@ -51,6 +55,7 @@ fun MovieScreen(
 
     val movie by viewModel.movie.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val isError by viewModel.isError.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -95,6 +100,16 @@ fun MovieScreen(
             }
         }
     )
+
+    if (isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    }
+
+    if (isError) {
+        RetrySection(onClick = { viewModel.getMovie(movieId) })
+    }
 }
 
 @Composable

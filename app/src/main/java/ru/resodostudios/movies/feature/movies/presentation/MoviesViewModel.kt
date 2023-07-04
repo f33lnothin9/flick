@@ -1,6 +1,5 @@
 package ru.resodostudios.movies.feature.movies.presentation
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +18,8 @@ class MoviesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _movies = MutableStateFlow(emptyList<MovieEntry>())
-    private val _isLoading = MutableStateFlow(true)
+    private val _isLoading = MutableStateFlow(false)
+    private val _isError = MutableStateFlow(false)
 
     private var _cachedMovies = listOf<MovieEntry>()
     private var _isSearching = mutableStateOf(false)
@@ -27,15 +27,23 @@ class MoviesViewModel @Inject constructor(
 
     val movies = _movies.asStateFlow()
     val isLoading = _isLoading.asStateFlow()
+    val isError = _isError.asStateFlow()
 
     init {
+        getMovies()
+    }
+
+    fun getMovies() {
+        _isLoading.value = true
         viewModelScope.launch {
             moviesUseCase.invoke().let {
                 if (it.isSuccessful) {
                     _movies.value = it.body()!!
                     _isLoading.value = false
+                    _isError.value = false
                 } else {
-                    Log.d("data", "Error")
+                    _isLoading.value = false
+                    _isError.value = true
                 }
             }
         }

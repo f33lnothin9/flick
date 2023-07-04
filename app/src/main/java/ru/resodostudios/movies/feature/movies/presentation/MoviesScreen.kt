@@ -26,6 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.feature.movies.presentation.components.MovieCard
 import ru.resodostudios.movies.feature.movies.presentation.components.SearchBar
 
@@ -41,6 +42,7 @@ fun MoviesScreen(
 
     val movies by viewModel.movies.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val isError by viewModel.isError.collectAsStateWithLifecycle()
 
     Surface(Modifier.fillMaxSize()) {
         SearchBar(
@@ -49,12 +51,6 @@ fun MoviesScreen(
             navController = navController,
             onMenuClick = { scope.launch { drawerState.open() } }
         )
-
-        AnimatedVisibility(visible = isLoading, exit = fadeOut()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        }
 
         AnimatedVisibility(
             visible = !isLoading,
@@ -72,6 +68,16 @@ fun MoviesScreen(
                     MovieCard(movie = movie, navController = navController)
                 }
             }
+        }
+
+        AnimatedVisibility(visible = isLoading, exit = fadeOut()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        }
+
+        AnimatedVisibility(visible = isError, exit = fadeOut(), enter = fadeIn()) {
+            RetrySection(onClick = { viewModel.getMovies() })
         }
     }
 }
