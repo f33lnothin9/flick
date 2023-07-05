@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -56,7 +57,7 @@ dependencies {
     val hilt = "2.46.1"
     val retrofit = "2.9.0"
     val okHttp = "4.11.0"
-    val room = "2.5.1"
+    val room = "2.5.2"
     val coroutines = "1.7.2"
     val navigation = "2.6.0"
     val accompanist = "0.30.0"
@@ -109,4 +110,8 @@ dependencies {
 
     // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // Room
+    implementation("androidx.room:room-ktx:$room")
+    ksp("androidx.room:room-compiler:$room")
 }
