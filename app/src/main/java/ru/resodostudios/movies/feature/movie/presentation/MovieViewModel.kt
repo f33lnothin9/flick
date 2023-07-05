@@ -16,7 +16,7 @@ class MovieViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _movie = MutableStateFlow(Movie())
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     private val _isError = MutableStateFlow(false)
 
     val movie = _movie.asStateFlow()
@@ -24,7 +24,6 @@ class MovieViewModel @Inject constructor(
     val isError = _isError.asStateFlow()
 
     fun getMovie(id: String) {
-        _isLoading.value = true
         viewModelScope.launch {
             movieUseCase.invoke(id).let {
                 if (it.isSuccessful) {

@@ -18,7 +18,7 @@ class MoviesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _movies = MutableStateFlow(emptyList<MovieEntry>())
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     private val _isError = MutableStateFlow(false)
 
     private var _cachedMovies = listOf<MovieEntry>()
@@ -34,7 +34,6 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun getMovies() {
-        _isLoading.value = true
         viewModelScope.launch {
             moviesUseCase.invoke().let {
                 if (it.isSuccessful) {

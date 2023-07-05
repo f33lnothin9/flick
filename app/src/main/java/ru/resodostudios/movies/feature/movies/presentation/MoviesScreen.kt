@@ -70,7 +70,7 @@ fun MoviesScreen(
             }
         }
 
-        AnimatedVisibility(visible = isLoading, exit = fadeOut()) {
+        AnimatedVisibility(visible = isLoading, exit = fadeOut(), enter = fadeIn()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
