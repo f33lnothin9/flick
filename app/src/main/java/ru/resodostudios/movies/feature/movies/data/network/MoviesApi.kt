@@ -13,6 +13,6 @@ interface MoviesApi {
 
     @GET("/shows/{id}")
     suspend fun getMovie(
-        @Path("id") id: String
+        @Path("id") id: Int
     ): Response<Movie>
 }

@@ -2,7 +2,6 @@ package ru.resodostudios.movies.feature.movie.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -40,6 +40,7 @@ import androidx.navigation.NavController
 import ru.resodostudios.movies.core.presentation.components.CoilImage
 import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.core.presentation.theme.Typography
+import ru.resodostudios.movies.feature.favorites.domain.util.MovieEvent
 import ru.resodostudios.movies.feature.movie.data.model.Movie
 import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
 
@@ -48,12 +49,13 @@ import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
 fun MovieScreen(
     navController: NavController,
     viewModel: MovieViewModel = hiltViewModel(),
-    movieId: String
+    movieId: Int,
+    onEvent: (MovieEvent) -> Unit
 ) {
 
     viewModel.getMovie(movieId)
 
-    val movie = viewModel.movie.collectAsStateWithLifecycle().value
+    val movie by viewModel.movie.collectAsStateWithLifecycle()
     val isLoading = viewModel.isLoading.collectAsStateWithLifecycle().value
     val isError = viewModel.isError.collectAsStateWithLifecycle().value
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -65,7 +67,9 @@ fun MovieScreen(
                 scrollBehavior = scrollBehavior,
                 onNavIconClick = { navController.navigateUp() },
                 actions = {
-                    IconButton(onClick = { }) {
+                    IconButton(
+                        onClick = { onEvent(MovieEvent.AddMovie(movie)) }
+                    ) {
                         Icon(
                             imageVector = Icons.Outlined.FavoriteBorder,
                             contentDescription = "Favorite"

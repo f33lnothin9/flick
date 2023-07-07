@@ -20,7 +20,7 @@ class MoviesApiRepository @Inject constructor(
         return Response.success(response.body())
     }
 
-    suspend fun getMovie(id: String): Response<Movie> {
+    suspend fun getMovie(id: Int): Response<Movie> {
         val response = try {
             apiRepository.getMovie(id)
         } catch (e: Exception) {

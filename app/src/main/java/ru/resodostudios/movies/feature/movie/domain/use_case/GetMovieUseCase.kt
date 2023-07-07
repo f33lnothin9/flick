@@ -7,5 +7,5 @@ class GetMovieUseCase @Inject constructor(
     private val repository: MoviesApiRepository
 ) {
 
-    suspend operator fun invoke(id: String) = repository.getMovie(id)
+    suspend operator fun invoke(id: Int) = repository.getMovie(id)
 }

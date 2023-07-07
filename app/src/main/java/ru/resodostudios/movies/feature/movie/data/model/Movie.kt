@@ -11,7 +11,6 @@ data class Movie(
     val averageRuntime: Int? = null,
     val ended: String? = null,
     val genres: List<String>? = null,
-    val id: Int? = null,
     val image: Image? = null,
     val language: String? = null,
     val name: String? = null,
@@ -22,5 +21,6 @@ data class Movie(
     val runtime: Int? = null,
     val schedule: Schedule? = null,
     val status: String? = null,
-    val summary: String? = null
+    val summary: String? = null,
+    val id: Int? = null
 )

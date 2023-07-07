@@ -23,7 +23,7 @@ class MovieViewModel @Inject constructor(
     val isLoading = _isLoading.asStateFlow()
     val isError = _isError.asStateFlow()
 
-    fun getMovie(id: String) {
+    fun getMovie(id: Int) {
         viewModelScope.launch {
             movieUseCase.invoke(id).let {
                 if (it.isSuccessful) {
