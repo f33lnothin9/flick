@@ -33,6 +33,7 @@ fun NavDrawer(navController: NavHostController, drawerState: DrawerState, scope:
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    val gesturesEnabled = screens.any { it.route == currentDestination?.route }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -51,6 +52,7 @@ fun NavDrawer(navController: NavHostController, drawerState: DrawerState, scope:
                 }
             }
         },
+        gesturesEnabled = gesturesEnabled,
         content = content
     )
 }

@@ -13,7 +13,7 @@ fun FavoritesScreen(state: MovieState) {
     Scaffold { innerPadding ->
         LazyColumn(contentPadding = innerPadding ) {
             items(state.movies) { movie ->
-                Text(text = movie.id.toString())
+                Text(text = movie.name.toString())
             }
         }
     }

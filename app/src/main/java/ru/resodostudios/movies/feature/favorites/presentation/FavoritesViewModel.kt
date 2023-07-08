@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val repository: FavoritesRepository
+    repository: FavoritesRepository
 ) : ViewModel() {
 
     private val _movies =
