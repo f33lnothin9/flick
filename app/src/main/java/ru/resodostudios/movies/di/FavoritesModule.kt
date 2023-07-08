@@ -7,9 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.resodostudios.movies.feature.favorites.data.data_source.MovieDatabase
-import ru.resodostudios.movies.feature.favorites.presentation.FavoritesViewModel
-import ru.resodostudios.movies.feature.movie.domain.use_case.GetMovieUseCase
-import ru.resodostudios.movies.feature.movie.presentation.MovieViewModel
+import ru.resodostudios.movies.feature.favorites.data.repository.FavoritesRepositoryImpl
+import ru.resodostudios.movies.feature.favorites.domain.repository.FavoritesRepository
 import javax.inject.Singleton
 
 @Module
@@ -28,5 +27,6 @@ object FavoritesModule {
 
     @Provides
     @Singleton
-    fun provideFavoritesViewModel(db: MovieDatabase) = FavoritesViewModel(db.dao)
+    fun provideFavoritesRepository(db: MovieDatabase): FavoritesRepository =
+        FavoritesRepositoryImpl(db.dao)
 }

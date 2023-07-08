@@ -49,8 +49,7 @@ import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
 fun MovieScreen(
     navController: NavController,
     viewModel: MovieViewModel = hiltViewModel(),
-    movieId: Int,
-    onEvent: (MovieEvent) -> Unit
+    movieId: Int
 ) {
 
     viewModel.getMovie(movieId)
@@ -68,7 +67,7 @@ fun MovieScreen(
                 onNavIconClick = { navController.navigateUp() },
                 actions = {
                     IconButton(
-                        onClick = { onEvent(MovieEvent.AddMovie(movie)) }
+                        onClick = { viewModel.onEvent(MovieEvent.AddMovie(movie)) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.FavoriteBorder,

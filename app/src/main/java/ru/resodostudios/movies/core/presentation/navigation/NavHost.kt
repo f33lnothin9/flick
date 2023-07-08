@@ -46,13 +46,11 @@ fun NavHost(
             val id = remember {
                 it.arguments?.getInt("id")
             }
-            val viewModel: FavoritesViewModel = hiltViewModel()
 
             id?.let {
                 MovieScreen(
                     navController = navController,
-                    movieId = it,
-                    onEvent = viewModel::onEvent
+                    movieId = it
                 )
             }
         }
