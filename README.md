@@ -1,23 +1,33 @@
 # Movies
 It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using Jetpack Compose, [Android Architecture Components][2] in MVVM Architecture Pattern. For the UI it uses Jetpack Compose and [Material3 Design][11].
 
-![alt text](https://i.ibb.co/whghQFD/Movies.png)
+## Screenshots
+![alt text](https://i.ibb.co/dr9yvnq/Movies.png)
 
 ## Android Architecture Components:
+
 * [ViewModel][4]
 * [Navigation][8]
 
 ## Dependency Injection:
+
 * [Hilt for Android][5]
 
 ## Asynchronous Programming:
+
 * [Kotlin Coroutines][6]
 
 ## Other:
+
 * [Retrofit][9]
 * [StateFlow][3]
 * [Jetpack Compose][7]
 * [Coil][10]
+
+## License
+
+**Movies** is distributed under the terms of the Apache License (Version 2.0). See the
+[license](LICENSE) for more information.
 
 [1]: https://kotlinlang.org/
 [2]: https://developer.android.com/topic/libraries/architecture
