@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -36,7 +37,8 @@ fun FavoriteCard(imageUrl: String, onNavigate: () -> Unit, onDelete: () -> Unit)
                 contentDescription = "Image",
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
-                    .size(height = 160.dp, width = 121.dp)
+                    .size(height = 160.dp, width = 121.dp),
+                filterQuality = FilterQuality.Low
             )
 
             FilledTonalIconButton(

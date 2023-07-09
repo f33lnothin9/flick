@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,9 +37,7 @@ import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 @Composable
 fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
 
-    Card(
-        onClick = onNavigate
-    ) {
+    Card(onClick = onNavigate) {
         Box {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -56,13 +55,12 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                         contentDescription = "Image",
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
-                            .size(height = 118.dp, width = 84.dp)
+                            .size(height = 118.dp, width = 84.dp),
+                        filterQuality = FilterQuality.Low
                     )
                 }
 
-                Column(
-                    modifier = Modifier.height(118.dp)
-                ) {
+                Column(modifier = Modifier.height(118.dp)) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
