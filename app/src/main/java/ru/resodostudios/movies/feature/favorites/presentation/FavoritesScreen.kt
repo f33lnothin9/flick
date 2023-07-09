@@ -21,12 +21,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.core.presentation.navigation.Screens
+import ru.resodostudios.movies.feature.favorites.domain.util.MovieEvent
 import ru.resodostudios.movies.feature.favorites.domain.util.MovieState
 import ru.resodostudios.movies.feature.favorites.presentation.components.FavoriteCard
 
 @ExperimentalMaterial3Api
 @Composable
-fun FavoritesScreen(state: MovieState, navController: NavController, drawerState: DrawerState) {
+fun FavoritesScreen(
+    state: MovieState,
+    navController: NavController,
+    drawerState: DrawerState,
+    onEvent: (MovieEvent) -> Unit
+) {
 
     val scope = rememberCoroutineScope()
 
@@ -53,7 +59,7 @@ fun FavoritesScreen(state: MovieState, navController: NavController, drawerState
                 FavoriteCard(
                     imageUrl = movie.image.toString(),
                     onNavigate = { navController.navigate(Screens.Movie.route + "/${movie.id}") },
-                    onDelete = { }
+                    onDelete = { onEvent(MovieEvent.DeleteMovie(movie)) }
                 )
             }
         }

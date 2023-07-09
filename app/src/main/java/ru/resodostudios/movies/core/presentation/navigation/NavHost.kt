@@ -15,6 +15,7 @@ import androidx.navigation.navArgument
 import ru.resodostudios.movies.feature.favorites.presentation.FavoritesScreen
 import ru.resodostudios.movies.feature.favorites.presentation.FavoritesViewModel
 import ru.resodostudios.movies.feature.movie.presentation.MovieScreen
+import ru.resodostudios.movies.feature.movie.presentation.MovieViewModel
 import ru.resodostudios.movies.feature.movies.presentation.MoviesScreen
 
 @ExperimentalMaterial3Api
@@ -53,8 +54,14 @@ fun NavHost(
 
         composable(route = Screens.Favorites.route) {
             val viewModel: FavoritesViewModel = hiltViewModel()
+            val viewModelMovie: MovieViewModel = hiltViewModel()
             val state by viewModel.state.collectAsStateWithLifecycle()
-            FavoritesScreen(state = state, navController = navController, drawerState = drawerState)
+            FavoritesScreen(
+                state = state,
+                navController = navController,
+                drawerState = drawerState,
+                onEvent = viewModelMovie::onEvent
+            )
         }
 
         composable(route = Screens.Settings.route) {
