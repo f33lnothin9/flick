@@ -41,7 +41,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
         Box {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box {
@@ -58,47 +58,42 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                             .size(height = 118.dp, width = 84.dp),
                         filterQuality = FilterQuality.Low
                     )
-                }
 
-                Column(modifier = Modifier.height(118.dp)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth()
+                    Surface(
+                        modifier = Modifier
+                            .padding(start = 4.dp, top = 4.dp)
+                            .align(Alignment.TopStart)
+                            .clip(RoundedCornerShape(12.dp)),
+                        color = MaterialTheme.colorScheme.secondaryContainer
                     ) {
                         Text(
-                            text = movie.name.toString(),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            style = Typography.titleMedium,
-                            textAlign = TextAlign.Start,
-                            modifier = Modifier.fillMaxWidth(0.7f),
-                            color = MaterialTheme.colorScheme.onSurface
+                            text = movie.rating?.average.toString(),
+                            modifier = Modifier
+                                .padding(
+                                    start = 8.dp,
+                                    top = 4.dp,
+                                    end = 8.dp,
+                                    bottom = 4.dp
+                                ),
+                            style = Typography.labelLarge,
+                            maxLines = 1
                         )
-
-                        Box(modifier = Modifier.fillMaxWidth()) {
-                            Surface(
-                                modifier = Modifier
-                                    .align(Alignment.CenterEnd)
-                                    .padding(top = 8.dp, end = 8.dp)
-                                    .clip(RoundedCornerShape(12.dp)),
-                                color = MaterialTheme.colorScheme.secondaryContainer
-                            ) {
-                                Text(
-                                    text = movie.rating?.average.toString(),
-                                    modifier = Modifier
-                                        .padding(
-                                            start = 8.dp,
-                                            top = 4.dp,
-                                            end = 8.dp,
-                                            bottom = 4.dp
-                                        ),
-                                    style = Typography.labelLarge,
-                                    maxLines = 1
-                                )
-                            }
-                        }
                     }
+                }
+
+                Column(
+                    modifier = Modifier.height(118.dp),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    Text(
+                        text = movie.name.toString(),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = Typography.titleLarge,
+                        textAlign = TextAlign.Start,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(top = 8.dp, end = 16.dp, bottom = 4.dp)
+                    )
 
                     Row {
                         movie.genres?.take(2)?.forEach { genres ->
@@ -113,19 +108,14 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                         text = movie.language.toString(),
                         style = Typography.titleSmall
                     )
-
-                    Text(
-                        text = "${movie.runtime} minutes",
-                        style = Typography.titleSmall
-                    )
                 }
             }
 
             FilledTonalIconButton(
                 onClick = onDelete,
                 modifier = Modifier
-                    .padding(4.dp)
                     .align(Alignment.BottomEnd)
+                    .padding(4.dp)
             ) {
                 Icon(Icons.Outlined.FavoriteBorder, contentDescription = "Favorite")
             }
