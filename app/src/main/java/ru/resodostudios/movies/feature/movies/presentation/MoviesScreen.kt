@@ -17,32 +17,31 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.core.presentation.navigation.Screens
 import ru.resodostudios.movies.feature.movie.presentation.components.MovieCard
 import ru.resodostudios.movies.feature.movies.presentation.components.SearchBar
 
-@ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @Composable
 fun MoviesScreen(
     navController: NavController,
     viewModel: MoviesViewModel = hiltViewModel(),
-    scope: CoroutineScope,
     drawerState: DrawerState
 ) {
 
     val movies by viewModel.movies.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val isError by viewModel.isError.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
 
     Surface(Modifier.fillMaxSize()) {
         SearchBar(

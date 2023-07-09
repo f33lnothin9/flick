@@ -12,6 +12,7 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 import ru.resodostudios.movies.core.presentation.navigation.NavDrawerItem
 
 @Composable
-fun NavDrawer(navController: NavHostController, drawerState: DrawerState, scope: CoroutineScope, content: @Composable () -> Unit) {
+fun NavDrawer(navController: NavHostController, drawerState: DrawerState, content: @Composable () -> Unit) {
 
     val screens = listOf(
         NavDrawerItem.Movies,
@@ -34,6 +35,7 @@ fun NavDrawer(navController: NavHostController, drawerState: DrawerState, scope:
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val gesturesEnabled = screens.any { it.route == currentDestination?.route }
+    val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
         drawerState = drawerState,
