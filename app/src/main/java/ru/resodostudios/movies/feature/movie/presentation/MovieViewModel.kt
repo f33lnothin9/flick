@@ -48,7 +48,7 @@ class MovieViewModel @Inject constructor(
                 val eventMovie = event.movie
                 val favoriteMovie = FavoriteMovie(
                     id = eventMovie.id,
-                    image = eventMovie.image?.medium,
+                    image = eventMovie.image?.original,
                     rating = eventMovie.rating?.average,
                     name = eventMovie.name
                 )

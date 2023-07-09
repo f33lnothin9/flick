@@ -58,7 +58,7 @@ fun NavHost(
         composable(route = Screens.Favorites.route) {
             val viewModel: FavoritesViewModel = hiltViewModel()
             val state by viewModel.state.collectAsStateWithLifecycle()
-            FavoritesScreen(state)
+            FavoritesScreen(state = state, navController = navController)
         }
 
         composable(route = Screens.Settings.route) {
