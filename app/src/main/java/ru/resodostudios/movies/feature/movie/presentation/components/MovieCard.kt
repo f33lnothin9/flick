@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
@@ -37,7 +37,7 @@ import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 @Composable
 fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
 
-    Card(onClick = onNavigate) {
+    ElevatedCard(onClick = onNavigate) {
         Box {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -71,9 +71,9 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                             modifier = Modifier
                                 .padding(
                                     start = 8.dp,
-                                    top = 4.dp,
+                                    top = 2.dp,
                                     end = 8.dp,
-                                    bottom = 4.dp
+                                    bottom = 2.dp
                                 ),
                             style = Typography.labelLarge,
                             maxLines = 1
@@ -92,7 +92,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                         style = Typography.titleLarge,
                         textAlign = TextAlign.Start,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(top = 8.dp, end = 16.dp, bottom = 4.dp)
+                        modifier = Modifier.padding(top = 8.dp, end = 8.dp, bottom = 4.dp)
                     )
 
                     Row {
