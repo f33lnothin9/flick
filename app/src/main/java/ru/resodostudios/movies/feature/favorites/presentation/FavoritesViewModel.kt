@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import ru.resodostudios.movies.feature.favorites.domain.repository.FavoritesRepository
-import ru.resodostudios.movies.feature.favorites.domain.util.MovieState
+import ru.resodostudios.movies.feature.favorites.domain.util.FavoritesState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,10 +19,10 @@ class FavoritesViewModel @Inject constructor(
     private val _movies =
         repository.getMovies().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    private val _state = MutableStateFlow(MovieState())
+    private val _state = MutableStateFlow(FavoritesState())
     val state = combine(_state, _movies) { state, movies ->
         state.copy(
             movies = movies
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MovieState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), FavoritesState())
 }

@@ -43,19 +43,24 @@ fun NavHost(
             val id = remember {
                 it.arguments?.getInt("id")
             }
+            val viewModel: MovieViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsStateWithLifecycle()
 
-            id?.let {
-                MovieScreen(
-                    navController = navController,
-                    movieId = it
-                )
-            }
+            id?.let { viewModel.getMovie(it) }
+
+            MovieScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent,
+                onRetry = { id?.let { viewModel.getMovie(it) } }
+            )
         }
 
         composable(route = Screens.Favorites.route) {
             val viewModel: FavoritesViewModel = hiltViewModel()
             val viewModelMovie: MovieViewModel = hiltViewModel()
             val state by viewModel.state.collectAsStateWithLifecycle()
+
             FavoritesScreen(
                 state = state,
                 navController = navController,

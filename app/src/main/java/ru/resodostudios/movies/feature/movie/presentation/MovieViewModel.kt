@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.feature.favorites.domain.model.FavoriteMovie
 import ru.resodostudios.movies.feature.favorites.domain.repository.FavoritesRepository
-import ru.resodostudios.movies.feature.favorites.domain.util.MovieEvent
+import ru.resodostudios.movies.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.movies.feature.movie.data.model.Movie
 import ru.resodostudios.movies.feature.movie.domain.use_case.GetMovieUseCase
+import ru.resodostudios.movies.feature.movie.domain.util.MovieState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,10 +25,15 @@ class MovieViewModel @Inject constructor(
     private val _movie = MutableStateFlow(Movie())
     private val _isLoading = MutableStateFlow(true)
     private val _isError = MutableStateFlow(false)
+    private val _state = MutableStateFlow(MovieState())
 
-    val movie = _movie.asStateFlow()
-    val isLoading = _isLoading.asStateFlow()
-    val isError = _isError.asStateFlow()
+    val state = combine(_state, _movie, _isLoading, _isError) { state, movie, isLoading, isError ->
+        state.copy(
+            movie = movie,
+            isLoading = isLoading,
+            isError = isError
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MovieState())
 
     fun getMovie(id: Int) {
         viewModelScope.launch {
@@ -42,15 +50,14 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: MovieEvent) {
+    fun onEvent(event: FavoriteEvent) {
         when (event) {
-            is MovieEvent.AddMovie -> {
-                val eventMovie = event.movie
+            is FavoriteEvent.AddMovie -> {
                 val favoriteMovie = FavoriteMovie(
-                    id = eventMovie.id,
-                    image = eventMovie.image?.medium,
-                    rating = eventMovie.rating?.average,
-                    name = eventMovie.name
+                    id = event.movie.id,
+                    image = event.movie.image?.medium,
+                    rating = event.movie.rating?.average,
+                    name = event.movie.name
                 )
 
                 viewModelScope.launch {
@@ -58,7 +65,7 @@ class MovieViewModel @Inject constructor(
                 }
             }
 
-            is MovieEvent.DeleteMovie -> {
+            is FavoriteEvent.DeleteMovie -> {
                 viewModelScope.launch {
                     repository.deleteMovie(event.movie)
                 }

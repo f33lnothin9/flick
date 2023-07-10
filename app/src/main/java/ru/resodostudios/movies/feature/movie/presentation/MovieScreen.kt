@@ -26,7 +26,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -34,29 +33,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import ru.resodostudios.movies.core.presentation.components.CoilImage
 import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.core.presentation.theme.Typography
-import ru.resodostudios.movies.feature.favorites.domain.util.MovieEvent
+import ru.resodostudios.movies.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.movies.feature.movie.data.model.Movie
+import ru.resodostudios.movies.feature.movie.domain.util.MovieState
 import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
 
 @ExperimentalMaterial3Api
 @Composable
 fun MovieScreen(
     navController: NavController,
-    viewModel: MovieViewModel = hiltViewModel(),
-    movieId: Int
+    state: MovieState,
+    onEvent: (FavoriteEvent) -> Unit,
+    onRetry: () -> Unit
 ) {
 
-    viewModel.getMovie(movieId)
-
-    val movie by viewModel.movie.collectAsStateWithLifecycle()
-    val isLoading = viewModel.isLoading.collectAsStateWithLifecycle().value
-    val isError = viewModel.isError.collectAsStateWithLifecycle().value
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
@@ -67,7 +61,7 @@ fun MovieScreen(
                 onNavIconClick = { navController.navigateUp() },
                 actions = {
                     IconButton(
-                        onClick = { viewModel.onEvent(MovieEvent.AddMovie(movie)) }
+                        onClick = { onEvent(FavoriteEvent.AddMovie(state.movie)) }
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.FavoriteBorder,
@@ -79,7 +73,7 @@ fun MovieScreen(
         },
         contentWindowInsets = WindowInsets.waterfall,
         content = {
-            AnimatedVisibility(visible = !isLoading, enter = fadeIn()) {
+            AnimatedVisibility(visible = !state.isLoading, enter = fadeIn()) {
                 LazyColumn(
                     modifier = Modifier
                         .padding(start = 16.dp, end = 16.dp)
@@ -87,12 +81,12 @@ fun MovieScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     content = {
                         item {
-                            Header(movie = movie)
+                            Header(movie = state.movie)
                         }
                         item {
                             Text(
                                 text = HtmlCompat.fromHtml(
-                                    movie.summary ?: "",
+                                    state.movie.summary ?: "",
                                     HtmlCompat.FROM_HTML_MODE_COMPACT
                                 ).toString(),
                                 style = Typography.bodyLarge
@@ -104,14 +98,14 @@ fun MovieScreen(
         }
     )
 
-    if (isLoading) {
+    if (state.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     }
 
-    if (isError) {
-        RetrySection(onClick = { viewModel.getMovie(movieId) })
+    if (state.isError) {
+        RetrySection(onClick = onRetry)
     }
 }
 
