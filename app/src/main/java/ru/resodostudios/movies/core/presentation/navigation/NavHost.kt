@@ -17,6 +17,7 @@ import ru.resodostudios.movies.feature.favorites.presentation.FavoritesViewModel
 import ru.resodostudios.movies.feature.movie.presentation.MovieScreen
 import ru.resodostudios.movies.feature.movie.presentation.MovieViewModel
 import ru.resodostudios.movies.feature.movies.presentation.MoviesScreen
+import ru.resodostudios.movies.feature.movies.presentation.MoviesViewModel
 
 @ExperimentalMaterial3Api
 @Composable
@@ -29,7 +30,16 @@ fun NavHost(
         startDestination = Screens.Main.route
     ) {
         composable(route = Screens.Main.route) {
-            MoviesScreen(navController = navController, drawerState = drawerState)
+            val viewModel: MoviesViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+
+            MoviesScreen(
+                navController = navController,
+                drawerState = drawerState,
+                state = state,
+                onRetry = { viewModel.getMovies() },
+                onEvent = viewModel::onEvent
+            )
         }
 
         composable(

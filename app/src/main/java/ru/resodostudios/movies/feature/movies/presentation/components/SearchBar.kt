@@ -35,12 +35,12 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import ru.resodostudios.movies.core.presentation.navigation.Screens
 import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
-import ru.resodostudios.movies.feature.movies.presentation.MoviesViewModel
 
 @ExperimentalMaterial3Api
 @Composable
 fun SearchBar(
-    viewModel: MoviesViewModel,
+    onSearch: (String) -> Unit,
+    onClearSearch: (String) -> Unit,
     movies: List<MovieEntry>,
     navController: NavController,
     onMenuClick: () -> Unit
@@ -60,7 +60,7 @@ fun SearchBar(
             query = text,
             onQueryChange = {
                 text = it
-                viewModel.searchMovie(it)
+                onSearch(it)
             },
             onSearch = { active = false },
             active = active,
@@ -82,7 +82,7 @@ fun SearchBar(
                     IconButton(
                         onClick = {
                             text = ""
-                            viewModel.searchMovie("")
+                            onClearSearch("")
                         }
                     ) {
                         Icon(Icons.Default.Close, contentDescription = null)
@@ -107,7 +107,12 @@ fun SearchBar(
                                     }
                                 }
                             },
-                            leadingContent = { Icon(Icons.Filled.Search, contentDescription = null) },
+                            leadingContent = {
+                                Icon(
+                                    Icons.Filled.Search,
+                                    contentDescription = null
+                                )
+                            },
                             modifier = Modifier.clickable {
                                 navController.navigate(Screens.Movie.route + "/${movie.id}")
                                 active = false
