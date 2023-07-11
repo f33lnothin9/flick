@@ -1,4 +1,4 @@
-package ru.resodostudios.movies.feature.movie.presentation.components
+package ru.resodostudios.movies.feature.movies.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,7 @@ import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 @Composable
 fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
 
-    ElevatedCard(onClick = onNavigate) {
+    Card(onClick = onNavigate) {
         Box {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -55,7 +56,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                         contentDescription = "Image",
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
-                            .size(height = 118.dp, width = 84.dp),
+                            .size(height = 122.dp, width = 87.dp),
                         filterQuality = FilterQuality.Low
                     )
 
@@ -70,13 +71,14 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                             text = movie.rating?.average.toString(),
                             modifier = Modifier
                                 .padding(
-                                    start = 8.dp,
+                                    start = 6.dp,
                                     top = 2.dp,
-                                    end = 8.dp,
+                                    end = 6.dp,
                                     bottom = 2.dp
                                 ),
-                            style = Typography.labelLarge,
-                            maxLines = 1
+                            style = Typography.labelMedium,
+                            maxLines = 1,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -102,20 +104,20 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit, onDelete: () -> Unit) {
                                 style = Typography.titleSmall
                             )
                         }
-                    }
 
-                    Text(
-                        text = movie.language.toString(),
-                        style = Typography.titleSmall
-                    )
+                        Text(
+                            text = "• ${movie.premiered?.take(4)}",
+                            style = Typography.titleSmall
+                        )
+                    }
                 }
             }
 
-            FilledTonalIconButton(
+            FilledIconButton(
                 onClick = onDelete,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(4.dp)
+                    .padding(8.dp)
             ) {
                 Icon(Icons.Outlined.FavoriteBorder, contentDescription = "Favorite")
             }

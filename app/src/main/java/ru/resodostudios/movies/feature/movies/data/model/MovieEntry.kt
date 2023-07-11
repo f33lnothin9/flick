@@ -9,7 +9,7 @@ data class MovieEntry(
     val genres: List<String>? = null,
     val id: Int? = null,
     val image: Image? = null,
-    val language: String? = null,
+    val premiered: String? = null,
     val name: String? = null,
     val rating: Rating? = null,
     val runtime: Int? = null
