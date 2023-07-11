@@ -23,16 +23,15 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.core.presentation.navigation.Screens
-import ru.resodostudios.movies.feature.movie.presentation.components.MovieCard
+import ru.resodostudios.movies.feature.movies.presentation.components.MovieCard
 import ru.resodostudios.movies.feature.movies.domain.util.MoviesEvent
-import ru.resodostudios.movies.feature.movies.domain.util.MoviesState
 import ru.resodostudios.movies.feature.movies.presentation.components.SearchBar
 
 @ExperimentalMaterial3Api
 @Composable
 fun MoviesScreen(
     navController: NavController,
-    state: MoviesState,
+    state: MoviesUiState,
     onEvent: (MoviesEvent) -> Unit,
     onRetry: () -> Unit,
     drawerState: DrawerState

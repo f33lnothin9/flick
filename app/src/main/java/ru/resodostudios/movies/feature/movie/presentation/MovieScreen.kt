@@ -39,14 +39,13 @@ import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.core.presentation.theme.Typography
 import ru.resodostudios.movies.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.movies.feature.movie.data.model.Movie
-import ru.resodostudios.movies.feature.movie.domain.util.MovieState
 import ru.resodostudios.movies.feature.movie.presentation.components.MovieTopBar
 
 @ExperimentalMaterial3Api
 @Composable
 fun MovieScreen(
     navController: NavController,
-    state: MovieState,
+    state: MovieUiState,
     onEvent: (FavoriteEvent) -> Unit,
     onRetry: () -> Unit
 ) {

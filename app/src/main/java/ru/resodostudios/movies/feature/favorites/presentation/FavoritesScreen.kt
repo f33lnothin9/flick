@@ -21,14 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.core.presentation.navigation.Screens
-import ru.resodostudios.movies.feature.favorites.domain.util.FavoritesState
 import ru.resodostudios.movies.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.movies.feature.favorites.presentation.components.FavoriteCard
 
 @ExperimentalMaterial3Api
 @Composable
 fun FavoritesScreen(
-    state: FavoritesState,
+    state: FavoritesUiState,
     navController: NavController,
     drawerState: DrawerState,
     onEvent: (FavoriteEvent) -> Unit

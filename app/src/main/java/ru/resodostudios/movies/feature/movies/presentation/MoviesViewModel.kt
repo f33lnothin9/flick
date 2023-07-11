@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 import ru.resodostudios.movies.feature.movies.domain.use_case.GetMoviesUseCase
 import ru.resodostudios.movies.feature.movies.domain.util.MoviesEvent
-import ru.resodostudios.movies.feature.movies.domain.util.MoviesState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +23,7 @@ class MoviesViewModel @Inject constructor(
     private val _movies = MutableStateFlow(emptyList<MovieEntry>())
     private val _isLoading = MutableStateFlow(true)
     private val _isError = MutableStateFlow(false)
-    private val _state = MutableStateFlow(MoviesState())
+    private val _state = MutableStateFlow(MoviesUiState())
 
     private var _cachedMovies = listOf<MovieEntry>()
     private var _isSearching = mutableStateOf(false)
@@ -36,7 +35,7 @@ class MoviesViewModel @Inject constructor(
             isLoading = isLoading,
             isError = isError
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MoviesState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MoviesUiState())
 
     init {
         getMovies()
