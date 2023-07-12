@@ -2,7 +2,6 @@ package ru.resodostudios.movies.feature.movies.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,9 +22,9 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.core.presentation.components.RetrySection
 import ru.resodostudios.movies.core.presentation.navigation.Screens
-import ru.resodostudios.movies.feature.movies.presentation.components.MovieCard
 import ru.resodostudios.movies.feature.movies.domain.util.MoviesEvent
-import ru.resodostudios.movies.feature.movies.presentation.components.SearchBar
+import ru.resodostudios.movies.feature.movies.presentation.components.MovieCard
+import ru.resodostudios.movies.feature.search.presentation.components.SearchBar
 
 @ExperimentalMaterial3Api
 @Composable
@@ -42,10 +41,10 @@ fun MoviesScreen(
     Surface(Modifier.fillMaxSize()) {
         SearchBar(
             onSearch = { onEvent(MoviesEvent.Search(it)) },
-            movies = state.movies,
+            movies = state.searchedMovies,
             navController = navController,
             onMenuClick = { scope.launch { drawerState.open() } },
-            onClearSearch = { onEvent(MoviesEvent.Search("")) }
+            onClearSearch = { onEvent(MoviesEvent.Search(it)) }
         )
 
         AnimatedVisibility(
@@ -69,13 +68,13 @@ fun MoviesScreen(
             }
         }
 
-        AnimatedVisibility(visible = state.isLoading, exit = fadeOut(), enter = fadeIn()) {
+        if (state.isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         }
 
-        AnimatedVisibility(visible = state.isError, exit = fadeOut(), enter = fadeIn()) {
+        if (state.isError) {
             RetrySection(onClick = onRetry)
         }
     }

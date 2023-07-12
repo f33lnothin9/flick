@@ -1,4 +1,4 @@
-package ru.resodostudios.movies.feature.movies.presentation.components
+package ru.resodostudios.movies.feature.search.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,14 +34,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import ru.resodostudios.movies.core.presentation.navigation.Screens
-import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
+import ru.resodostudios.movies.feature.search.data.model.SearchedMovie
 
 @ExperimentalMaterial3Api
 @Composable
 fun SearchBar(
     onSearch: (String) -> Unit,
     onClearSearch: (String) -> Unit,
-    movies: List<MovieEntry>,
+    movies: List<SearchedMovie>,
     navController: NavController,
     onMenuClick: () -> Unit
 ) {
@@ -97,12 +97,12 @@ fun SearchBar(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 if (text.isNotBlank()) {
-                    items(movies) { movie ->
+                    items(movies) { searchedMovie ->
                         ListItem(
-                            headlineContent = { movie.name?.let { Text(it) } },
+                            headlineContent = { searchedMovie.movie?.name?.let { Text(it) } },
                             supportingContent = {
                                 Row {
-                                    movie.genres?.take(2)?.forEach {
+                                    searchedMovie.movie?.genres?.take(2)?.forEach {
                                         Text(text = "$it ")
                                     }
                                 }
@@ -114,7 +114,7 @@ fun SearchBar(
                                 )
                             },
                             modifier = Modifier.clickable {
-                                navController.navigate(Screens.Movie.route + "/${movie.id}")
+                                navController.navigate(Screens.Movie.route + "/${searchedMovie.movie?.id}")
                                 active = false
                             }
                         )

@@ -1,6 +1,6 @@
 package ru.resodostudios.movies.feature.movies.domain.use_case
 
-import ru.resodostudios.movies.feature.movies.data.repository.MoviesApiRepository
+import ru.resodostudios.movies.core.data.repository.MoviesApiRepository
 import javax.inject.Inject
 
 class GetMoviesUseCase @Inject constructor(
