@@ -78,7 +78,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
 
             Column(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
                     text = movie.name.toString(),

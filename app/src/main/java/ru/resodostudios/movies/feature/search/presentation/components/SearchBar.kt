@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBars
@@ -28,8 +27,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.isContainer
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
@@ -49,6 +50,8 @@ fun SearchBar(
     var text by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
 
+    val focusManager = LocalFocusManager.current
+
     Box(
         Modifier
             .semantics { isContainer = true }
@@ -62,13 +65,19 @@ fun SearchBar(
                 text = it
                 onSearch(it)
             },
-            onSearch = { active = false },
+            onSearch = { focusManager.clearFocus() },
             active = active,
             onActiveChange = { active = it },
             placeholder = { Text("Search movies") },
             leadingIcon = {
                 if (active) {
-                    IconButton(onClick = { active = false }) {
+                    IconButton(
+                        onClick = {
+                            active = false
+                            text = ""
+                            onClearSearch("")
+                        }
+                    ) {
                         Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
                 } else {
@@ -101,11 +110,12 @@ fun SearchBar(
                         ListItem(
                             headlineContent = { searchedMovie.movie?.name?.let { Text(it) } },
                             supportingContent = {
-                                Row {
-                                    searchedMovie.movie?.genres?.take(2)?.forEach {
-                                        Text(text = "$it ")
-                                    }
-                                }
+                                Text(
+                                    text = searchedMovie.movie?.genres?.take(2)?.joinToString(", ")
+                                        ?: "Empty",
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
                             },
                             leadingContent = {
                                 Icon(
