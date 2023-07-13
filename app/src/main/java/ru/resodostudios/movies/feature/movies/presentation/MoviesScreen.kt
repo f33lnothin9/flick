@@ -2,13 +2,15 @@ package ru.resodostudios.movies.feature.movies.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +28,7 @@ import ru.resodostudios.movies.feature.movies.domain.util.MoviesEvent
 import ru.resodostudios.movies.feature.movies.presentation.components.MovieCard
 import ru.resodostudios.movies.feature.search.presentation.components.SearchBar
 
+@ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @Composable
 fun MoviesScreen(
@@ -51,18 +54,18 @@ fun MoviesScreen(
             visible = !state.isLoading,
             enter = fadeIn()
         ) {
-            LazyColumn(
+            LazyVerticalStaggeredGrid(
                 modifier = Modifier
                     .statusBarsPadding()
                     .padding(start = 16.dp, end = 16.dp, top = 76.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                verticalItemSpacing = 8.dp,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                columns = StaggeredGridCells.Adaptive(180.dp)
             ) {
                 items(state.movies) { movie ->
                     MovieCard(
                         movie = movie,
-                        onNavigate = { navController.navigate(Screens.Movie.route + "/${movie.id}") },
-                        onDelete = { }
+                        onNavigate = { navController.navigate(Screens.Movie.route + "/${movie.id}") }
                     )
                 }
             }
