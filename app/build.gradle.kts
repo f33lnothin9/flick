@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "ru.resodostudios.movies"
+    namespace = "ru.resodostudios.flick"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "ru.resodostudios.movies"
+        applicationId = "ru.resodostudios.flick"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

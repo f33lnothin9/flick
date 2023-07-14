@@ -1,5 +1,5 @@
-# Movies
-It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using Jetpack Compose, [Android Architecture Components][2] in MVVM Architecture Pattern. For the UI it uses Jetpack Compose and [Material3 Design][11].
+# Flick
+It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using [Jetpack Compose][7], [Material3 Design][11], [Android Architecture Components][2] in MVVM Architecture Pattern.
 
 ## Screenshots
 ![alt text](https://i.ibb.co/dr9yvnq/Movies.png)
@@ -26,7 +26,7 @@ It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using J
 
 ## License
 
-**Movies** is distributed under the terms of the Apache License (Version 2.0). See the
+**Flick** is distributed under the terms of the Apache License (Version 2.0). See the
 [license](LICENSE) for more information.
 
 [1]: https://kotlinlang.org/
