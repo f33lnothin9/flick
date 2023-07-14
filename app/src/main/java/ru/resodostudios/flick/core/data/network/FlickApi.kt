@@ -8,7 +8,7 @@ import ru.resodostudios.flick.feature.movie.data.model.Movie
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
 
-interface MoviesApi {
+interface FlickApi {
 
     @GET("/shows")
     suspend fun getMovies(): Response<List<MovieEntry>>

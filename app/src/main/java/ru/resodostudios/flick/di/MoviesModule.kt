@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.resodostudios.flick.core.data.network.MoviesApi
+import ru.resodostudios.flick.core.data.network.FlickApi
 import ru.resodostudios.flick.feature.movies.data.repository.MoviesRepositoryImpl
 import ru.resodostudios.flick.feature.movies.domain.repository.MoviesRepository
 import javax.inject.Singleton
@@ -15,6 +15,6 @@ object MoviesModule {
 
     @Provides
     @Singleton
-    fun provideMoviesRepository(apiRepository: MoviesApi): MoviesRepository =
+    fun provideMoviesRepository(apiRepository: FlickApi): MoviesRepository =
         MoviesRepositoryImpl(apiRepository = apiRepository)
 }

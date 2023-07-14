@@ -2,13 +2,13 @@ package ru.resodostudios.flick.feature.movies.data.repository
 
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
-import ru.resodostudios.flick.core.data.network.MoviesApi
+import ru.resodostudios.flick.core.data.network.FlickApi
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
 import ru.resodostudios.flick.feature.movies.domain.repository.MoviesRepository
 import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
-    private val apiRepository: MoviesApi
+    private val apiRepository: FlickApi
 ) : MoviesRepository {
 
     override suspend fun getMovies(): Response<List<MovieEntry>> {

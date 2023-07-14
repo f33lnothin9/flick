@@ -10,7 +10,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import ru.resodostudios.flick.core.Constants.BASE_URL
-import ru.resodostudios.flick.core.data.network.MoviesApi
+import ru.resodostudios.flick.core.data.network.FlickApi
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -45,6 +45,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMoviesApi(retrofit: Retrofit): MoviesApi =
-        retrofit.create(MoviesApi::class.java)
+    fun provideMoviesApi(retrofit: Retrofit): FlickApi =
+        retrofit.create(FlickApi::class.java)
 }

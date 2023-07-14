@@ -23,9 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import ru.resodostudios.flick.core.presentation.components.AnimatedShimmer
 import ru.resodostudios.flick.core.presentation.theme.Typography
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
 
@@ -39,7 +40,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box {
-                AsyncImage(
+                SubcomposeAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(movie.image?.original)
                         .crossfade(400)
@@ -50,7 +51,8 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
                         .defaultMinSize(minWidth = 200.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     filterQuality = FilterQuality.Low,
-                    contentScale = ContentScale.FillWidth
+                    contentScale = ContentScale.FillWidth,
+                    loading = { AnimatedShimmer() }
                 )
 
                 Surface(
