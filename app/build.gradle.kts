@@ -115,3 +115,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$room")
     ksp("androidx.room:room-compiler:$room")
 }
+
+kapt {
+    correctErrorTypes = true
+}

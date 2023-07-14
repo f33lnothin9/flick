@@ -1,10 +1,10 @@
 package ru.resodostudios.movies.feature.movies.domain.use_case
 
-import ru.resodostudios.movies.core.data.repository.MoviesApiRepository
+import ru.resodostudios.movies.feature.movies.domain.repository.MoviesRepository
 import javax.inject.Inject
 
 class GetMoviesUseCase @Inject constructor(
-    private val repository: MoviesApiRepository
+    private val repository: MoviesRepository
 ) {
 
     suspend operator fun invoke() = repository.getMovies()

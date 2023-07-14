@@ -1,18 +1,19 @@
-package ru.resodostudios.movies.core.data.repository
+package ru.resodostudios.movies.feature.movies.data.repository
 
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
 import ru.resodostudios.movies.core.data.network.MoviesApi
 import ru.resodostudios.movies.feature.movie.data.model.Movie
 import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
+import ru.resodostudios.movies.feature.movies.domain.repository.MoviesRepository
 import ru.resodostudios.movies.feature.search.data.model.SearchedMovie
 import javax.inject.Inject
 
-class MoviesApiRepository @Inject constructor(
+class MoviesRepositoryImpl @Inject constructor(
     private val apiRepository: MoviesApi
-) {
+) : MoviesRepository {
 
-    suspend fun getMovies(): Response<List<MovieEntry>> {
+    override suspend fun getMovies(): Response<List<MovieEntry>> {
         val response = try {
             apiRepository.getMovies()
         } catch (e: Exception) {

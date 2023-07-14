@@ -1,5 +1,6 @@
 package ru.resodostudios.movies.core.presentation.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ import ru.resodostudios.movies.feature.movie.presentation.MovieViewModel
 import ru.resodostudios.movies.feature.movies.presentation.MoviesScreen
 import ru.resodostudios.movies.feature.movies.presentation.MoviesViewModel
 
+@ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @Composable
 fun NavHost(

@@ -4,8 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import ru.resodostudios.movies.core.data.network.MoviesApi
+import ru.resodostudios.movies.feature.movies.data.repository.MoviesRepositoryImpl
+import ru.resodostudios.movies.feature.movies.domain.repository.MoviesRepository
 import javax.inject.Singleton
 
 @Module
@@ -14,6 +15,6 @@ object MoviesModule {
 
     @Provides
     @Singleton
-    fun provideMoviesApi(retrofit: Retrofit): MoviesApi =
-        retrofit.create(MoviesApi::class.java)
+    fun provideMoviesRepository(apiRepository: MoviesApi): MoviesRepository =
+        MoviesRepositoryImpl(apiRepository = apiRepository)
 }

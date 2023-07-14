@@ -57,9 +57,9 @@ class MoviesViewModel @Inject constructor(
     fun getMovies() {
         viewModelScope.launch {
             _isLoading.value = true
-            moviesUseCase.invoke().let {
-                if (it.isSuccessful) {
-                    _movies.value = it.body()!!
+            moviesUseCase.invoke().let { response ->
+                if (response.isSuccessful) {
+                    _movies.value = response.body()!!
                     _isLoading.value = false
                     _isError.value = false
                 } else {
@@ -72,7 +72,6 @@ class MoviesViewModel @Inject constructor(
 
     private fun searchMovies(query: String) {
         viewModelScope.launch {
-            _isLoading.value = true
             searchUseCase.invoke(query).let {
                 if (it.isSuccessful) {
                     _searchedMovies.value = it.body()!!

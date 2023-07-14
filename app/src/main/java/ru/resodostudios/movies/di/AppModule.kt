@@ -10,6 +10,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import ru.resodostudios.movies.core.Constants.BASE_URL
+import ru.resodostudios.movies.core.data.network.MoviesApi
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -22,17 +23,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .build()
-    }
+    fun provideOkHttpClient() = OkHttpClient.Builder()
+        .readTimeout(15, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .build()
 
     @Provides
     @Singleton
     fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
-
         val contentType = "application/json".toMediaType()
         val json = Json {
             ignoreUnknownKeys = true
@@ -44,4 +42,9 @@ object AppModule {
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideMoviesApi(retrofit: Retrofit): MoviesApi =
+        retrofit.create(MoviesApi::class.java)
 }
