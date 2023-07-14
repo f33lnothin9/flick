@@ -5,7 +5,6 @@ import retrofit2.Response
 import ru.resodostudios.movies.core.data.network.MoviesApi
 import ru.resodostudios.movies.feature.movies.data.model.MovieEntry
 import ru.resodostudios.movies.feature.movies.domain.repository.MoviesRepository
-import ru.resodostudios.movies.feature.search.data.model.SearchedMovie
 import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
@@ -15,15 +14,6 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovies(): Response<List<MovieEntry>> {
         val response = try {
             apiRepository.getMovies()
-        } catch (e: Exception) {
-            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
-        }
-        return Response.success(response.body())
-    }
-
-    suspend fun searchMovies(query: String): Response<List<SearchedMovie>> {
-        val response = try {
-            apiRepository.searchMovies(query)
         } catch (e: Exception) {
             return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
         }
