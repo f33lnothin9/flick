@@ -60,7 +60,7 @@ fun MoviesScreen(
                     .padding(start = 16.dp, end = 16.dp, top = 76.dp),
                 verticalItemSpacing = 8.dp,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                columns = StaggeredGridCells.Adaptive(180.dp)
+                columns = StaggeredGridCells.Adaptive(150.dp)
             ) {
                 items(state.movies) { movie ->
                     MovieCard(
@@ -77,8 +77,6 @@ fun MoviesScreen(
             }
         }
 
-        if (state.isError) {
-            RetrySection(onClick = onRetry)
-        }
+        if (state.isError) RetrySection(onClick = onRetry)
     }
 }

@@ -47,7 +47,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
                         .build(),
                     contentDescription = "Image",
                     modifier = Modifier
-                        .defaultMinSize(minWidth = 250.dp)
+                        .defaultMinSize(minWidth = 200.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     filterQuality = FilterQuality.Low,
                     contentScale = ContentScale.FillWidth
