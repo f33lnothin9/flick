@@ -2,7 +2,7 @@
 It's an app written in [Kotlin][1] that shows movies from api.tvmaze.com using [Jetpack Compose][7], [Material3 Design][11], [Android Architecture Components][2] in MVVM Architecture Pattern.
 
 ## Screenshots
-![alt text](https://i.ibb.co/dr9yvnq/Movies.png)
+![Screenshot showing Movies screen, Movie screen and Favorites screen](images/Flick.png "Screenshot showing Movies screen, Movie screen and Favorites screen")
 
 ## Android Architecture Components:
 

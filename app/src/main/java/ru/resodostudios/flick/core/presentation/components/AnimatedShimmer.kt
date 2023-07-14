@@ -18,12 +18,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AnimatedShimmer() {
+
     val shimmerColors = listOf(
         Color.LightGray.copy(alpha = 0.6f),
         Color.LightGray.copy(alpha = 0.2f),
         Color.LightGray.copy(alpha = 0.6f),
     )
-
     val transition = rememberInfiniteTransition(label = "transition")
     val translateAnim = transition.animateFloat(
         initialValue = 0f,
@@ -36,7 +36,6 @@ fun AnimatedShimmer() {
             repeatMode = RepeatMode.Reverse
         ), label = "translateAnim"
     )
-
     val brush = Brush.linearGradient(
         colors = shimmerColors,
         start = Offset.Zero,
