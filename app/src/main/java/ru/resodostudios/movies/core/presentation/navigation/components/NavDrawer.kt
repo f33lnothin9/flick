@@ -1,10 +1,9 @@
 package ru.resodostudios.movies.core.presentation.navigation.components
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -14,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -23,12 +23,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.resodostudios.movies.core.presentation.navigation.NavDrawerItem
+import ru.resodostudios.movies.core.presentation.theme.Typography
 
 @Composable
 fun NavDrawer(navController: NavHostController, drawerState: DrawerState, content: @Composable () -> Unit) {
 
     val screens = listOf(
         NavDrawerItem.Movies,
+        NavDrawerItem.People,
         NavDrawerItem.Favorites,
         NavDrawerItem.Settings
     )
@@ -41,7 +43,13 @@ fun NavDrawer(navController: NavHostController, drawerState: DrawerState, conten
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Spacer(Modifier.height(12.dp))
+                Text(
+                    text = "Flick",
+                    modifier = Modifier.padding(start = 32.dp, top = 8.dp, bottom = 24.dp),
+                    style = Typography.titleLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
 
                 screens.forEach { screen ->
                     DrawerItem(

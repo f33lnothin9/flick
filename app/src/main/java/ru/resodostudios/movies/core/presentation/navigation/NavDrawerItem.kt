@@ -1,8 +1,9 @@
 package ru.resodostudios.movies.core.presentation.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CameraRoll
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -11,10 +12,17 @@ sealed class NavDrawerItem(
     val title: String,
     val icon: ImageVector
 ) {
+
     object Movies : NavDrawerItem(
         route = Screens.Main.route,
         title = "Movies",
-        icon = Icons.Outlined.Movie
+        icon = Icons.Outlined.CameraRoll
+    )
+
+    object People : NavDrawerItem(
+        route = Screens.People.route,
+        title = "People",
+        icon = Icons.Outlined.People
     )
 
     object Favorites : NavDrawerItem(
