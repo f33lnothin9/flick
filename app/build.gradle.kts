@@ -54,7 +54,7 @@ android {
 
 dependencies {
 
-    val hilt = "2.46.1"
+    val hilt = "2.47"
     val retrofit = "2.9.0"
     val okHttp = "4.11.0"
     val room = "2.5.2"
