@@ -1,6 +1,7 @@
 package ru.resodostudios.flick.core.presentation.navigation.components
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,13 +27,18 @@ import ru.resodostudios.flick.core.presentation.navigation.NavDrawerItem
 import ru.resodostudios.flick.core.presentation.theme.Typography
 
 @Composable
-fun NavDrawer(navController: NavHostController, drawerState: DrawerState, content: @Composable () -> Unit) {
+fun NavDrawer(
+    navController: NavHostController,
+    drawerState: DrawerState,
+    content: @Composable () -> Unit
+) {
 
     val screens = listOf(
         NavDrawerItem.Movies,
         NavDrawerItem.People,
         NavDrawerItem.Favorites,
-        NavDrawerItem.Settings
+        NavDrawerItem.Settings,
+        NavDrawerItem.About
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -45,13 +51,23 @@ fun NavDrawer(navController: NavHostController, drawerState: DrawerState, conten
             ModalDrawerSheet {
                 Text(
                     text = "Flick",
-                    modifier = Modifier.padding(start = 32.dp, top = 8.dp, bottom = 24.dp),
+                    modifier = Modifier.padding(start = 32.dp, top = 16.dp, bottom = 24.dp),
                     style = Typography.titleLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 screens.forEach { screen ->
+                    if (screen == NavDrawerItem.Settings) {
+                        Divider(
+                            Modifier.padding(
+                                start = 24.dp,
+                                end = 24.dp,
+                                top = 8.dp,
+                                bottom = 8.dp
+                            )
+                        )
+                    }
                     DrawerItem(
                         screen = screen,
                         currentDestination = currentDestination,
