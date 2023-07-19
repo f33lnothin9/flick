@@ -60,7 +60,7 @@ dependencies {
     val room = "2.5.2"
     val coroutines = "1.7.2"
     val navigation = "2.6.0"
-    val accompanist = "0.30.0"
+    val accompanist = "0.30.1"
 
     val composeBom = platform("androidx.compose:compose-bom:2023.06.01")
     implementation(composeBom)
