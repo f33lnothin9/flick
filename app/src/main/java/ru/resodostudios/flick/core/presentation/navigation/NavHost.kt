@@ -19,6 +19,7 @@ import ru.resodostudios.flick.feature.movie.presentation.MovieScreen
 import ru.resodostudios.flick.feature.movie.presentation.MovieViewModel
 import ru.resodostudios.flick.feature.movies.presentation.MoviesScreen
 import ru.resodostudios.flick.feature.movies.presentation.MoviesViewModel
+import ru.resodostudios.flick.feature.people.presentation.PeopleScreen
 
 @ExperimentalFoundationApi
 @ExperimentalMaterial3Api
@@ -29,9 +30,9 @@ fun NavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screens.Main.route
+        startDestination = Screens.Movies.route
     ) {
-        composable(route = Screens.Main.route) {
+        composable(route = Screens.Movies.route) {
             val viewModel: MoviesViewModel = hiltViewModel()
             val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -66,6 +67,10 @@ fun NavHost(
                 onEvent = viewModel::onEvent,
                 onRetry = { id?.let { viewModel.getMovie(it) } }
             )
+        }
+
+        composable(route = Screens.People.route) {
+            PeopleScreen()
         }
 
         composable(route = Screens.Favorites.route) {

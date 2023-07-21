@@ -14,31 +14,31 @@ sealed class NavDrawerItem(
     val icon: ImageVector
 ) {
 
-    object Movies : NavDrawerItem(
-        route = Screens.Main.route,
+    data object Movies : NavDrawerItem(
+        route = Screens.Movies.route,
         title = "Movies",
         icon = Icons.Outlined.CameraRoll
     )
 
-    object People : NavDrawerItem(
+    data object People : NavDrawerItem(
         route = Screens.People.route,
         title = "People",
         icon = Icons.Outlined.People
     )
 
-    object Favorites : NavDrawerItem(
+    data object Favorites : NavDrawerItem(
         route = Screens.Favorites.route,
         title = "Favorites",
         icon = Icons.Outlined.FavoriteBorder
     )
 
-    object Settings : NavDrawerItem(
+    data object Settings : NavDrawerItem(
         route = Screens.Settings.route,
         title = "Settings",
         icon = Icons.Outlined.Settings
     )
 
-    object About : NavDrawerItem(
+    data object About : NavDrawerItem(
         route = Screens.About.route,
         title = "About",
         icon = Icons.Outlined.Info
