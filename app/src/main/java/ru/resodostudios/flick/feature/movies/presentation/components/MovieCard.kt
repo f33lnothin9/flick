@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import coil.size.Size
 import ru.resodostudios.flick.core.presentation.components.AnimatedShimmer
 import ru.resodostudios.flick.core.presentation.theme.Typography
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
@@ -44,7 +43,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(movie.image?.original)
                         .crossfade(400)
-                        .size(Size.ORIGINAL)
+                        .size(256)
                         .build(),
                     contentDescription = "Image",
                     modifier = Modifier

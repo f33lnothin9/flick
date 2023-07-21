@@ -6,6 +6,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.resodostudios.flick.feature.movie.data.model.Movie
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
+import ru.resodostudios.flick.feature.people.domain.model.People
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
 
 interface FlickApi {
@@ -22,4 +23,7 @@ interface FlickApi {
     suspend fun searchMovies(
         @Query("q") query: String
     ): Response<List<SearchedMovie>>
+
+    @GET("/people")
+    suspend fun getPeople(): Response<List<People>>
 }

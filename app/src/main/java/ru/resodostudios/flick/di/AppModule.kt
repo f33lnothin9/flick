@@ -19,6 +19,7 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
+    @Singleton
     fun baseUrl() = BASE_URL
 
     @Provides
@@ -30,14 +31,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         val json = Json {
             ignoreUnknownKeys = true
         }
 
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(baseUrl())
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
