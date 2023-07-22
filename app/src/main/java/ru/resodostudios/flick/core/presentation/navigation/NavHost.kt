@@ -20,6 +20,7 @@ import ru.resodostudios.flick.feature.movie.presentation.MovieViewModel
 import ru.resodostudios.flick.feature.movies.presentation.MoviesScreen
 import ru.resodostudios.flick.feature.movies.presentation.MoviesViewModel
 import ru.resodostudios.flick.feature.people.presentation.PeopleScreen
+import ru.resodostudios.flick.feature.people.presentation.PeopleViewModel
 
 @ExperimentalFoundationApi
 @ExperimentalMaterial3Api
@@ -70,7 +71,14 @@ fun NavHost(
         }
 
         composable(route = Screens.People.route) {
-            PeopleScreen()
+            val viewModel: PeopleViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsStateWithLifecycle()
+
+            PeopleScreen(
+                state = state,
+                onRetry = { viewModel.getPeople() },
+                drawerState = drawerState
+            )
         }
 
         composable(route = Screens.Favorites.route) {
