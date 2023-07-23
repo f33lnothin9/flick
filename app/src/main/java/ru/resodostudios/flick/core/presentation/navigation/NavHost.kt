@@ -77,7 +77,8 @@ fun NavHost(
             PeopleScreen(
                 state = state,
                 onRetry = { viewModel.getPeople() },
-                drawerState = drawerState
+                drawerState = drawerState,
+                onEvent = viewModel::onEvent
             )
         }
 

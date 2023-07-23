@@ -8,6 +8,7 @@ import ru.resodostudios.flick.feature.movie.data.model.Movie
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
 import ru.resodostudios.flick.feature.people.domain.model.People
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
+import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
 
 interface FlickApi {
 
@@ -19,11 +20,16 @@ interface FlickApi {
         @Path("id") id: Int
     ): Response<Movie>
 
+    @GET("/people")
+    suspend fun getPeople(): Response<List<People>>
+
     @GET("/search/shows")
     suspend fun searchMovies(
         @Query("q") query: String
     ): Response<List<SearchedMovie>>
 
-    @GET("/people")
-    suspend fun getPeople(): Response<List<People>>
+    @GET("/search/people")
+    suspend fun searchPeople(
+        @Query("q") query: String
+    ): Response<List<SearchedPeople>>
 }

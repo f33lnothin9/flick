@@ -1,6 +1,5 @@
 package ru.resodostudios.flick.feature.search.presentation.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,16 +7,15 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,21 +28,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.isContainer
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.navigation.NavController
-import ru.resodostudios.flick.core.presentation.navigation.Screens
-import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
 
 @ExperimentalMaterial3Api
 @Composable
 fun SearchBar(
     onSearch: (String) -> Unit,
     onClearSearch: (String) -> Unit,
-    movies: List<SearchedMovie>,
-    navController: NavController,
-    onMenuClick: () -> Unit
+    onMenuClick: () -> Unit,
+    onFilterClick: () -> Unit,
+    content: LazyListScope.() -> Unit,
+    title: String
 ) {
 
     var text by rememberSaveable { mutableStateOf("") }
@@ -68,7 +63,7 @@ fun SearchBar(
             onSearch = { focusManager.clearFocus() },
             active = active,
             onActiveChange = { active = it },
-            placeholder = { Text("Search movies") },
+            placeholder = { Text(title) },
             leadingIcon = {
                 if (active) {
                     IconButton(
@@ -97,40 +92,20 @@ fun SearchBar(
                         Icon(Icons.Default.Close, contentDescription = null)
                     }
                 }
+                if (text.isBlank() && !active) {
+                    IconButton(onClick = onFilterClick) {
+                        Icon(Icons.Outlined.FilterList, contentDescription = null)
+                    }
+                }
             },
             windowInsets = WindowInsets.statusBars
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                if (text.isNotBlank()) {
-                    items(movies) { searchedMovie ->
-                        ListItem(
-                            headlineContent = { searchedMovie.movie?.name?.let { Text(it) } },
-                            supportingContent = {
-                                Text(
-                                    text = searchedMovie.movie?.genres?.take(2)?.joinToString(", ")
-                                        ?: "Empty",
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
-                            },
-                            leadingContent = {
-                                Icon(
-                                    Icons.Filled.Search,
-                                    contentDescription = null
-                                )
-                            },
-                            modifier = Modifier.clickable {
-                                navController.navigate(Screens.Movie.route + "/${searchedMovie.movie?.id}")
-                                active = false
-                            }
-                        )
-                    }
-                }
-            }
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                content = content
+            )
         }
     }
 }

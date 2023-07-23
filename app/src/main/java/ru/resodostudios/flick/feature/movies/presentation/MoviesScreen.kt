@@ -3,25 +3,39 @@ package ru.resodostudios.flick.feature.movies.presentation
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import ru.resodostudios.flick.core.presentation.components.FilterBottomSheet
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.core.presentation.navigation.Screens
 import ru.resodostudios.flick.feature.movies.domain.util.MoviesEvent
@@ -39,15 +53,53 @@ fun MoviesScreen(
     drawerState: DrawerState
 ) {
 
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+
+    val bottomSheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
     Surface(Modifier.fillMaxSize()) {
         SearchBar(
             onSearch = { onEvent(MoviesEvent.Search(it)) },
-            movies = state.searchedMovies,
-            navController = navController,
             onMenuClick = { scope.launch { drawerState.open() } },
-            onClearSearch = { onEvent(MoviesEvent.Search(it)) }
+            onClearSearch = { onEvent(MoviesEvent.Search(it)) },
+            onFilterClick = { openBottomSheet = true },
+            title = "Search movies",
+            content = {
+                items(state.searchedMovies) { searchedMovie ->
+                    ListItem(
+                        headlineContent = { searchedMovie.movie?.name?.let { Text(it) } },
+                        supportingContent = {
+                            Text(
+                                text = searchedMovie.movie?.genres?.take(2)?.joinToString(", ")
+                                    ?: "Empty",
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        },
+                        leadingContent = {
+                            Icon(
+                                Icons.Filled.Search,
+                                contentDescription = null
+                            )
+                        },
+                        modifier = Modifier.clickable { navController.navigate(Screens.Movie.route + "/${searchedMovie.movie?.id}") }
+                    )
+                }
+            }
+        )
+
+        FilterBottomSheet(
+            isOpen = openBottomSheet,
+            sheetState = bottomSheetState,
+            onDismiss = { openBottomSheet = false },
+            onApply = {
+                scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
+                    if (!bottomSheetState.isVisible) {
+                        openBottomSheet = false
+                    }
+                }
+            }
         )
 
         AnimatedVisibility(
