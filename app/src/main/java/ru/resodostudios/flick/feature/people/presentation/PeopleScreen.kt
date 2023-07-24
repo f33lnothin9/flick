@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
+import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.launch
@@ -86,7 +86,7 @@ fun PeopleScreen(
                         supportingContent = { Text(text = it.country?.name.toString()) },
                         leadingContent = {
                             Box {
-                                SubcomposeAsyncImage(
+                                AsyncImage(
                                     model = ImageRequest.Builder(LocalContext.current)
                                         .data(it.image?.medium)
                                         .crossfade(400)
@@ -95,8 +95,7 @@ fun PeopleScreen(
                                         .build(),
                                     contentDescription = "Image",
                                     modifier = Modifier.size(56.dp),
-                                    filterQuality = FilterQuality.Low,
-                                    loading = { CircularProgressIndicator() }
+                                    filterQuality = FilterQuality.Low
                                 )
                             }
                         }
