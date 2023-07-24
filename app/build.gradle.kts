@@ -5,6 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
+    id("androidx.baselineprofile")
 }
 
 android {
@@ -52,6 +53,7 @@ android {
 }
 
 dependencies {
+
 
     val hilt = "2.47"
     val retrofit = "2.9.0"
@@ -113,6 +115,9 @@ dependencies {
     // Room
     implementation("androidx.room:room-ktx:$room")
     ksp("androidx.room:room-compiler:$room")
+
+    implementation("androidx.profileinstaller:profileinstaller:1.3.1")
+    "baselineProfile"(project(":baselineprofile"))
 }
 
 kapt {
