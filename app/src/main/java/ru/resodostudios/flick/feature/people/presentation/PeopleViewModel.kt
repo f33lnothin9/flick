@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.resodostudios.flick.feature.people.domain.model.People
+import ru.resodostudios.flick.feature.people.domain.model.Person
 import ru.resodostudios.flick.feature.people.domain.use_case.GetPeopleUseCase
 import ru.resodostudios.flick.feature.people.domain.util.PeopleEvent
 import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
@@ -21,7 +21,7 @@ class PeopleViewModel @Inject constructor(
     private val searchPeopleUseCase: SearchPeopleUseCase
 ) : ViewModel() {
 
-    private val _people = MutableStateFlow(emptyList<People>())
+    private val _people = MutableStateFlow(emptyList<Person>())
     private val _searchedPeople = MutableStateFlow(emptyList<SearchedPeople>())
     private val _isLoading = MutableStateFlow(false)
     private val _isError = MutableStateFlow(false)

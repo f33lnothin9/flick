@@ -5,7 +5,7 @@ import ru.resodostudios.flick.core.data.model.Country
 import ru.resodostudios.flick.core.data.model.Image
 
 @Serializable
-data class People(
+data class Person(
     val birthday: String? = null,
     val country: Country? = null,
     val deathday: String? = null,
