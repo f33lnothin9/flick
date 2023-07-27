@@ -1,8 +1,8 @@
 package ru.resodostudios.flick.core.presentation.navigation.components
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
@@ -59,7 +59,7 @@ fun NavDrawer(
 
                 screens.forEach { screen ->
                     if (screen == NavDrawerItem.Settings) {
-                        Divider(
+                        HorizontalDivider(
                             Modifier.padding(
                                 start = 24.dp,
                                 end = 24.dp,

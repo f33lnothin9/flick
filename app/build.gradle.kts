@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -67,7 +67,7 @@ dependencies {
     androidTestImplementation(composeBom)
 
     // Material Design 3
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha04")
 
     // UI Tests
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
