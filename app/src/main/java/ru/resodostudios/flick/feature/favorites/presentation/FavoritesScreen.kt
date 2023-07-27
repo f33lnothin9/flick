@@ -1,28 +1,36 @@
 package ru.resodostudios.flick.feature.favorites.presentation
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Size
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.core.presentation.navigation.Screens
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
-import ru.resodostudios.flick.feature.favorites.presentation.components.FavoriteCard
 
 @ExperimentalMaterial3Api
 @Composable
@@ -47,18 +55,38 @@ fun FavoritesScreen(
             )
         }
     ) { innerPadding ->
-        LazyVerticalGrid(
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-            columns = GridCells.Adaptive(110.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        LazyColumn(
             contentPadding = innerPadding
         ) {
             items(state.movies) { movie ->
-                FavoriteCard(
-                    imageUrl = movie.image.toString(),
-                    onNavigate = { navController.navigate(Screens.Movie.route + "/${movie.id}") },
-                    onDelete = { onEvent(FavoriteEvent.DeleteMovie(movie)) }
+                ListItem(
+                    headlineContent = { Text(text = movie.name.toString()) },
+                    leadingContent = {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(movie.image)
+                                .crossfade(400)
+                                .size(Size.ORIGINAL)
+                                .transformations()
+                                .build(),
+                            contentDescription = "Image",
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(12.dp))
+                                .size(56.dp),
+                            filterQuality = FilterQuality.Low,
+                            contentScale = ContentScale.Crop
+                        )
+                    },
+                    trailingContent = {
+                        IconButton(onClick = { onEvent(FavoriteEvent.DeleteMovie(movie)) }) {
+                            Icon(
+                                Icons.Filled.Favorite,
+                                contentDescription = "Remove from Favorites"
+                            )
+                        }
+                    },
+                    supportingContent = { Text(text = movie.rating.toString()) },
+                    modifier = Modifier.clickable { navController.navigate(Screens.Movie.route + "/${movie.id}") }
                 )
             }
         }
