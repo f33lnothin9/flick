@@ -60,13 +60,21 @@ fun NavHost(
             val viewModel: MovieViewModel = hiltViewModel()
             val state by viewModel.state.collectAsStateWithLifecycle()
 
-            id?.let { viewModel.getMovie(it) }
+            id?.let {
+                viewModel.getMovie(it)
+                viewModel.getCast(it)
+            }
 
             MovieScreen(
                 navController = navController,
                 state = state,
                 onEvent = viewModel::onEvent,
-                onRetry = { id?.let { viewModel.getMovie(it) } }
+                onRetry = {
+                    id?.let {
+                        viewModel.getMovie(it)
+                        viewModel.getCast(it)
+                    }
+                }
             )
         }
 

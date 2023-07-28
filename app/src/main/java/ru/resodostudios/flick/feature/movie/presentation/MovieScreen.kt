@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.StarRate
@@ -23,6 +26,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -34,13 +39,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.transform.CircleCropTransformation
 import ru.resodostudios.flick.core.presentation.components.CoilImage
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.core.presentation.theme.Typography
@@ -92,7 +103,7 @@ fun MovieScreen(
                         }
                         item {
                             Body(
-                                movie = state.movie,
+                                state = state,
                                 onSummaryClick = { maxLines = Int.MAX_VALUE },
                                 maxLines = maxLines
                             )
@@ -185,31 +196,76 @@ private fun Header(movie: Movie) {
 
 @ExperimentalMaterial3Api
 @Composable
-private fun Body(movie: Movie, onSummaryClick: () -> Unit, maxLines: Int) {
+private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int) {
 
     Spacer(modifier = Modifier.height(8.dp))
-    Card(
-        onClick = onSummaryClick
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(16.dp)
+        Card(
+            onClick = onSummaryClick
         ) {
-            Text(
-                text = "Summary",
-                style = Typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "Summary",
+                    style = Typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
 
-            Text(
-                text = HtmlCompat.fromHtml(
-                    movie.summary ?: "",
-                    HtmlCompat.FROM_HTML_MODE_COMPACT
-                ).toString(),
-                style = Typography.bodyLarge,
-                maxLines = maxLines,
-                overflow = TextOverflow.Ellipsis
-            )
+                Text(
+                    text = HtmlCompat.fromHtml(
+                        state.movie.summary ?: "",
+                        HtmlCompat.FROM_HTML_MODE_COMPACT
+                    ).toString(),
+                    style = Typography.bodyLarge,
+                    maxLines = maxLines,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+
+        Card {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
+                Text(
+                    text = "Cast",
+                    style = Typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+                )
+
+                LazyHorizontalGrid(
+                    rows = GridCells.Fixed(3),
+                    modifier = Modifier.height(200.dp)
+                ) {
+                    items(state.cast) { cast ->
+                        ListItem(
+                            headlineContent = { Text(text = cast.person?.name.toString()) },
+                            leadingContent = {
+                                Box {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(LocalContext.current)
+                                            .data(cast.person?.image?.medium)
+                                            .crossfade(400)
+                                            .size(256)
+                                            .transformations(CircleCropTransformation())
+                                            .build(),
+                                        contentDescription = "Image",
+                                        modifier = Modifier.size(56.dp),
+                                        filterQuality = FilterQuality.Low
+                                    )
+                                }
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                    }
+                }
+            }
         }
     }
 }

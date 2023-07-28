@@ -30,9 +30,16 @@ class MovieViewModel @Inject constructor(
     private val _isError = MutableStateFlow(false)
     private val _state = MutableStateFlow(MovieUiState())
 
-    val state = combine(_state, _movie, _isLoading, _isError) { state, movie, isLoading, isError ->
+    val state = combine(
+        _state,
+        _movie,
+        _cast,
+        _isLoading,
+        _isError
+    ) { state, movie, cast, isLoading, isError ->
         state.copy(
             movie = movie,
+            cast = cast,
             isLoading = isLoading,
             isError = isError
         )
