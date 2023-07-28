@@ -240,8 +240,8 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                 )
 
                 LazyHorizontalGrid(
-                    rows = GridCells.Fixed(3),
-                    modifier = Modifier.height(200.dp)
+                    rows = GridCells.Fixed(4),
+                    modifier = Modifier.height(300.dp)
                 ) {
                     items(state.cast) { cast ->
                         ListItem(
@@ -261,7 +261,8 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                                     )
                                 }
                             },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            supportingContent = { Text(text = cast.character?.name.toString()) }
                         )
                     }
                 }
