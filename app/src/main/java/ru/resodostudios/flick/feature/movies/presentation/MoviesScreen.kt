@@ -10,30 +10,25 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import ru.resodostudios.flick.core.presentation.components.FilterBottomSheet
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.core.presentation.navigation.Screens
 import ru.resodostudios.flick.feature.movies.domain.util.MoviesEvent
@@ -59,9 +55,9 @@ fun MoviesScreen(
     drawerState: DrawerState
 ) {
 
-    var selected by remember { mutableStateOf(false) }
-    var filtersOpened by remember { mutableStateOf(false) }
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
 
+    val bottomSheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
     Box(Modifier.fillMaxSize()) {
@@ -75,7 +71,7 @@ fun MoviesScreen(
                 onSearch = { onEvent(MoviesEvent.Search(it)) },
                 onMenuClick = { scope.launch { drawerState.open() } },
                 onClearSearch = { onEvent(MoviesEvent.Search(it)) },
-                onFilterClick = { filtersOpened = !filtersOpened },
+                onFilterClick = { openBottomSheet = true },
                 title = "Search movies",
                 content = {
                     items(state.searchedMovies) { searchedMovie ->
@@ -100,66 +96,18 @@ fun MoviesScreen(
                     }
                 }
             )
+        }
 
-            if (filtersOpened) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.padding(bottom = 8.dp, start = 16.dp)
-                ) {
-                    item {
-                        FilterChip(
-                            selected = selected,
-                            onClick = { selected = !selected },
-                            label = { Text("Genre") },
-                            leadingIcon = {
-                                if (selected) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Done,
-                                        contentDescription = "Localized Description",
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                    )
-                                }
-                            },
-                            trailingIcon = {
-                                if (!selected) {
-                                    Icon(
-                                        imageVector = Icons.Filled.ArrowDropDown,
-                                        contentDescription = "Localized Description",
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                    )
-                                }
-                            }
-                        )
-                    }
-
-                    item {
-                        FilterChip(
-                            selected = selected,
-                            onClick = { selected = !selected },
-                            label = { Text("Language") },
-                            leadingIcon = {
-                                if (selected) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Done,
-                                        contentDescription = "Localized Description",
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                    )
-                                }
-                            },
-                            trailingIcon = {
-                                if (!selected) {
-                                    Icon(
-                                        imageVector = Icons.Filled.ArrowDropDown,
-                                        contentDescription = "Localized Description",
-                                        modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                    )
-                                }
-                            }
-                        )
-                    }
+        FilterBottomSheet(
+            isOpen = openBottomSheet,
+            sheetState = bottomSheetState,
+            onDismiss = { openBottomSheet = false },
+            onApply = {
+                scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
+                    if (!bottomSheetState.isVisible) openBottomSheet = false
                 }
             }
-        }
+        )
 
         AnimatedVisibility(
             visible = !state.isLoading,
@@ -168,13 +116,7 @@ fun MoviesScreen(
             LazyVerticalStaggeredGrid(
                 modifier = Modifier
                     .statusBarsPadding()
-                    .then(
-                        if (filtersOpened) {
-                            Modifier.padding(start = 16.dp, end = 16.dp, top = 128.dp)
-                        } else {
-                            Modifier.padding(start = 16.dp, end = 16.dp, top = 80.dp)
-                        }
-                    ),
+                    .padding(start = 16.dp, end = 16.dp, top = 80.dp),
                 verticalItemSpacing = 8.dp,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 columns = StaggeredGridCells.Adaptive(150.dp)
