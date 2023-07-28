@@ -4,6 +4,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import ru.resodostudios.flick.feature.movie.data.model.Cast
 import ru.resodostudios.flick.feature.movie.data.model.Movie
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
 import ru.resodostudios.flick.feature.people.domain.model.Person
@@ -32,4 +33,9 @@ interface FlickApi {
     suspend fun searchPeople(
         @Query("q") query: String
     ): Response<List<SearchedPeople>>
+
+    @GET("/shows/{id}/cast")
+    suspend fun getCast(
+        @Path("id") id: Int
+    ): Response<List<Cast>>
 }
