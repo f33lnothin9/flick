@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -166,9 +167,8 @@ private fun Header(movie: Movie) {
 
             Column {
                 Text(
-                    text = movie.premiered?.take(4) + " • ${movie.genres?.get(0)}, ${
-                        movie.genres?.get(1)
-                    }",
+                    text = (movie.premiered?.take(4) + " • " + movie.genres?.take(2)
+                        ?.joinToString(", ")),
                     style = Typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
@@ -227,7 +227,7 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
             }
         }
 
-        Card {
+        Card(modifier = Modifier.fillMaxWidth()) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(bottom = 16.dp)

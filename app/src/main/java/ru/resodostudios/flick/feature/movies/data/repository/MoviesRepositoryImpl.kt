@@ -15,7 +15,7 @@ class MoviesRepositoryImpl @Inject constructor(
         val response = try {
             apiRepository.getMovies()
         } catch (e: Exception) {
-            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
+            return Response.error(0, e.message?.toResponseBody()!!)
         }
         return Response.success(response.body())
     }

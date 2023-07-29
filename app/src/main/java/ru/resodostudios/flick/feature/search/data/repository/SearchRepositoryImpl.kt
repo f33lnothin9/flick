@@ -16,7 +16,7 @@ class SearchRepositoryImpl @Inject constructor(
         val response = try {
             apiRepository.searchMovies(query)
         } catch (e: Exception) {
-            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
+            return Response.error(0, e.message?.toResponseBody()!!)
         }
         return Response.success(response.body())
     }
@@ -25,7 +25,7 @@ class SearchRepositoryImpl @Inject constructor(
         val response = try {
             apiRepository.searchPeople(query)
         } catch (e: Exception) {
-            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
+            return Response.error(0, e.message?.toResponseBody()!!)
         }
         return Response.success(response.body())
     }
