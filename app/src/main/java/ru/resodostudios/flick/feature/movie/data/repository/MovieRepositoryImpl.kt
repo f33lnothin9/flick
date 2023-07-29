@@ -17,7 +17,7 @@ class MovieRepositoryImpl @Inject constructor(
         val response = try {
             apiRepository.getMovie(id)
         } catch (e: Exception) {
-            return Response.error(0, e.message?.toResponseBody()!!)
+            return Response.error(0, e.message!!.toResponseBody())
         }
         return Response.success(response.body())
     }
@@ -26,7 +26,7 @@ class MovieRepositoryImpl @Inject constructor(
         val response = try {
             apiRepository.getCast(id)
         } catch (e: Exception) {
-            return Response.error(0, e.message?.toResponseBody()!!)
+            return Response.error(0, e.message!!.toResponseBody())
         }
         return Response.success(response.body())
     }
@@ -35,7 +35,7 @@ class MovieRepositoryImpl @Inject constructor(
         val response = try {
             apiRepository.getCrew(id)
         } catch (e: Exception) {
-            return Response.error(0, e.message?.toResponseBody()!!)
+            return Response.error(0, e.message!!.toResponseBody())
         }
         return Response.success(response.body())
     }
