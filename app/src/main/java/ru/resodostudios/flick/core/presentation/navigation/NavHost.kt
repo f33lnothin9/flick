@@ -63,6 +63,7 @@ fun NavHost(
             id?.let {
                 viewModel.getMovie(it)
                 viewModel.getCast(it)
+                viewModel.getCrew(it)
             }
 
             MovieScreen(
@@ -73,6 +74,7 @@ fun NavHost(
                     id?.let {
                         viewModel.getMovie(it)
                         viewModel.getCast(it)
+                        viewModel.getCrew(it)
                     }
                 }
             )

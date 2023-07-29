@@ -7,13 +7,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
 import ru.resodostudios.flick.feature.favorites.domain.repository.FavoritesRepository
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.data.model.Cast
+import ru.resodostudios.flick.feature.movie.data.model.Crew
 import ru.resodostudios.flick.feature.movie.data.model.Movie
 import ru.resodostudios.flick.feature.movie.domain.use_case.GetCastUseCase
+import ru.resodostudios.flick.feature.movie.domain.use_case.GetCrewUseCase
 import ru.resodostudios.flick.feature.movie.domain.use_case.GetMovieUseCase
 import javax.inject.Inject
 
@@ -21,40 +24,46 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(
     private val movieUseCase: GetMovieUseCase,
     private val getCastUseCase: GetCastUseCase,
+    private val getCrewUseCase: GetCrewUseCase,
     private val repository: FavoritesRepository
 ) : ViewModel() {
 
     private val _movie = MutableStateFlow(Movie())
     private val _cast = MutableStateFlow(emptyList<Cast>())
-    private val _isLoading = MutableStateFlow(true)
-    private val _isError = MutableStateFlow(false)
+    private val _crew = MutableStateFlow(emptyList<Crew>())
     private val _state = MutableStateFlow(MovieUiState())
 
     val state = combine(
         _state,
         _movie,
         _cast,
-        _isLoading,
-        _isError
-    ) { state, movie, cast, isLoading, isError ->
+        _crew
+    ) { state, movie, cast, crew ->
         state.copy(
             movie = movie,
             cast = cast,
-            isLoading = isLoading,
-            isError = isError
+            crew = crew
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MovieUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MovieUiState())
 
     fun getMovie(id: Int) {
         viewModelScope.launch {
             movieUseCase.invoke(id).let {
                 if (it.isSuccessful) {
                     _movie.value = it.body()!!
-                    _isLoading.value = false
-                    _isError.value = false
+                    _state.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            isError = false
+                        )
+                    }
                 } else {
-                    _isLoading.value = false
-                    _isError.value = true
+                    _state.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            isError = true
+                        )
+                    }
                 }
             }
         }
@@ -65,11 +74,42 @@ class MovieViewModel @Inject constructor(
             getCastUseCase.invoke(id).let {
                 if (it.isSuccessful) {
                     _cast.value = it.body()!!
-                    _isLoading.value = false
-                    _isError.value = false
+                    _state.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            isError = false
+                        )
+                    }
                 } else {
-                    _isLoading.value = false
-                    _isError.value = true
+                    _state.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            isError = true
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun getCrew(id: Int) {
+        viewModelScope.launch {
+            getCrewUseCase.invoke(id).let {
+                if (it.isSuccessful) {
+                    _crew.value = it.body()!!
+                    _state.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            isError = false
+                        )
+                    }
+                } else {
+                    _state.update { state ->
+                        state.copy(
+                            isLoading = false,
+                            isError = true
+                        )
+                    }
                 }
             }
         }

@@ -11,13 +11,16 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.StarRate
@@ -167,8 +170,8 @@ private fun Header(movie: Movie) {
 
             Column {
                 Text(
-                    text = (movie.premiered?.take(4) + " • " + movie.genres?.take(2)
-                        ?.joinToString(", ")),
+                    text = movie.premiered?.take(4) + " • " + movie.genres?.take(2)
+                        ?.joinToString(", "),
                     style = Typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
@@ -268,5 +271,46 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                 }
             }
         }
+
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
+                Text(
+                    text = "Crew",
+                    style = Typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+                )
+
+                LazyRow {
+                    items(state.crew) { cast ->
+                        ListItem(
+                            headlineContent = { Text(text = cast.person?.name.toString()) },
+                            leadingContent = {
+                                Box {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(LocalContext.current)
+                                            .data(cast.person?.image?.medium)
+                                            .crossfade(400)
+                                            .size(256)
+                                            .transformations(CircleCropTransformation())
+                                            .build(),
+                                        contentDescription = "Image",
+                                        modifier = Modifier.size(56.dp),
+                                        filterQuality = FilterQuality.Low
+                                    )
+                                }
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            supportingContent = { Text(text = cast.type.toString()) }
+                        )
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.navigationBarsPadding())
     }
 }
