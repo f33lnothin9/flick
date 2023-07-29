@@ -53,7 +53,6 @@ class MovieViewModel @Inject constructor(
                     _movie.value = it.body()!!
                     _state.update { state ->
                         state.copy(
-                            isLoading = false,
                             isError = false
                         )
                     }
@@ -76,7 +75,6 @@ class MovieViewModel @Inject constructor(
                     _cast.value = it.body()!!
                     _state.update { state ->
                         state.copy(
-                            isLoading = false,
                             isError = false
                         )
                     }

@@ -291,14 +291,14 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                 )
 
                 LazyRow {
-                    items(state.crew) { cast ->
+                    items(state.crew) { crew ->
                         ListItem(
-                            headlineContent = { Text(text = cast.person?.name.toString()) },
+                            headlineContent = { Text(text = crew.person?.name.toString()) },
                             leadingContent = {
                                 Box {
                                     AsyncImage(
                                         model = ImageRequest.Builder(LocalContext.current)
-                                            .data(cast.person?.image?.medium)
+                                            .data(crew.person?.image?.medium)
                                             .crossfade(400)
                                             .size(256)
                                             .transformations(CircleCropTransformation())
@@ -310,7 +310,7 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                                 }
                             },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            supportingContent = { Text(text = cast.type.toString()) }
+                            supportingContent = { Text(text = crew.type.toString()) }
                         )
                     }
                 }

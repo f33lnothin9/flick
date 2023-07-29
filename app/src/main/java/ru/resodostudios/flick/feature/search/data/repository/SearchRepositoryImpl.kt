@@ -1,6 +1,8 @@
 package ru.resodostudios.flick.feature.search.data.repository
 
 import okhttp3.ResponseBody.Companion.toResponseBody
+import okio.IOException
+import retrofit2.HttpException
 import retrofit2.Response
 import ru.resodostudios.flick.core.data.network.FlickApi
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
@@ -15,8 +17,10 @@ class SearchRepositoryImpl @Inject constructor(
     override suspend fun searchMovies(query: String): Response<List<SearchedMovie>> {
         val response = try {
             apiRepository.searchMovies(query)
-        } catch (e: Exception) {
-            return Response.error(0, e.message?.toResponseBody()!!)
+        } catch (e: HttpException) {
+            return Response.error(e.code(), e.message?.toResponseBody()!!)
+        } catch(e: IOException) {
+            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
         }
         return Response.success(response.body())
     }
@@ -24,8 +28,10 @@ class SearchRepositoryImpl @Inject constructor(
     override suspend fun searchPeople(query: String): Response<List<SearchedPeople>> {
         val response = try {
             apiRepository.searchPeople(query)
-        } catch (e: Exception) {
-            return Response.error(0, e.message?.toResponseBody()!!)
+        } catch (e: HttpException) {
+            return Response.error(e.code(), e.message?.toResponseBody()!!)
+        } catch(e: IOException) {
+            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
         }
         return Response.success(response.body())
     }

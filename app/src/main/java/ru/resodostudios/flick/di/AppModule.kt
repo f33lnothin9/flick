@@ -19,7 +19,6 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    @Singleton
     fun baseUrl() = BASE_URL
 
     @Provides
@@ -31,14 +30,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(url: String, okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         val json = Json {
             ignoreUnknownKeys = true
         }
 
         return Retrofit.Builder()
-            .baseUrl(baseUrl())
+            .baseUrl(url)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
@@ -46,6 +45,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMoviesApi(retrofit: Retrofit): FlickApi =
+    fun provideFlickApi(retrofit: Retrofit): FlickApi =
         retrofit.create(FlickApi::class.java)
 }
