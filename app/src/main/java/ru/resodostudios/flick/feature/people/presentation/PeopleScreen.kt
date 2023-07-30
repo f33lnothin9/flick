@@ -3,6 +3,7 @@ package ru.resodostudios.flick.feature.people.presentation
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +33,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.launch
+import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.feature.people.domain.util.PeopleEvent
 import ru.resodostudios.flick.feature.search.presentation.components.SearchBar
@@ -98,6 +100,7 @@ fun PeopleScreen(
                                         .data(it.image?.medium)
                                         .crossfade(400)
                                         .size(256)
+                                        .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
                                         .transformations(CircleCropTransformation())
                                         .build(),
                                     contentDescription = "Image",

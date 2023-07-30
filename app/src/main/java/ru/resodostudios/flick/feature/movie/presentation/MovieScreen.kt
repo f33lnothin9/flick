@@ -2,6 +2,7 @@ package ru.resodostudios.flick.feature.movie.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -58,6 +58,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.presentation.components.CoilImage
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.core.presentation.theme.Typography
@@ -110,7 +111,9 @@ fun MovieScreen(
                         item {
                             Body(
                                 state = state,
-                                onSummaryClick = { maxLines = Int.MAX_VALUE },
+                                onSummaryClick = {
+                                    maxLines = if (maxLines == 3) Int.MAX_VALUE else 3
+                                },
                                 maxLines = maxLines
                             )
                         }
@@ -211,9 +214,7 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Card(
-            onClick = onSummaryClick
-        ) {
+        Card(onClick = onSummaryClick) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(16.dp)
@@ -236,83 +237,97 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
             }
         }
 
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(bottom = 16.dp)
-            ) {
-                Text(
-                    text = "Cast",
-                    style = Typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp)
-                )
+        var castRows by remember { mutableIntStateOf(4) }
 
-                LazyHorizontalGrid(
-                    rows = GridCells.Fixed(4),
-                    modifier = Modifier.height(300.dp)
-                ) {
-                    items(state.cast) { cast ->
-                        ListItem(
-                            headlineContent = { Text(text = cast.person?.name.toString()) },
-                            leadingContent = {
-                                Box {
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(cast.person?.image?.medium)
-                                            .crossfade(400)
-                                            .size(256)
-                                            .transformations(CircleCropTransformation())
-                                            .build(),
-                                        contentDescription = "Image",
-                                        modifier = Modifier.size(56.dp),
-                                        filterQuality = FilterQuality.Low
-                                    )
-                                }
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            supportingContent = { Text(text = cast.character?.name.toString()) }
-                        )
-                    }
+        when (state.cast.size) {
+            3 -> castRows = 3
+            2 -> castRows = 2
+            1 -> castRows = 1
+        }
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+        ) {
+            Text(
+                text = "Cast",
+                style = Typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+            )
+
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(castRows),
+                modifier = Modifier
+                    .then(
+                        when (state.cast.size) {
+                            3 -> Modifier.height(216.dp)
+                            2 -> Modifier.height(144.dp)
+                            1 -> Modifier.height(72.dp)
+                            else -> Modifier.height(288.dp)
+                        }
+                    )
+            ) {
+                items(state.cast) { cast ->
+                    ListItem(
+                        headlineContent = { Text(text = cast.person?.name.toString()) },
+                        leadingContent = {
+                            Box {
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(cast.person?.image?.medium)
+                                        .crossfade(400)
+                                        .size(256)
+                                        .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
+                                        .transformations(CircleCropTransformation())
+                                        .build(),
+                                    contentDescription = "Image",
+                                    modifier = Modifier.size(56.dp),
+                                    filterQuality = FilterQuality.Low
+                                )
+                            }
+                        },
+                        supportingContent = { Text(text = cast.character?.name.toString()) }
+                    )
                 }
             }
         }
 
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(bottom = 16.dp)
-            ) {
-                Text(
-                    text = "Crew",
-                    style = Typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp)
-                )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text(
+                text = "Crew",
+                style = Typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+            )
 
-                LazyRow {
-                    items(state.crew) { crew ->
-                        ListItem(
-                            headlineContent = { Text(text = crew.person?.name.toString()) },
-                            leadingContent = {
-                                Box {
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(crew.person?.image?.medium)
-                                            .crossfade(400)
-                                            .size(256)
-                                            .transformations(CircleCropTransformation())
-                                            .build(),
-                                        contentDescription = "Image",
-                                        modifier = Modifier.size(56.dp),
-                                        filterQuality = FilterQuality.Low
-                                    )
-                                }
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            supportingContent = { Text(text = crew.type.toString()) }
-                        )
-                    }
+            LazyRow {
+                items(state.crew) { crew ->
+                    ListItem(
+                        headlineContent = { Text(text = crew.person?.name.toString()) },
+                        leadingContent = {
+                            Box {
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(crew.person?.image?.medium)
+                                        .crossfade(400)
+                                        .size(256)
+                                        .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
+                                        .transformations(CircleCropTransformation())
+                                        .build(),
+                                    contentDescription = "Image",
+                                    modifier = Modifier.size(56.dp),
+                                    filterQuality = FilterQuality.Low
+                                )
+                            }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                        supportingContent = { Text(text = crew.type.toString()) }
+                    )
                 }
             }
         }

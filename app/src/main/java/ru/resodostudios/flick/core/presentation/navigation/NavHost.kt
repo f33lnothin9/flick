@@ -108,5 +108,9 @@ fun NavHost(
         composable(route = Screens.Settings.route) {
 
         }
+
+        composable(route = Screens.About.route) {
+
+        }
     }
 }

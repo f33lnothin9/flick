@@ -132,8 +132,9 @@ fun FilterBottomSheet(
                 ) {
                     Text("Apply")
                 }
+
+                Spacer(modifier = Modifier.navigationBarsPadding())
             }
-            Spacer(modifier = Modifier.navigationBarsPadding())
         }
     }
 }
