@@ -6,9 +6,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ru.resodostudios.flick.feature.favorites.data.data_source.MovieDao
 import ru.resodostudios.flick.feature.favorites.data.data_source.MovieDatabase
-import ru.resodostudios.flick.feature.favorites.data.repository.FavoritesRepositoryImpl
-import ru.resodostudios.flick.feature.favorites.domain.repository.FavoritesRepository
 import javax.inject.Singleton
 
 @Module
@@ -17,16 +16,11 @@ object FavoritesModule {
 
     @Provides
     @Singleton
-    fun provideMovieDatabase(app: Application): MovieDatabase {
+    fun provideMovieDatabase(app: Application): MovieDao {
         return Room.databaseBuilder(
             app,
             MovieDatabase::class.java,
             "favoriteMovies"
-        ).build()
+        ).build().dao
     }
-
-    @Provides
-    @Singleton
-    fun provideFavoritesRepository(db: MovieDatabase): FavoritesRepository =
-        FavoritesRepositoryImpl(db.dao)
 }

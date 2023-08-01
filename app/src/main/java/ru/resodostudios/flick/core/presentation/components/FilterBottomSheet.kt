@@ -2,7 +2,6 @@ package ru.resodostudios.flick.core.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -52,7 +51,8 @@ fun FilterBottomSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp)
+                    .navigationBarsPadding()
+                    .padding(start = 24.dp, end = 24.dp, bottom = 8.dp)
             ) {
                 Text(
                     text = "Filter movies",
@@ -129,11 +129,7 @@ fun FilterBottomSheet(
                 Button(
                     onClick = onApply,
                     modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Apply")
-                }
-
-                Spacer(modifier = Modifier.navigationBarsPadding())
+                ) { Text("Apply") }
             }
         }
     }
