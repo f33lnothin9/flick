@@ -1,11 +1,11 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
-    id("androidx.baselineprofile")
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -54,68 +54,66 @@ android {
 
 dependencies {
 
-    val hilt = "2.47"
-    val retrofit = "2.9.0"
-    val okHttp = "4.11.0"
-    val room = "2.5.2"
-    val coroutines = "1.7.3"
-    val navigation = "2.6.0"
-    val accompanist = "0.30.1"
-
-    val composeBom = platform("androidx.compose:compose-bom:2023.06.01")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
+    platform(libs.androidx.compose.bom)
+    implementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
 
     // Material Design 3
-    implementation("androidx.compose.material3:material3:1.2.0-alpha04")
+    implementation(libs.androidx.material3)
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.test.manifest)
 
     // Integration with activities
-    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(libs.androidx.activity.compose)
 
     // Full set of material icons
-    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.material.icons)
 
     // Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:$navigation")
+    implementation(libs.androidx.navigation.compose)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
+    implementation(libs.kotlinx.coroutines.android)
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:$hilt")
-    kapt("com.google.dagger:hilt-compiler:$hilt")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:$retrofit")
-    implementation("com.squareup.okhttp3:okhttp:$okHttp")
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
 
     // Kotlin Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
 
     // Accompanist
-    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanist")
+    implementation(libs.accompanist.systemuicontroller)
 
     // Splash Screen
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation(libs.androidx.core.splashscreen)
 
     // Room
-    implementation("androidx.room:room-ktx:$room")
-    ksp("androidx.room:room-compiler:$room")
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
-    implementation("androidx.profileinstaller:profileinstaller:1.3.1")
+    // Lottie
+    implementation(libs.lottie.compose)
+
+    // Yandex Ads
+    implementation(libs.mobileads)
+
+    implementation(libs.androidx.profileinstaller)
     "baselineProfile"(project(":baselineprofile"))
 }
 
