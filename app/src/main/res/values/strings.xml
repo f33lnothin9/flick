@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Flick</string>
+
+    <string name="banner_movies">R-M-2566736-1</string>
+    <string name="banner_movie">R-M-2566736-4</string>
+    <string name="banner_people">R-M-2566736-2</string>
+    <string name="banner_settings">R-M-2566736-5</string>
+    <string name="banner_favorites">R-M-2566736-3</string>
 </resources>

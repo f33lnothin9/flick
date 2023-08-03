@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.presentation.components.Banner
 import ru.resodostudios.flick.core.presentation.components.FilterBottomSheet
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.core.presentation.navigation.Screens
@@ -137,5 +139,9 @@ fun MoviesScreen(
         }
 
         if (state.isError) RetrySection(onClick = onRetry)
+
+        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+            Banner(id = R.string.banner_movies)
+        }
     }
 }

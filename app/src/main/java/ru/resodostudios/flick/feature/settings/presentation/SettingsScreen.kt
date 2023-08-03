@@ -31,6 +31,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.presentation.components.Banner
 
 @ExperimentalMaterial3Api
 @Composable
@@ -41,53 +42,60 @@ fun SettingsScreen(onBack: () -> Unit) {
     val progress by animateLottieCompositionAsState(composition = lottieComposition, iterations = LottieConstants.IterateForever)
     val context = LocalContext.current
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            LargeTopAppBar(
-                title = { Text(text = "Settings") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Outlined.ArrowBack, contentDescription = null)
-                    }
-                },
-                scrollBehavior = scrollBehavior
-            )
-        }
-    ) { innerPadding ->
+    Box(
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                LargeTopAppBar(
+                    title = { Text(text = "Settings") },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.Outlined.ArrowBack, contentDescription = null)
+                        }
+                    },
+                    scrollBehavior = scrollBehavior
+                )
+            }
+        ) { innerPadding ->
 
-        LazyColumn(
-            contentPadding = innerPadding,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    LottieAnimation(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(256.dp),
-                        composition = lottieComposition,
-                        contentScale = ContentScale.Fit,
-                        progress = { progress }
+            LazyColumn(
+                contentPadding = innerPadding,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item {
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        LottieAnimation(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .size(256.dp),
+                            composition = lottieComposition,
+                            contentScale = ContentScale.Fit,
+                            progress = { progress }
+                        )
+                    }
+                }
+                item {
+                    Text(
+                        text = "About",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+                item {
+                    val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                    ListItem(
+                        headlineContent = { Text(text = "Version") },
+                        supportingContent = { Text(text = packageInfo.versionName) }
                     )
                 }
             }
-            item {
-                Text(
-                    text = "About",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-            }
-            item {
-                val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-                ListItem(
-                    headlineContent = { Text(text = "Version") },
-                    supportingContent = { Text(text = packageInfo.versionName) }
-                )
-            }
         }
+
+        Banner(id = R.string.banner_settings)
     }
+
 }

@@ -42,6 +42,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.presentation.components.Banner
 import ru.resodostudios.flick.core.presentation.navigation.Screens
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 
@@ -58,75 +59,84 @@ fun FavoritesScreen(
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_empty))
     val scope = rememberCoroutineScope()
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            LargeTopAppBar(
-                title = { Text(text = "Favorites") },
-                navigationIcon = {
-                    IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                        Icon(Icons.Default.Menu, contentDescription = null)
+    Box {
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                LargeTopAppBar(
+                    title = { Text(text = "Favorites") },
+                    navigationIcon = {
+                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                            Icon(Icons.Default.Menu, contentDescription = null)
+                        }
+                    },
+                    scrollBehavior = scrollBehavior
+                )
+            }
+        ) { innerPadding ->
+            LazyColumn(
+                contentPadding = innerPadding
+            ) {
+                if (state.movies.isNotEmpty()) {
+                    items(state.movies) { movie ->
+                        ListItem(
+                            headlineContent = { Text(text = movie.name.toString()) },
+                            leadingContent = {
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(movie.image)
+                                        .crossfade(400)
+                                        .size(Size.ORIGINAL)
+                                        .transformations()
+                                        .build(),
+                                    contentDescription = "Image",
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .size(56.dp),
+                                    filterQuality = FilterQuality.Low,
+                                    contentScale = ContentScale.Crop
+                                )
+                            },
+                            trailingContent = {
+                                IconButton(onClick = { onEvent(FavoriteEvent.DeleteMovie(movie)) }) {
+                                    Icon(
+                                        Icons.Filled.Favorite,
+                                        contentDescription = "Remove from Favorites"
+                                    )
+                                }
+                            },
+                            supportingContent = { Text(text = movie.rating.toString()) },
+                            modifier = Modifier.clickable { navController.navigate(Screens.Movie.route + "/${movie.id}") }
+                        )
                     }
-                },
-                scrollBehavior = scrollBehavior
-            )
-        }
-    ) { innerPadding ->
-        LazyColumn(
-            contentPadding = innerPadding
-        ) {
-            if (state.movies.isNotEmpty()) {
-                items(state.movies) { movie ->
-                    ListItem(
-                        headlineContent = { Text(text = movie.name.toString()) },
-                        leadingContent = {
-                            AsyncImage(
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data(movie.image)
-                                    .crossfade(400)
-                                    .size(Size.ORIGINAL)
-                                    .transformations()
-                                    .build(),
-                                contentDescription = "Image",
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .size(56.dp),
-                                filterQuality = FilterQuality.Low,
-                                contentScale = ContentScale.Crop
-                            )
-                        },
-                        trailingContent = {
-                            IconButton(onClick = { onEvent(FavoriteEvent.DeleteMovie(movie)) }) {
-                                Icon(
-                                    Icons.Filled.Favorite,
-                                    contentDescription = "Remove from Favorites"
+                } else {
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                LottieAnimation(
+                                    modifier = Modifier.size(256.dp),
+                                    composition = lottieComposition
+                                )
+                                Text(
+                                    text = "Nothing in Favorites",
+                                    maxLines = 1,
+                                    style = MaterialTheme.typography.titleMedium
                                 )
                             }
-                        },
-                        supportingContent = { Text(text = movie.rating.toString()) },
-                        modifier = Modifier.clickable { navController.navigate(Screens.Movie.route + "/${movie.id}") }
-                    )
-                }
-            } else {
-                item {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            LottieAnimation(
-                                modifier = Modifier.size(256.dp),
-                                composition = lottieComposition
-                            )
-                            Text(
-                                text = "Nothing in Favorites",
-                                maxLines = 1,
-                                style = MaterialTheme.typography.titleMedium
-                            )
                         }
                     }
                 }
             }
+        }
+
+        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+            Banner(id = R.string.banner_favorites)
         }
     }
 }

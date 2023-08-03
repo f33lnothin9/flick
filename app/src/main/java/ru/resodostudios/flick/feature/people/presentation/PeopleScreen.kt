@@ -19,7 +19,6 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,6 +33,7 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.presentation.components.Banner
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.feature.people.domain.util.PeopleEvent
 import ru.resodostudios.flick.feature.search.presentation.components.SearchBar
@@ -49,12 +49,14 @@ fun PeopleScreen(
 
     val scope = rememberCoroutineScope()
 
-    Surface(Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
         SearchBar(
             onSearch = { onEvent(PeopleEvent.Search(it)) },
             onMenuClick = { scope.launch { drawerState.open() } },
             onClearSearch = { onEvent(PeopleEvent.Search(it)) },
-            onFilterClick = {  },
+            onFilterClick = { },
             title = "Search people",
             content = {
                 items(state.searchedPeople) { searchedPeople ->
@@ -73,7 +75,7 @@ fun PeopleScreen(
                                 contentDescription = null
                             )
                         },
-                        modifier = Modifier.clickable {  }
+                        modifier = Modifier.clickable { }
                     )
                 }
             }
@@ -121,5 +123,9 @@ fun PeopleScreen(
         }
 
         if (state.isError) RetrySection(onClick = onRetry)
+
+        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+            Banner(id = R.string.banner_people)
+        }
     }
 }
