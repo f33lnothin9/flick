@@ -1,6 +1,5 @@
 package ru.resodostudios.flick.core.presentation.navigation
 
-import ru.resodostudios.flick.core.Constants.ABOUT_SCREEN
 import ru.resodostudios.flick.core.Constants.FAVORITES_SCREEN
 import ru.resodostudios.flick.core.Constants.MOVIES_SCREEN
 import ru.resodostudios.flick.core.Constants.MOVIE_SCREEN
@@ -18,6 +17,4 @@ sealed class Screens(val route: String) {
     data object Settings: Screens(SETTINGS_SCREEN)
 
     data object People: Screens(PEOPLE_SCREEN)
-
-    data object About: Screens(ABOUT_SCREEN)
 }

@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -92,11 +91,11 @@ fun SearchBar(
                         Icon(Icons.Default.Close, contentDescription = null)
                     }
                 }
-                if (text.isBlank() && !active) {
-                    IconButton(onClick = onFilterClick) {
-                        Icon(Icons.Outlined.FilterList, contentDescription = null)
-                    }
-                }
+//                if (text.isBlank() && !active) {
+//                    IconButton(onClick = onFilterClick) {
+//                        Icon(Icons.Outlined.FilterList, contentDescription = null)
+//                    }
+//                }
             },
             windowInsets = WindowInsets.statusBars
         ) {

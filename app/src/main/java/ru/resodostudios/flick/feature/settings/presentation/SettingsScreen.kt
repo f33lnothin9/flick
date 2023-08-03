@@ -2,8 +2,8 @@ package ru.resodostudios.flick.feature.settings.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -12,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -37,6 +39,7 @@ fun SettingsScreen(onBack: () -> Unit) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_dev))
     val progress by animateLottieCompositionAsState(composition = lottieComposition, iterations = LottieConstants.IterateForever)
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -53,29 +56,38 @@ fun SettingsScreen(onBack: () -> Unit) {
         }
     ) { innerPadding ->
 
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                LottieAnimation(
-                    modifier = Modifier.size(256.dp),
-                    composition = lottieComposition,
-                    contentScale = ContentScale.Fit,
-                    progress = { progress }
-                )
+        LazyColumn(
+            contentPadding = innerPadding,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    LottieAnimation(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .size(256.dp),
+                        composition = lottieComposition,
+                        contentScale = ContentScale.Fit,
+                        progress = { progress }
+                    )
+                }
+            }
+            item {
                 Text(
-                    text = "Work in Progress",
+                    text = "About",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
-                    style = MaterialTheme.typography.titleMedium
+                    modifier = Modifier.padding(start = 16.dp)
                 )
             }
-        }
-
-        LazyColumn(
-            contentPadding = innerPadding
-        ) {
-
+            item {
+                val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                ListItem(
+                    headlineContent = { Text(text = "Version") },
+                    supportingContent = { Text(text = packageInfo.versionName) }
+                )
+            }
         }
     }
 }

@@ -13,7 +13,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import ru.resodostudios.flick.feature.about.presentation.AboutScreen
 import ru.resodostudios.flick.feature.favorites.presentation.FavoritesScreen
 import ru.resodostudios.flick.feature.favorites.presentation.FavoritesViewModel
 import ru.resodostudios.flick.feature.movie.presentation.MovieScreen
@@ -109,10 +108,6 @@ fun NavHost(
 
         composable(route = Screens.Settings.route) {
             SettingsScreen(onBack = { navController.popBackStack() })
-        }
-
-        composable(route = Screens.About.route) {
-            AboutScreen(onBack = { navController.popBackStack() })
         }
     }
 }

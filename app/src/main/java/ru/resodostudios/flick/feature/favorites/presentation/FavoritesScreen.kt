@@ -72,10 +72,10 @@ fun FavoritesScreen(
             )
         }
     ) { innerPadding ->
-        if (state.movies.isNotEmpty()) {
-            LazyColumn(
-                contentPadding = innerPadding
-            ) {
+        LazyColumn(
+            contentPadding = innerPadding
+        ) {
+            if (state.movies.isNotEmpty()) {
                 items(state.movies) { movie ->
                     ListItem(
                         headlineContent = { Text(text = movie.name.toString()) },
@@ -107,23 +107,24 @@ fun FavoritesScreen(
                         modifier = Modifier.clickable { navController.navigate(Screens.Movie.route + "/${movie.id}") }
                     )
                 }
-            }
-        } else {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    LottieAnimation(
-                        modifier = Modifier.size(256.dp),
-                        composition = lottieComposition,
-                        contentScale = ContentScale.Fit
-                    )
-                    Text(
-                        text = "Nothing in Favorites",
-                        maxLines = 1,
-                        style = MaterialTheme.typography.titleMedium
-                    )
+            } else {
+                item {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            LottieAnimation(
+                                modifier = Modifier.size(256.dp),
+                                composition = lottieComposition
+                            )
+                            Text(
+                                text = "Nothing in Favorites",
+                                maxLines = 1,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
+                    }
                 }
             }
         }

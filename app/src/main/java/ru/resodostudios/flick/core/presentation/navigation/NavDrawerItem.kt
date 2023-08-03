@@ -3,7 +3,6 @@ package ru.resodostudios.flick.core.presentation.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CameraRoll
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -36,11 +35,5 @@ sealed class NavDrawerItem(
         route = Screens.Settings.route,
         title = "Settings",
         icon = Icons.Outlined.Settings
-    )
-
-    data object About : NavDrawerItem(
-        route = Screens.About.route,
-        title = "About",
-        icon = Icons.Outlined.Info
     )
 }

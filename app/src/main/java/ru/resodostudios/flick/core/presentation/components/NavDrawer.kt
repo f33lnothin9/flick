@@ -37,12 +37,11 @@ fun NavDrawer(
         NavDrawerItem.Movies,
         NavDrawerItem.People,
         NavDrawerItem.Favorites,
-        NavDrawerItem.Settings,
-        NavDrawerItem.About
+        NavDrawerItem.Settings
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val gesturesEnabled = screens.dropLast(2).any { it.route == currentDestination?.route }
+    val gesturesEnabled = screens.dropLast(1).any { it.route == currentDestination?.route }
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(

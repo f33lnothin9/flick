@@ -43,7 +43,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(movie.image?.original)
                         .crossfade(400)
-                        .size(256)
+                        .size(175)
                         .build(),
                     contentDescription = "Image",
                     modifier = Modifier
