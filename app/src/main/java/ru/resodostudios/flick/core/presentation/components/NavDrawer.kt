@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.presentation.navigation.components
+package ru.resodostudios.flick.core.presentation.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
@@ -42,7 +42,7 @@ fun NavDrawer(
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val gesturesEnabled = screens.any { it.route == currentDestination?.route }
+    val gesturesEnabled = screens.dropLast(2).any { it.route == currentDestination?.route }
     val scope = rememberCoroutineScope()
 
     ModalNavigationDrawer(

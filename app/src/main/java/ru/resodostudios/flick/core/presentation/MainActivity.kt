@@ -13,7 +13,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.resodostudios.flick.core.presentation.navigation.NavHost
-import ru.resodostudios.flick.core.presentation.navigation.components.NavDrawer
+import ru.resodostudios.flick.core.presentation.components.NavDrawer
 import ru.resodostudios.flick.core.presentation.theme.MoviesTheme
 
 @ExperimentalFoundationApi
