@@ -1,5 +1,6 @@
 package ru.resodostudios.flick.feature.movie.presentation
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -31,7 +32,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -45,7 +45,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -77,6 +76,7 @@ fun MovieScreen(
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val context = LocalContext.current
 
     var maxLines by remember { mutableIntStateOf(3) }
 
@@ -89,7 +89,11 @@ fun MovieScreen(
                     onNavIconClick = { navController.navigateUp() },
                     actions = {
                         IconButton(
-                            onClick = { onEvent(FavoriteEvent.AddMovie(state.movie)) }
+                            onClick = {
+                                onEvent(FavoriteEvent.AddMovie(state.movie))
+                                Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.FavoriteBorder,
@@ -103,9 +107,7 @@ fun MovieScreen(
             content = {
                 AnimatedVisibility(visible = !state.isLoading, enter = fadeIn()) {
                     LazyColumn(
-                        modifier = Modifier
-                            .padding(start = 16.dp, end = 16.dp)
-                            .padding(it),
+                        contentPadding = it,
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         content = {
                             item {
@@ -145,6 +147,7 @@ fun MovieScreen(
 @Composable
 private fun Header(movie: Movie) {
     Row(
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.Top
     ) {
@@ -171,7 +174,7 @@ private fun Header(movie: Movie) {
                 color = MaterialTheme.colorScheme.secondaryContainer
             ) {
                 Text(
-                    text = movie.rating?.average.toString(),
+                    text = (movie.rating?.average ?: 0.0).toString(),
                     modifier = Modifier
                         .padding(
                             start = 8.dp,
@@ -219,10 +222,14 @@ private fun Header(movie: Movie) {
 private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int) {
 
     Spacer(modifier = Modifier.height(8.dp))
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Card(onClick = onSummaryClick) {
+        Card(
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+            onClick = onSummaryClick
+        ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(16.dp)
@@ -253,89 +260,94 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
             1 -> castRows = 1
         }
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-        ) {
-            Text(
-                text = "Cast",
-                style = Typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp)
-            )
-
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(castRows),
+        if (state.cast.isNotEmpty()) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
-                    .then(
-                        when (state.cast.size) {
-                            3 -> Modifier.height(216.dp)
-                            2 -> Modifier.height(144.dp)
-                            1 -> Modifier.height(72.dp)
-                            else -> Modifier.height(288.dp)
-                        }
-                    )
+                    .padding(bottom = 16.dp)
             ) {
-                items(state.cast) { cast ->
-                    ListItem(
-                        headlineContent = { Text(text = cast.person?.name.toString()) },
-                        leadingContent = {
-                            Box {
-                                AsyncImage(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data(cast.person?.image?.medium)
-                                        .crossfade(400)
-                                        .size(256)
-                                        .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
-                                        .transformations(CircleCropTransformation())
-                                        .build(),
-                                    contentDescription = "Image",
-                                    modifier = Modifier.size(56.dp),
-                                    filterQuality = FilterQuality.Low
-                                )
+                Text(
+                    text = "Cast",
+                    style = Typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(start = 32.dp, top = 16.dp)
+                )
+
+                LazyHorizontalGrid(
+                    rows = GridCells.Fixed(castRows),
+                    modifier = Modifier
+                        .then(
+                            when (state.cast.size) {
+                                3 -> Modifier.height(216.dp)
+                                2 -> Modifier.height(144.dp)
+                                1 -> Modifier.height(72.dp)
+                                else -> Modifier.height(288.dp)
                             }
-                        },
-                        supportingContent = { Text(text = cast.character?.name.toString()) }
-                    )
+                        )
+                ) {
+                    items(state.cast) { cast ->
+                        ListItem(
+                            modifier = Modifier.padding(start = 16.dp),
+                            headlineContent = { Text(text = cast.person?.name.toString()) },
+                            leadingContent = {
+                                Box {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(LocalContext.current)
+                                            .data(cast.person?.image?.medium)
+                                            .crossfade(400)
+                                            .size(256)
+                                            .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
+                                            .transformations(CircleCropTransformation())
+                                            .build(),
+                                        contentDescription = "Image",
+                                        modifier = Modifier.size(56.dp),
+                                        filterQuality = FilterQuality.Low
+                                    )
+                                }
+                            },
+                            supportingContent = { Text(text = cast.character?.name.toString()) }
+                        )
+                    }
                 }
             }
         }
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            Text(
-                text = "Crew",
-                style = Typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp)
-            )
+        if (state.crew.isNotEmpty()) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(bottom = 16.dp)
+            ) {
+                Text(
+                    text = "Crew",
+                    style = Typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(start = 32.dp)
+                )
 
-            LazyRow {
-                items(state.crew) { crew ->
-                    ListItem(
-                        headlineContent = { Text(text = crew.person?.name.toString()) },
-                        leadingContent = {
-                            Box {
-                                AsyncImage(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data(crew.person?.image?.medium)
-                                        .crossfade(400)
-                                        .size(256)
-                                        .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
-                                        .transformations(CircleCropTransformation())
-                                        .build(),
-                                    contentDescription = "Image",
-                                    modifier = Modifier.size(56.dp),
-                                    filterQuality = FilterQuality.Low
-                                )
-                            }
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                        supportingContent = { Text(text = crew.type.toString()) }
-                    )
+                LazyRow {
+                    items(state.crew) { crew ->
+                        ListItem(
+                            modifier = Modifier.padding(start = 16.dp),
+                            headlineContent = { Text(text = crew.person?.name.toString()) },
+                            leadingContent = {
+                                Box {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(LocalContext.current)
+                                            .data(crew.person?.image?.medium)
+                                            .crossfade(400)
+                                            .size(256)
+                                            .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
+                                            .transformations(CircleCropTransformation())
+                                            .build(),
+                                        contentDescription = "Image",
+                                        modifier = Modifier.size(56.dp),
+                                        filterQuality = FilterQuality.Low
+                                    )
+                                }
+                            },
+                            supportingContent = { Text(text = crew.type.toString()) }
+                        )
+                    }
                 }
             }
         }

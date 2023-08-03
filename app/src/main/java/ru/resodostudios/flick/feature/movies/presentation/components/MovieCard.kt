@@ -62,7 +62,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
                     color = MaterialTheme.colorScheme.secondaryContainer
                 ) {
                     Text(
-                        text = movie.rating?.average.toString(),
+                        text = (movie.rating?.average ?: 0.0).toString(),
                         modifier = Modifier
                             .padding(
                                 start = 8.dp,

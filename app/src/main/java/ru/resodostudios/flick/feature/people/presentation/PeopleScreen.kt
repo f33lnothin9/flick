@@ -94,7 +94,7 @@ fun PeopleScreen(
                 items(state.people) {
                     ListItem(
                         headlineContent = { Text(text = it.name.toString()) },
-                        supportingContent = { Text(text = it.country?.name.toString()) },
+                        supportingContent = { Text(text = it.country?.name ?: "Unknown Country") },
                         leadingContent = {
                             Box {
                                 AsyncImage(

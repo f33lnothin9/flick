@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -75,6 +76,7 @@ fun FavoritesScreen(
             }
         ) { innerPadding ->
             LazyColumn(
+                modifier = Modifier.fillMaxSize(),
                 contentPadding = innerPadding
             ) {
                 if (state.movies.isNotEmpty()) {
@@ -112,7 +114,9 @@ fun FavoritesScreen(
                 } else {
                     item {
                         Box(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Column(
