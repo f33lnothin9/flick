@@ -5,7 +5,6 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
-    alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -109,9 +108,6 @@ dependencies {
 
     // Yandex Ads
     implementation(libs.mobileads)
-
-    implementation(libs.androidx.profileinstaller)
-    "baselineProfile"(project(":baselineprofile"))
 }
 
 kapt {

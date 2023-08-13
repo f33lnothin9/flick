@@ -14,4 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Flick"
 include ':app'
-include ':baselineprofile'
