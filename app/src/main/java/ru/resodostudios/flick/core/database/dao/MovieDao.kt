@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.favorites.data.data_source
+package ru.resodostudios.flick.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

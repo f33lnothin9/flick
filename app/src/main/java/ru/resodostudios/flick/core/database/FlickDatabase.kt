@@ -1,7 +1,8 @@
-package ru.resodostudios.flick.feature.favorites.data.data_source
+package ru.resodostudios.flick.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import ru.resodostudios.flick.core.database.dao.MovieDao
 import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
 
 @Database(
@@ -9,7 +10,7 @@ import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
     version = 1,
     exportSchema = false
 )
-abstract class MovieDatabase : RoomDatabase() {
+abstract class FlickDatabase : RoomDatabase() {
 
-    abstract val dao: MovieDao
+    abstract fun movieDao(): MovieDao
 }
