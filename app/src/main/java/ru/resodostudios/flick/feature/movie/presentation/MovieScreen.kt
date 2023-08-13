@@ -58,7 +58,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.presentation.components.Banner
 import ru.resodostudios.flick.core.presentation.components.CoilImage
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.core.presentation.theme.Typography
@@ -136,10 +135,6 @@ fun MovieScreen(
 
         if (state.isError) {
             RetrySection(onClick = onRetry)
-        }
-
-        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
-            Banner(id = R.string.banner_movie)
         }
     }
 }

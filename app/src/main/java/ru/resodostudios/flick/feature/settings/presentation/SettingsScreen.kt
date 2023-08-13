@@ -31,7 +31,6 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.presentation.components.Banner
 
 @ExperimentalMaterial3Api
 @Composable
@@ -94,8 +93,5 @@ fun SettingsScreen(onBack: () -> Unit) {
                 }
             }
         }
-
-        Banner(id = R.string.banner_settings)
     }
-
 }

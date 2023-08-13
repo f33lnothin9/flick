@@ -33,7 +33,6 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.presentation.components.Banner
 import ru.resodostudios.flick.core.presentation.components.RetrySection
 import ru.resodostudios.flick.feature.people.domain.util.PeopleEvent
 import ru.resodostudios.flick.feature.search.presentation.components.SearchBar
@@ -123,9 +122,5 @@ fun PeopleScreen(
         }
 
         if (state.isError) RetrySection(onClick = onRetry)
-
-        Box(modifier = Modifier.align(Alignment.BottomCenter)) {
-            Banner(id = R.string.banner_people)
-        }
     }
 }

@@ -1,6 +1,5 @@
 package ru.resodostudios.flick.core.presentation.navigation
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -23,7 +22,6 @@ import ru.resodostudios.flick.feature.people.presentation.PeopleScreen
 import ru.resodostudios.flick.feature.people.presentation.PeopleViewModel
 import ru.resodostudios.flick.feature.settings.presentation.SettingsScreen
 
-@ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @Composable
 fun NavHost(
