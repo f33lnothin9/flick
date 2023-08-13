@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="ru.resodostudios.flick" />
+                  <option name="mobileSdkAppId" value="1:111814820668:android:d600e10428e34fdd7e1439" />
+                  <option name="projectId" value="flick-c99d0" />
+                  <option name="projectNumber" value="111814820668" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

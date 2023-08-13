@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "111814820668",
+    "project_id": "flick-c99d0",
+    "storage_bucket": "flick-c99d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111814820668:android:d600e10428e34fdd7e1439",
+        "android_client_info": {
+          "package_name": "ru.resodostudios.flick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111814820668-fmcdu34hq8dvag8qi0grmo3dmtui8fdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAocp3_X7lspwjdYTgKgt3Syf87rvypN6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111814820668-fmcdu34hq8dvag8qi0grmo3dmtui8fdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
