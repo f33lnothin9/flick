@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.presentation.navigation
+package ru.resodostudios.flick.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CameraRoll

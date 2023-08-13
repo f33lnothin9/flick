@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.presentation.components
+package ru.resodostudios.flick.core.designsystem.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
@@ -23,8 +23,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ru.resodostudios.flick.core.presentation.navigation.NavDrawerItem
-import ru.resodostudios.flick.core.presentation.theme.Typography
+import ru.resodostudios.flick.navigation.NavDrawerItem
+import ru.resodostudios.flick.core.designsystem.theme.Typography
 
 @Composable
 fun NavDrawer(

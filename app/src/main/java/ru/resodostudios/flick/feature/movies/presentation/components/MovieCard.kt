@@ -25,8 +25,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import ru.resodostudios.flick.core.presentation.components.AnimatedShimmer
-import ru.resodostudios.flick.core.presentation.theme.Typography
+import ru.resodostudios.flick.core.designsystem.component.AnimatedShimmer
+import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
 
 @ExperimentalMaterial3Api

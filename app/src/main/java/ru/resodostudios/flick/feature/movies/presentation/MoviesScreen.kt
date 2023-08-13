@@ -35,9 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
-import ru.resodostudios.flick.core.presentation.components.FilterBottomSheet
-import ru.resodostudios.flick.core.presentation.components.RetrySection
-import ru.resodostudios.flick.core.presentation.navigation.Screens
+import ru.resodostudios.flick.core.designsystem.component.FilterBottomSheet
+import ru.resodostudios.flick.core.designsystem.component.RetrySection
+import ru.resodostudios.flick.navigation.Screens
 import ru.resodostudios.flick.feature.movies.domain.util.MoviesEvent
 import ru.resodostudios.flick.feature.movies.presentation.components.MovieCard
 import ru.resodostudios.flick.feature.search.presentation.components.SearchBar

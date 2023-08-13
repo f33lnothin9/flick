@@ -33,7 +33,7 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.presentation.components.RetrySection
+import ru.resodostudios.flick.core.designsystem.component.RetrySection
 import ru.resodostudios.flick.feature.people.domain.util.PeopleEvent
 import ru.resodostudios.flick.feature.search.presentation.components.SearchBar
 

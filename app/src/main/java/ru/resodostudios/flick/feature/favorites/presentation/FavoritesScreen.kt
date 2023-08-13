@@ -43,7 +43,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.presentation.navigation.Screens
+import ru.resodostudios.flick.navigation.Screens
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 
 @ExperimentalMaterial3Api

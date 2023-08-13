@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.presentation.components
+package ru.resodostudios.flick.core.designsystem.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ru.resodostudios.flick.core.presentation.theme.Typography
+import ru.resodostudios.flick.core.designsystem.theme.Typography
 
 @ExperimentalMaterial3Api
 @Composable

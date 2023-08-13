@@ -58,9 +58,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.presentation.components.CoilImage
-import ru.resodostudios.flick.core.presentation.components.RetrySection
-import ru.resodostudios.flick.core.presentation.theme.Typography
+import ru.resodostudios.flick.core.designsystem.component.CoilImage
+import ru.resodostudios.flick.core.designsystem.component.RetrySection
+import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.data.model.Movie
 import ru.resodostudios.flick.feature.movie.presentation.components.MovieTopBar

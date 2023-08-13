@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.presentation.components
+package ru.resodostudios.flick.core.designsystem.component
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape

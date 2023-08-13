@@ -97,9 +97,6 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
 
-    // Accompanist
-    implementation(libs.accompanist.systemuicontroller)
-
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
 

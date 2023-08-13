@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.presentation.navigation
+package ru.resodostudios.flick.navigation
 
 import ru.resodostudios.flick.core.Constants.FAVORITES_SCREEN
 import ru.resodostudios.flick.core.Constants.MOVIES_SCREEN

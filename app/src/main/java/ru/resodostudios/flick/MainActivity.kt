@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.presentation
+package ru.resodostudios.flick
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,11 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.presentation.components.Banner
-import ru.resodostudios.flick.core.presentation.components.NavDrawer
-import ru.resodostudios.flick.core.presentation.navigation.NavHost
-import ru.resodostudios.flick.core.presentation.theme.MoviesTheme
+import ru.resodostudios.flick.core.designsystem.theme.FlickTheme
+import ru.resodostudios.flick.core.designsystem.component.Banner
+import ru.resodostudios.flick.core.designsystem.component.NavDrawer
+import ru.resodostudios.flick.navigation.NavHost
 
 @ExperimentalMaterial3Api
 @AndroidEntryPoint
@@ -28,7 +27,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         enableEdgeToEdge()
         setContent {
-            MoviesTheme {
+            FlickTheme {
                 val navController = rememberNavController()
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
 
