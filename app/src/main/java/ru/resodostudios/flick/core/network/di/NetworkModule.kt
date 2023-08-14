@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.di
+package ru.resodostudios.flick.core.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -10,16 +10,13 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import ru.resodostudios.flick.core.Constants.BASE_URL
-import ru.resodostudios.flick.core.data.network.FlickApi
+import ru.resodostudios.flick.core.network.FlickApi
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
-
-    @Provides
-    fun baseUrl() = BASE_URL
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -30,14 +27,14 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(url: String, okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val contentType = "application/json".toMediaType()
         val json = Json {
             ignoreUnknownKeys = true
         }
 
         return Retrofit.Builder()
-            .baseUrl(url)
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()

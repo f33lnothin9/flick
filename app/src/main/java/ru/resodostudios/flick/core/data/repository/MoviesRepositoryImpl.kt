@@ -1,10 +1,10 @@
-package ru.resodostudios.flick.feature.movies.data.repository
+package ru.resodostudios.flick.core.data.repository
 
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.IOException
 import retrofit2.HttpException
 import retrofit2.Response
-import ru.resodostudios.flick.core.data.network.FlickApi
+import ru.resodostudios.flick.core.network.FlickApi
 import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
 import ru.resodostudios.flick.feature.movies.domain.repository.MoviesRepository
 import javax.inject.Inject

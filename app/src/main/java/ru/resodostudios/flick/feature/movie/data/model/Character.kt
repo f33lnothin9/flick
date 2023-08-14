@@ -1,7 +1,7 @@
 package ru.resodostudios.flick.feature.movie.data.model
 
 import kotlinx.serialization.Serializable
-import ru.resodostudios.flick.core.data.model.Image
+import ru.resodostudios.flick.core.network.model.Image
 
 @Serializable
 data class Character(

@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.data.network
+package ru.resodostudios.flick.core.network
 
 import retrofit2.Response
 import retrofit2.http.GET
@@ -14,33 +14,33 @@ import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
 
 interface FlickApi {
 
-    @GET("/shows")
+    @GET("shows")
     suspend fun getMovies(): Response<List<MovieEntry>>
 
-    @GET("/shows/{id}")
+    @GET("shows/{id}")
     suspend fun getMovie(
         @Path("id") id: Int
     ): Response<Movie>
 
-    @GET("/people")
+    @GET("people")
     suspend fun getPeople(): Response<List<Person>>
 
-    @GET("/search/shows")
+    @GET("search/shows")
     suspend fun searchMovies(
         @Query("q") query: String
     ): Response<List<SearchedMovie>>
 
-    @GET("/search/people")
+    @GET("search/people")
     suspend fun searchPeople(
         @Query("q") query: String
     ): Response<List<SearchedPeople>>
 
-    @GET("/shows/{id}/cast")
+    @GET("shows/{id}/cast")
     suspend fun getCast(
         @Path("id") id: Int
     ): Response<List<Cast>>
 
-    @GET("/shows/{id}/crew")
+    @GET("shows/{id}/crew")
     suspend fun getCrew(
         @Path("id") id: Int
     ): Response<List<Crew>>

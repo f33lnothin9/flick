@@ -1,10 +1,10 @@
 package ru.resodostudios.flick.feature.movie.data.model
 
 import kotlinx.serialization.Serializable
-import ru.resodostudios.flick.core.data.model.Image
-import ru.resodostudios.flick.core.data.model.Network
-import ru.resodostudios.flick.core.data.model.Rating
-import ru.resodostudios.flick.core.data.model.Schedule
+import ru.resodostudios.flick.core.network.model.Image
+import ru.resodostudios.flick.core.network.model.Network
+import ru.resodostudios.flick.core.network.model.Rating
+import ru.resodostudios.flick.core.network.model.Schedule
 
 @Serializable
 data class Movie(

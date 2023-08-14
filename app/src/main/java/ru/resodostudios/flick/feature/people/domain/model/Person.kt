@@ -1,8 +1,8 @@
 package ru.resodostudios.flick.feature.people.domain.model
 
 import kotlinx.serialization.Serializable
-import ru.resodostudios.flick.core.data.model.Country
-import ru.resodostudios.flick.core.data.model.Image
+import ru.resodostudios.flick.core.network.model.Country
+import ru.resodostudios.flick.core.network.model.Image
 
 @Serializable
 data class Person(

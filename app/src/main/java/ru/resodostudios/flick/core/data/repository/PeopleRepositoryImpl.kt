@@ -1,10 +1,10 @@
-package ru.resodostudios.flick.feature.people.data.repository
+package ru.resodostudios.flick.core.data.repository
 
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.IOException
 import retrofit2.HttpException
 import retrofit2.Response
-import ru.resodostudios.flick.core.data.network.FlickApi
+import ru.resodostudios.flick.core.network.FlickApi
 import ru.resodostudios.flick.feature.people.domain.model.Person
 import ru.resodostudios.flick.feature.people.domain.repository.PeopleRepository
 import javax.inject.Inject
