@@ -21,7 +21,7 @@ fun Banner(id: Int) {
                 setAdSize(AdSize.stickySize(context, 300))
 
                 val executor = Executors.newScheduledThreadPool(1)
-                val delaySeconds = 10L
+                val delaySeconds = 5L
 
                 val runnable = Runnable {
                     val adRequest = AdRequest.Builder().build()
