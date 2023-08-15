@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.data.repository
+package ru.resodostudios.flick.core.data.repository.implementation
 
 import kotlinx.coroutines.flow.Flow
 import ru.resodostudios.flick.core.database.dao.MovieDao

@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.movie.data.model
+package ru.resodostudios.flick.core.network.model
 
 import kotlinx.serialization.Serializable
 import ru.resodostudios.flick.feature.people.domain.model.Person

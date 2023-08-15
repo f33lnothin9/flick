@@ -1,8 +1,8 @@
 package ru.resodostudios.flick.feature.movie.presentation
 
-import ru.resodostudios.flick.feature.movie.data.model.Cast
-import ru.resodostudios.flick.feature.movie.data.model.Crew
-import ru.resodostudios.flick.feature.movie.data.model.Movie
+import ru.resodostudios.flick.core.network.model.Cast
+import ru.resodostudios.flick.core.network.model.Crew
+import ru.resodostudios.flick.core.network.model.Movie
 
 data class MovieUiState(
     val movie: Movie = Movie(),

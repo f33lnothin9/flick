@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
+import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.feature.movies.domain.use_case.GetMoviesUseCase
 import ru.resodostudios.flick.feature.movies.domain.util.MoviesEvent
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
@@ -21,7 +21,7 @@ class MoviesViewModel @Inject constructor(
     private val searchUseCase: SearchMoviesUseCase
 ) : ViewModel() {
 
-    private val _movies = MutableStateFlow(emptyList<MovieEntry>())
+    private val _movies = MutableStateFlow(emptyList<Movie>())
     private val _searchedMovies = MutableStateFlow(emptyList<SearchedMovie>())
     private val _isLoading = MutableStateFlow(false)
     private val _isError = MutableStateFlow(false)
@@ -40,7 +40,7 @@ class MoviesViewModel @Inject constructor(
             isLoading = isLoading,
             isError = isError
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MoviesUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MoviesUiState())
 
     init {
         getMovies()

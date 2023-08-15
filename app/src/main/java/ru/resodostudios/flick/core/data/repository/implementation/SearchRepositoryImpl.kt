@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.core.data.repository
+package ru.resodostudios.flick.core.data.repository.implementation
 
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.IOException

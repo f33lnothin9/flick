@@ -1,19 +1,16 @@
-package ru.resodostudios.flick.feature.movie.data.model
+package ru.resodostudios.flick.core.network.model
 
 import kotlinx.serialization.Serializable
-import ru.resodostudios.flick.core.network.model.Image
-import ru.resodostudios.flick.core.network.model.Network
-import ru.resodostudios.flick.core.network.model.Rating
-import ru.resodostudios.flick.core.network.model.Schedule
 
 @Serializable
 data class Movie(
+    val id: Int = 0,
     val averageRuntime: Int? = null,
     val ended: String? = null,
     val genres: List<String>? = null,
     val image: Image? = null,
     val language: String? = null,
-    val name: String? = null,
+    val name: String = "",
     val network: Network? = null,
     val officialSite: String? = null,
     val premiered: String? = null,
@@ -21,6 +18,5 @@ data class Movie(
     val runtime: Int? = null,
     val schedule: Schedule? = null,
     val status: String? = null,
-    val summary: String? = null,
-    val id: Int? = null
+    val summary: String? = null
 )

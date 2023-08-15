@@ -61,8 +61,8 @@ import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.CoilImage
 import ru.resodostudios.flick.core.designsystem.component.RetrySection
 import ru.resodostudios.flick.core.designsystem.theme.Typography
+import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
-import ru.resodostudios.flick.feature.movie.data.model.Movie
 import ru.resodostudios.flick.feature.movie.presentation.components.MovieTopBar
 
 @ExperimentalMaterial3Api
@@ -158,7 +158,7 @@ private fun Header(movie: Movie) {
         ) {
             Text(
                 modifier = Modifier.padding(top = 8.dp),
-                text = movie.name.toString(),
+                text = movie.name,
                 style = Typography.headlineSmall,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Bold
@@ -169,7 +169,7 @@ private fun Header(movie: Movie) {
                 color = MaterialTheme.colorScheme.secondaryContainer
             ) {
                 Text(
-                    text = (movie.rating?.average ?: 0.0).toString(),
+                    text = movie.rating?.average.toString(),
                     modifier = Modifier
                         .padding(
                             start = 8.dp,

@@ -4,10 +4,9 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.resodostudios.flick.feature.movie.data.model.Cast
-import ru.resodostudios.flick.feature.movie.data.model.Crew
-import ru.resodostudios.flick.feature.movie.data.model.Movie
-import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
+import ru.resodostudios.flick.core.network.model.Cast
+import ru.resodostudios.flick.core.network.model.Crew
+import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.feature.people.domain.model.Person
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
 import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
@@ -15,7 +14,7 @@ import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
 interface FlickApi {
 
     @GET("shows")
-    suspend fun getMovies(): Response<List<MovieEntry>>
+    suspend fun getMovies(): Response<List<Movie>>
 
     @GET("shows/{id}")
     suspend fun getMovie(

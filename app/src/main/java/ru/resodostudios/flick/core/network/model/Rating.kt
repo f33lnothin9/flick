@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Rating(
-    val average: Double? = null
+    val average: Double? = 0.0
 )

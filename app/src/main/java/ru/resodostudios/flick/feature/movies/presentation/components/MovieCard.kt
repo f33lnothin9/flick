@@ -27,11 +27,11 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import ru.resodostudios.flick.core.designsystem.component.AnimatedShimmer
 import ru.resodostudios.flick.core.designsystem.theme.Typography
-import ru.resodostudios.flick.feature.movies.data.model.MovieEntry
+import ru.resodostudios.flick.core.network.model.Movie
 
 @ExperimentalMaterial3Api
 @Composable
-fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
+fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
 
     Card(onClick = onNavigate) {
         Column(
@@ -62,7 +62,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
                     color = MaterialTheme.colorScheme.secondaryContainer
                 ) {
                     Text(
-                        text = (movie.rating?.average ?: 0.0).toString(),
+                        text = movie.rating?.average.toString(),
                         modifier = Modifier
                             .padding(
                                 start = 8.dp,
@@ -82,7 +82,7 @@ fun MovieCard(movie: MovieEntry, onNavigate: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    text = movie.name.toString(),
+                    text = movie.name,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     style = Typography.titleLarge,

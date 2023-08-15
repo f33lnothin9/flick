@@ -1,7 +1,7 @@
 package ru.resodostudios.flick.feature.favorites.domain.util
 
 import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
-import ru.resodostudios.flick.feature.movie.data.model.Movie
+import ru.resodostudios.flick.core.network.model.Movie
 
 sealed interface FavoriteEvent {
 
