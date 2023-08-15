@@ -77,7 +77,7 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun FlickTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
