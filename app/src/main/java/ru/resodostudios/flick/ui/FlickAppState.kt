@@ -10,8 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import ru.resodostudios.flick.feature.favorites.navigation.favoritesNavigationRoute
 import ru.resodostudios.flick.feature.favorites.navigation.navigateToFavorites
-import ru.resodostudios.flick.feature.movies.navigation.moviesNavigationRoute
-import ru.resodostudios.flick.feature.movies.navigation.navigateToMovies
+import ru.resodostudios.flick.feature.movies.navigation.moviesRoute
+import ru.resodostudios.flick.feature.movies.navigation.navigateToMoviesGraph
 import ru.resodostudios.flick.feature.people.navigation.navigateToPeople
 import ru.resodostudios.flick.feature.people.navigation.peopleNavigationRoute
 import ru.resodostudios.flick.navigation.TopLevelDestination
@@ -42,7 +42,7 @@ class FlickAppState(
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
-            moviesNavigationRoute -> MOVIES
+            moviesRoute -> MOVIES
             peopleNavigationRoute -> PEOPLE
             favoritesNavigationRoute -> FAVORITES
             else -> null
@@ -60,7 +60,7 @@ class FlickAppState(
         }
 
         when (topLevelDestination) {
-            MOVIES -> navController.navigateToMovies(topLevelNavOptions)
+            MOVIES -> navController.navigateToMoviesGraph(topLevelNavOptions)
             PEOPLE -> navController.navigateToPeople(topLevelNavOptions)
             FAVORITES -> navController.navigateToFavorites(topLevelNavOptions)
         }

@@ -4,18 +4,27 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import ru.resodostudios.flick.feature.movies.MoviesRoute
 
-const val moviesNavigationRoute = "movies_route"
+const val MOVIES_GRAPH_ROUTE_PATTERN = "movies_graph"
+const val moviesRoute = "movies_route"
 
-fun NavController.navigateToMovies(navOptions: NavOptions? = null) {
-    this.navigate(moviesNavigationRoute, navOptions)
+fun NavController.navigateToMoviesGraph(navOptions: NavOptions? = null) {
+    this.navigate(MOVIES_GRAPH_ROUTE_PATTERN, navOptions)
 }
 
-fun NavGraphBuilder.moviesScreen() {
-    composable(
-        route = moviesNavigationRoute
+fun NavGraphBuilder.moviesGraph(
+    onMovieClick: (Int) -> Unit,
+    nestedGraphs: NavGraphBuilder.() -> Unit
+) {
+    navigation(
+        route = MOVIES_GRAPH_ROUTE_PATTERN,
+        startDestination = moviesRoute,
     ) {
-        MoviesRoute()
+        composable(route = moviesRoute) {
+            MoviesRoute(onMovieClick = onMovieClick)
+        }
+        nestedGraphs()
     }
 }

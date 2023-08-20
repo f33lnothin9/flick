@@ -53,7 +53,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
@@ -65,13 +66,38 @@ import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.presentation.components.MovieTopBar
 
-@ExperimentalMaterial3Api
 @Composable
-fun MovieScreen(
-    navController: NavController,
+internal fun MovieRoute(
+    viewModel: MovieViewModel = hiltViewModel(),
+    onBackClick: () -> Unit,
+    movieId: Int
+) {
+
+    val movieState by viewModel.state.collectAsStateWithLifecycle()
+
+    viewModel.getMovie(movieId)
+    viewModel.getCast(movieId)
+    viewModel.getCrew(movieId)
+
+    MovieScreen(
+        state = movieState,
+        onEvent = viewModel::onEvent,
+        onRetry = {
+            viewModel.getMovie(movieId)
+            viewModel.getCast(movieId)
+            viewModel.getCrew(movieId)
+        },
+        onBackClick = onBackClick
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun MovieScreen(
     state: MovieUiState,
     onEvent: (FavoriteEvent) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onBackClick: () -> Unit
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -85,7 +111,7 @@ fun MovieScreen(
             topBar = {
                 MovieTopBar(
                     scrollBehavior = scrollBehavior,
-                    onNavIconClick = { navController.navigateUp() },
+                    onNavIconClick = onBackClick,
                     actions = {
                         IconButton(
                             onClick = {

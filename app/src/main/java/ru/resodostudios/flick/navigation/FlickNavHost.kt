@@ -12,12 +12,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ru.resodostudios.flick.feature.favorites.navigation.favoritesScreen
-import ru.resodostudios.flick.feature.movie.presentation.MovieScreen
+import ru.resodostudios.flick.feature.movie.navigation.movieScreen
+import ru.resodostudios.flick.feature.movie.navigation.navigateToMovie
 import ru.resodostudios.flick.feature.movie.presentation.MovieViewModel
-import ru.resodostudios.flick.feature.movies.MoviesScreen
-import ru.resodostudios.flick.feature.movies.MoviesViewModel
-import ru.resodostudios.flick.feature.movies.navigation.moviesNavigationRoute
-import ru.resodostudios.flick.feature.movies.navigation.moviesScreen
+import ru.resodostudios.flick.feature.movies.navigation.MOVIES_GRAPH_ROUTE_PATTERN
+import ru.resodostudios.flick.feature.movies.navigation.moviesGraph
 import ru.resodostudios.flick.feature.people.navigation.peopleScreen
 import ru.resodostudios.flick.feature.settings.presentation.SettingsScreen
 import ru.resodostudios.flick.ui.FlickAppState
@@ -25,14 +24,23 @@ import ru.resodostudios.flick.ui.FlickAppState
 @Composable
 fun FlickNavHost(
     appState: FlickAppState,
-    startDestination: String = moviesNavigationRoute,
+    startDestination: String = MOVIES_GRAPH_ROUTE_PATTERN,
 ) {
     val navController = appState.navController
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        moviesScreen()
+        moviesGraph(
+            onMovieClick = { movieId ->
+                navController.navigateToMovie(movieId)
+            },
+            nestedGraphs = {
+                movieScreen(
+                    onBackClick = navController::popBackStack
+                )
+            }
+        )
         peopleScreen()
         favoritesScreen()
     }
@@ -47,16 +55,16 @@ fun NavHost(
         navController = navController,
         startDestination = Screens.Movies.route
     ) {
-        composable(route = Screens.Movies.route) {
-            val viewModel: MoviesViewModel = hiltViewModel()
-            val state by viewModel.state.collectAsStateWithLifecycle()
-
-            MoviesScreen(
-                state = state,
-                onRetry = { viewModel.getMovies() },
-                onEvent = viewModel::onEvent
-            )
-        }
+//        composable(route = Screens.Movies.route) {
+//            val viewModel: MoviesViewModel = hiltViewModel()
+//            val state by viewModel.state.collectAsStateWithLifecycle()
+//
+//            MoviesScreen(
+//                state = state,
+//                onRetry = { viewModel.getMovies() },
+//                onEvent = viewModel::onEvent
+//            )
+//        }
 
         composable(
             route = Screens.Movie.route + "/{id}",
@@ -78,18 +86,17 @@ fun NavHost(
                 viewModel.getCrew(it)
             }
 
-            MovieScreen(
-                navController = navController,
-                state = state,
-                onEvent = viewModel::onEvent,
-                onRetry = {
-                    id?.let {
-                        viewModel.getMovie(it)
-                        viewModel.getCast(it)
-                        viewModel.getCrew(it)
-                    }
-                }
-            )
+//            MovieScreen(
+//                state = state,
+//                onEvent = viewModel::onEvent,
+//                onRetry = {
+//                    id?.let {
+//                        viewModel.getMovie(it)
+//                        viewModel.getCast(it)
+//                        viewModel.getCrew(it)
+//                    }
+//                }
+//            )
         }
 
         composable(route = Screens.People.route) { }

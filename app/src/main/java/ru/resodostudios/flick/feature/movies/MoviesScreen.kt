@@ -23,14 +23,16 @@ import ru.resodostudios.flick.feature.movies.domain.util.MoviesEvent
 
 @Composable
 internal fun MoviesRoute(
-    viewModel: MoviesViewModel = hiltViewModel()
+    viewModel: MoviesViewModel = hiltViewModel(),
+    onMovieClick: (Int) -> Unit
 ) {
     val moviesState by viewModel.state.collectAsStateWithLifecycle()
 
     MoviesScreen(
         state = moviesState,
         onRetry = viewModel::getMovies,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        onMovieClick = onMovieClick
     )
 }
 
@@ -38,7 +40,8 @@ internal fun MoviesRoute(
 internal fun MoviesScreen(
     state: MoviesUiState,
     onEvent: (MoviesEvent) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onMovieClick: (Int) -> Unit
 ) {
     AnimatedVisibility(
         visible = !state.isLoading,
@@ -53,7 +56,7 @@ internal fun MoviesScreen(
             items(state.movies) { movie ->
                 MovieCard(
                     movie = movie,
-                    onNavigate = { }
+                    onNavigate = { onMovieClick(movie.id) }
                 )
             }
         }
