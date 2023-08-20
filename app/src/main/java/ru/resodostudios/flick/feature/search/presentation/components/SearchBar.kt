@@ -36,7 +36,6 @@ fun SearchBar(
     onSearch: (String) -> Unit,
     onClearSearch: (String) -> Unit,
     onMenuClick: () -> Unit,
-    onFilterClick: () -> Unit,
     content: LazyListScope.() -> Unit,
     title: String
 ) {
@@ -91,11 +90,6 @@ fun SearchBar(
                         Icon(Icons.Default.Close, contentDescription = null)
                     }
                 }
-//                if (text.isBlank() && !active) {
-//                    IconButton(onClick = onFilterClick) {
-//                        Icon(Icons.Outlined.FilterList, contentDescription = null)
-//                    }
-//                }
             },
             windowInsets = WindowInsets.statusBars
         ) {
