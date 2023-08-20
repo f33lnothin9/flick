@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.favorites.presentation
+package ru.resodostudios.flick.feature.favorites
 
 import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
 

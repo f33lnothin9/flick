@@ -1,6 +1,5 @@
 package ru.resodostudios.flick.navigation
 
-import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,21 +11,37 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import ru.resodostudios.flick.feature.favorites.presentation.FavoritesScreen
-import ru.resodostudios.flick.feature.favorites.presentation.FavoritesViewModel
+import ru.resodostudios.flick.feature.favorites.navigation.favoritesScreen
 import ru.resodostudios.flick.feature.movie.presentation.MovieScreen
 import ru.resodostudios.flick.feature.movie.presentation.MovieViewModel
-import ru.resodostudios.flick.feature.movies.presentation.MoviesScreen
-import ru.resodostudios.flick.feature.movies.presentation.MoviesViewModel
-import ru.resodostudios.flick.feature.people.presentation.PeopleScreen
-import ru.resodostudios.flick.feature.people.presentation.PeopleViewModel
+import ru.resodostudios.flick.feature.movies.MoviesScreen
+import ru.resodostudios.flick.feature.movies.MoviesViewModel
+import ru.resodostudios.flick.feature.movies.navigation.moviesNavigationRoute
+import ru.resodostudios.flick.feature.movies.navigation.moviesScreen
+import ru.resodostudios.flick.feature.people.navigation.peopleScreen
 import ru.resodostudios.flick.feature.settings.presentation.SettingsScreen
+import ru.resodostudios.flick.ui.FlickAppState
+
+@Composable
+fun FlickNavHost(
+    appState: FlickAppState,
+    startDestination: String = moviesNavigationRoute,
+) {
+    val navController = appState.navController
+    NavHost(
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        moviesScreen()
+        peopleScreen()
+        favoritesScreen()
+    }
+}
 
 @ExperimentalMaterial3Api
 @Composable
 fun NavHost(
-    navController: NavHostController,
-    drawerState: DrawerState
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
@@ -37,8 +52,6 @@ fun NavHost(
             val state by viewModel.state.collectAsStateWithLifecycle()
 
             MoviesScreen(
-                navController = navController,
-                drawerState = drawerState,
                 state = state,
                 onRetry = { viewModel.getMovies() },
                 onEvent = viewModel::onEvent
@@ -79,29 +92,9 @@ fun NavHost(
             )
         }
 
-        composable(route = Screens.People.route) {
-            val viewModel: PeopleViewModel = hiltViewModel()
-            val state by viewModel.state.collectAsStateWithLifecycle()
-
-            PeopleScreen(
-                state = state,
-                onRetry = { viewModel.getPeople() },
-                drawerState = drawerState,
-                onEvent = viewModel::onEvent
-            )
-        }
+        composable(route = Screens.People.route) { }
 
         composable(route = Screens.Favorites.route) {
-            val viewModel: FavoritesViewModel = hiltViewModel()
-            val viewModelMovie: MovieViewModel = hiltViewModel()
-            val state by viewModel.state.collectAsStateWithLifecycle()
-
-            FavoritesScreen(
-                state = state,
-                navController = navController,
-                drawerState = drawerState,
-                onEvent = viewModelMovie::onEvent
-            )
         }
 
         composable(route = Screens.Settings.route) {

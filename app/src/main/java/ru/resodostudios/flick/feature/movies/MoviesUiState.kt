@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.movies.presentation
+package ru.resodostudios.flick.feature.movies
 
 import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie

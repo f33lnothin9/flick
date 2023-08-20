@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.favorites.presentation
+package ru.resodostudios.flick.feature.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

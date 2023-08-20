@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.movies.presentation.components
+package ru.resodostudios.flick.feature.movies.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,7 +29,7 @@ import ru.resodostudios.flick.core.designsystem.component.AnimatedShimmer
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.network.model.Movie
 
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
 

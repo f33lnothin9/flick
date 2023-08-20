@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.people.presentation
+package ru.resodostudios.flick.feature.people
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

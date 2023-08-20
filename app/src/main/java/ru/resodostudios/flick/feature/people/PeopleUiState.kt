@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.people.presentation
+package ru.resodostudios.flick.feature.people
 
 import ru.resodostudios.flick.feature.people.domain.model.Person
 import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
