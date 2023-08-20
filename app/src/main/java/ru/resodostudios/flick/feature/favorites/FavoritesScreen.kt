@@ -2,6 +2,7 @@ package ru.resodostudios.flick.feature.favorites
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -51,10 +52,10 @@ internal fun FavoritesScreen(
 
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_empty))
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        if (state.movies.isNotEmpty()) {
+    if (state.movies.isNotEmpty()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
             items(state.movies) { movie ->
                 ListItem(
                     headlineContent = { Text(text = movie.name.toString()) },
@@ -86,23 +87,26 @@ internal fun FavoritesScreen(
                     modifier = Modifier.clickable {  }
                 )
             }
-        } else {
-            item {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    LottieAnimation(
-                        modifier = Modifier.size(256.dp),
-                        composition = lottieComposition
-                    )
-                    Text(
-                        text = "Nothing in Favorites",
-                        maxLines = 1,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
+        }
+    } else {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                LottieAnimation(
+                    modifier = Modifier.size(256.dp),
+                    composition = lottieComposition
+                )
+                Text(
+                    text = "Nothing in Favorites",
+                    maxLines = 1,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         }
     }
