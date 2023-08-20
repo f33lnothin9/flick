@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import ru.resodostudios.flick.feature.favorites.domain.repository.FavoritesRepository
+import ru.resodostudios.flick.core.data.repository.FavoritesRepository
 import javax.inject.Inject
 
 @HiltViewModel

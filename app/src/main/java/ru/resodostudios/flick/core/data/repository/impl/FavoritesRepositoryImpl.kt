@@ -1,9 +1,9 @@
-package ru.resodostudios.flick.core.data.repository.implementation
+package ru.resodostudios.flick.core.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
+import ru.resodostudios.flick.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.database.dao.MovieDao
 import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
-import ru.resodostudios.flick.feature.favorites.domain.repository.FavoritesRepository
 import javax.inject.Inject
 
 class FavoritesRepositoryImpl @Inject constructor(

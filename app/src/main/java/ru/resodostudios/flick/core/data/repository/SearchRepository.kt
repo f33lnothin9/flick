@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.search.domain.repository
+package ru.resodostudios.flick.core.data.repository
 
 import retrofit2.Response
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie

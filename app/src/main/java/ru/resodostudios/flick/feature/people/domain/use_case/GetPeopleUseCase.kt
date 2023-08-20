@@ -1,6 +1,6 @@
 package ru.resodostudios.flick.feature.people.domain.use_case
 
-import ru.resodostudios.flick.feature.people.domain.repository.PeopleRepository
+import ru.resodostudios.flick.core.data.repository.PeopleRepository
 import javax.inject.Inject
 
 class GetPeopleUseCase @Inject constructor(

@@ -13,9 +13,9 @@ import androidx.compose.ui.Alignment
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ru.resodostudios.flick.core.designsystem.theme.FlickTheme
 import ru.resodostudios.flick.core.designsystem.component.Banner
 import ru.resodostudios.flick.core.designsystem.component.NavDrawer
+import ru.resodostudios.flick.core.designsystem.theme.FlickTheme
 import ru.resodostudios.flick.navigation.NavHost
 
 @ExperimentalMaterial3Api

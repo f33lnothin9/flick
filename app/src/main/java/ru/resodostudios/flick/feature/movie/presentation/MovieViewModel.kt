@@ -13,7 +13,7 @@ import ru.resodostudios.flick.core.network.model.Cast
 import ru.resodostudios.flick.core.network.model.Crew
 import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
-import ru.resodostudios.flick.feature.favorites.domain.repository.FavoritesRepository
+import ru.resodostudios.flick.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.domain.use_case.GetCastUseCase
 import ru.resodostudios.flick.feature.movie.domain.use_case.GetCrewUseCase

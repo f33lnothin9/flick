@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.favorites.domain.repository
+package ru.resodostudios.flick.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
