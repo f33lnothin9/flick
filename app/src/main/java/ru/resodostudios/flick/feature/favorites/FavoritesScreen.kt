@@ -33,21 +33,26 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
+import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
+import ru.resodostudios.flick.feature.movie.presentation.MovieViewModel
 
 @Composable
 internal fun FavoritesRoute(
-    viewModel: FavoritesViewModel = hiltViewModel()
+    favoriteViewModel: FavoritesViewModel = hiltViewModel(),
+    movieViewModel: MovieViewModel = hiltViewModel()
 ) {
-    val moviesState by viewModel.state.collectAsStateWithLifecycle()
+    val moviesState by favoriteViewModel.state.collectAsStateWithLifecycle()
 
     FavoritesScreen(
-        state = moviesState
+        state = moviesState,
+        onDeleteClick = movieViewModel::onEvent
     )
 }
 
 @Composable
 internal fun FavoritesScreen(
-    state: FavoritesUiState
+    state: FavoritesUiState,
+    onDeleteClick: (FavoriteEvent) -> Unit
 ) {
 
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_empty))
@@ -76,7 +81,7 @@ internal fun FavoritesScreen(
                         )
                     },
                     trailingContent = {
-                        IconButton(onClick = {  }) {
+                        IconButton(onClick = { onDeleteClick(FavoriteEvent.DeleteMovie(movie)) }) {
                             Icon(
                                 FlickIcons.Delete,
                                 contentDescription = "Remove from Favorites"
@@ -84,7 +89,7 @@ internal fun FavoritesScreen(
                         }
                     },
                     supportingContent = { Text(text = movie.rating.toString()) },
-                    modifier = Modifier.clickable {  }
+                    modifier = Modifier.clickable { }
                 )
             }
         }
