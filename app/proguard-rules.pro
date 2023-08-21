@@ -4,6 +4,7 @@
 -keep class ru.resodostudios.flick.feature.favorites.domain.model.** { *; }
 -keep class ru.resodostudios.flick.feature.people.domain.model.** { *; }
 -keep class ru.resodostudios.flick.feature.search.data.model.** { *; }
+-keep class ru.resodostudios.flick.core.network.model.** { *; }
 
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.
