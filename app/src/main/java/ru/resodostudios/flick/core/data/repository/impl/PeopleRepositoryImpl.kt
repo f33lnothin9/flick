@@ -20,24 +20,26 @@ class PeopleRepositoryImpl @Inject constructor(
 
     override fun getPeople(): Flow<List<Person>> = flow {
         emit(
-            datasource.getPeople().map {
-                Person(
-                    id = it.id,
-                    birthday = it.birthday,
-                    country = Country(
-                        name = it.country.name,
-                        code = it.country.code,
-                        timezone = it.country.timezone
-                    ),
-                    gender = it.gender,
-                    deathday = it.deathday,
-                    image = Image(
-                        medium = it.image.medium,
-                        original = it.image.original
-                    ),
-                    name = it.name
-                )
-            }
+            datasource
+                .getPeople()
+                .map {
+                    Person(
+                        id = it.id,
+                        birthday = it.birthday,
+                        country = Country(
+                            name = it.country.name,
+                            code = it.country.code,
+                            timezone = it.country.timezone
+                        ),
+                        gender = it.gender,
+                        deathday = it.deathday,
+                        image = Image(
+                            medium = it.image.medium,
+                            original = it.image.original
+                        ),
+                        name = it.name
+                    )
+                }
         )
     }.flowOn(ioDispatcher)
 }

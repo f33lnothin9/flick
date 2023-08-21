@@ -5,8 +5,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import okhttp3.OkHttpClient
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -19,11 +17,4 @@ object NetworkModule {
         ignoreUnknownKeys = true
         coerceInputValues = true
     }
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient() = OkHttpClient.Builder()
-        .readTimeout(15, TimeUnit.SECONDS)
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .build()
 }

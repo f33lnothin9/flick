@@ -6,17 +6,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.data.util.NetworkMonitor
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationBar
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationBarItem
 import ru.resodostudios.flick.core.designsystem.component.FlickTopAppBar
@@ -26,14 +33,32 @@ import ru.resodostudios.flick.navigation.TopLevelDestination
 
 @Composable
 fun FlickApp(
-    appState: FlickAppState = rememberFlickAppState()
+    networkMonitor: NetworkMonitor,
+    appState: FlickAppState = rememberFlickAppState(
+        networkMonitor = networkMonitor
+    )
 ) {
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val isOffline by appState.isOffline.collectAsStateWithLifecycle()
+
+    val notConnectedMessage = stringResource(R.string.not_connected)
+    LaunchedEffect(isOffline) {
+        if (isOffline) {
+            snackbarHostState.showSnackbar(
+                message = notConnectedMessage,
+                duration = SnackbarDuration.Indefinite,
+            )
+        }
+    }
+
     var showSettingsDialog by rememberSaveable {
         mutableStateOf(false)
     }
 
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             FlickBottomBar(
                 destinations = appState.topLevelDestinations,

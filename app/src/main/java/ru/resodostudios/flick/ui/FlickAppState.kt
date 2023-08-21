@@ -2,12 +2,18 @@ package ru.resodostudios.flick.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import ru.resodostudios.flick.core.data.util.NetworkMonitor
 import ru.resodostudios.flick.feature.favorites.navigation.favoritesNavigationRoute
 import ru.resodostudios.flick.feature.favorites.navigation.navigateToFavorites
 import ru.resodostudios.flick.feature.movies.navigation.moviesRoute
@@ -21,20 +27,28 @@ import ru.resodostudios.flick.navigation.TopLevelDestination.PEOPLE
 
 @Composable
 fun rememberFlickAppState(
+    networkMonitor: NetworkMonitor,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController()
 ): FlickAppState {
 
     return remember(
-        navController
+        navController,
+        coroutineScope,
+        networkMonitor
     ) {
         FlickAppState(
-            navController
+            navController,
+            coroutineScope,
+            networkMonitor
         )
     }
 }
 
 class FlickAppState(
-    val navController: NavHostController
+    val navController: NavHostController,
+    val coroutineScope: CoroutineScope,
+    networkMonitor: NetworkMonitor
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController
@@ -47,6 +61,14 @@ class FlickAppState(
             favoritesNavigationRoute -> FAVORITES
             else -> null
         }
+
+    val isOffline = networkMonitor.isOnline
+        .map(Boolean::not)
+        .stateIn(
+            scope = coroutineScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 

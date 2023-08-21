@@ -29,6 +29,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.model.data.Person
 
 @Composable
 internal fun PeopleRoute(
@@ -57,47 +58,42 @@ internal fun PeopleScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     people(
-                        peopleState = peopleState
+                        people = peopleState.people
                     )
                 }
             }
-        } else {
-            EmptyState()
         }
+
+        is PeopleUiState.Error -> EmptyState()
     }
 }
 
 private fun LazyGridScope.people(
-    peopleState: PeopleUiState
+    people: List<Person>
 ) {
-    when (peopleState) {
-        PeopleUiState.Loading -> Unit
-        is PeopleUiState.Success -> {
-            items(peopleState.people) { person ->
-                ListItem(
-                    headlineContent = { Text(text = person.name) },
-                    supportingContent = { Text(text = person.country.name) },
-                    leadingContent = {
-                        Box {
-                            AsyncImage(
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data(person.image.medium)
-                                    .crossfade(400)
-                                    .size(256)
-                                    .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
-                                    .build(),
-                                contentDescription = "Image",
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .size(56.dp),
-                                filterQuality = FilterQuality.Low,
-                                contentScale = ContentScale.Crop
-                            )
-                        }
-                    }
-                )
+    items(people) { person ->
+        ListItem(
+            headlineContent = { Text(text = person.name) },
+            supportingContent = { Text(text = person.country.name) },
+            leadingContent = {
+                Box {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(person.image.medium)
+                            .crossfade(400)
+                            .size(256)
+                            .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
+                            .build(),
+                        contentDescription = "Image",
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .size(56.dp),
+                        filterQuality = FilterQuality.Low,
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
-        }
+        )
     }
 }
 

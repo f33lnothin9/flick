@@ -3,7 +3,6 @@ package ru.resodostudios.flick.core.network.retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.GET
@@ -57,13 +56,11 @@ private const val FLICK_BASE_URL = "https://api.tvmaze.com/"
 
 @Singleton
 class RetrofitFlickNetwork @Inject constructor(
-    networkJson: Json,
-    okhttpClient: OkHttpClient,
+    networkJson: Json
 ) : FlickNetworkDataSource {
 
     private val networkApi = Retrofit.Builder()
         .baseUrl(FLICK_BASE_URL)
-        .client(okhttpClient)
         .addConverterFactory(
             networkJson.asConverterFactory("application/json".toMediaType()),
         )

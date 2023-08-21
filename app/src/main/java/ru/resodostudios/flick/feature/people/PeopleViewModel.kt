@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import ru.resodostudios.flick.core.data.repository.PeopleRepository
 import ru.resodostudios.flick.core.model.data.Person
@@ -20,7 +19,6 @@ class PeopleViewModel @Inject constructor(
     val peopleUiState: StateFlow<PeopleUiState> =
         peopleRepository.getPeople()
             .map<List<Person>, PeopleUiState>(PeopleUiState::Success)
-            .onStart { emit(PeopleUiState.Loading) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
@@ -35,4 +33,6 @@ sealed interface PeopleUiState {
     data class Success(
         val people: List<Person>
     ) : PeopleUiState
+
+    data object Error : PeopleUiState
 }
