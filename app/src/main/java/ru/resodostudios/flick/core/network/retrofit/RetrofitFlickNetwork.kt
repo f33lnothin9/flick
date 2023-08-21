@@ -13,7 +13,7 @@ import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.Cast
 import ru.resodostudios.flick.core.network.model.Crew
 import ru.resodostudios.flick.core.network.model.Movie
-import ru.resodostudios.flick.feature.people.domain.model.Person
+import ru.resodostudios.flick.core.network.model.NetworkPerson
 import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
 import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
 import javax.inject.Inject
@@ -30,7 +30,7 @@ private interface RetrofitFlickNetworkApi {
     ): Response<Movie>
 
     @GET("people")
-    suspend fun getPeople(): Response<List<Person>>
+    suspend fun getPeople(): List<NetworkPerson>
 
     @GET("search/shows")
     suspend fun searchMovies(
@@ -76,7 +76,7 @@ class RetrofitFlickNetwork @Inject constructor(
     override suspend fun getMovie(id: Int): Response<Movie> =
         networkApi.getMovie(id = id)
 
-    override suspend fun getPeople(): Response<List<Person>> =
+    override suspend fun getPeople(): List<NetworkPerson> =
         networkApi.getPeople()
 
     override suspend fun searchMovies(query: String): Response<List<SearchedMovie>> =

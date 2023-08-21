@@ -1,9 +1,9 @@
 package ru.resodostudios.flick.core.data.repository
 
-import retrofit2.Response
-import ru.resodostudios.flick.feature.people.domain.model.Person
+import kotlinx.coroutines.flow.Flow
+import ru.resodostudios.flick.core.model.data.Person
 
 interface PeopleRepository {
 
-    suspend fun getPeople(): Response<List<Person>>
+    fun getPeople(): Flow<List<Person>>
 }
