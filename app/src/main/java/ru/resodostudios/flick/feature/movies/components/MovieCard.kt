@@ -41,9 +41,9 @@ fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
             Box {
                 SubcomposeAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(movie.image?.original)
+                        .data(movie.image?.medium)
                         .crossfade(400)
-                        .size(175)
+                        .size(256)
                         .build(),
                     contentDescription = "Image",
                     modifier = Modifier

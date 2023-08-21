@@ -19,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.core.designsystem.component.RetrySection
 import ru.resodostudios.flick.feature.movies.components.MovieCard
-import ru.resodostudios.flick.feature.movies.domain.util.MoviesEvent
 
 @Composable
 internal fun MoviesRoute(
@@ -31,7 +30,6 @@ internal fun MoviesRoute(
     MoviesScreen(
         state = moviesState,
         onRetry = viewModel::getMovies,
-        onEvent = viewModel::onEvent,
         onMovieClick = onMovieClick
     )
 }
@@ -39,7 +37,6 @@ internal fun MoviesRoute(
 @Composable
 internal fun MoviesScreen(
     state: MoviesUiState,
-    onEvent: (MoviesEvent) -> Unit,
     onRetry: () -> Unit,
     onMovieClick: (Int) -> Unit
 ) {
