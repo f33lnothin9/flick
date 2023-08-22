@@ -30,3 +30,16 @@ class PeopleViewModel @Inject constructor(
             initialValue = Loading,
         )
 }
+
+sealed interface PeopleUiState {
+
+    data object Loading : PeopleUiState
+
+    data class Success(
+        val people: List<Person>
+    ) : PeopleUiState
+
+    data class Error(
+        val errorMessage: String
+    ) : PeopleUiState
+}
