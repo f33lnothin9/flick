@@ -1,8 +1,12 @@
 package ru.resodostudios.flick.feature.people
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -11,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,6 +25,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,9 +34,14 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.model.data.Person
+import ru.resodostudios.flick.feature.people.PeopleUiState.Error
+import ru.resodostudios.flick.feature.people.PeopleUiState.Loading
+import ru.resodostudios.flick.feature.people.PeopleUiState.Success
 
 @Composable
 internal fun PeopleRoute(
@@ -47,8 +59,8 @@ internal fun PeopleScreen(
 ) {
 
     when (peopleState) {
-        PeopleUiState.Loading -> LoadingState()
-        is PeopleUiState.Success -> if (peopleState.people.isNotEmpty()) {
+        Loading -> LoadingState()
+        is Success -> if (peopleState.people.isNotEmpty()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -64,7 +76,7 @@ internal fun PeopleScreen(
             }
         }
 
-        is PeopleUiState.Error -> EmptyState()
+        is Error -> ErrorState(errorMessage = peopleState.errorMessage)
     }
 }
 
@@ -108,19 +120,37 @@ private fun LoadingState() {
 }
 
 @Composable
-private fun EmptyState() {
+private fun ErrorState(errorMessage: String) {
 
-    val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_empty))
+    val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_error_1))
+    val progress by animateLottieCompositionAsState(
+        composition = lottieComposition,
+        iterations = LottieConstants.IterateForever
+    )
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .padding(PaddingValues(16.dp))
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        LottieAnimation(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(256.dp),
-            composition = lottieComposition,
-        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            LottieAnimation(
+                modifier = Modifier.size(200.dp),
+                composition = lottieComposition,
+                progress = { progress }
+            )
+            Text(
+                text = errorMessage,
+                maxLines = 2,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }
