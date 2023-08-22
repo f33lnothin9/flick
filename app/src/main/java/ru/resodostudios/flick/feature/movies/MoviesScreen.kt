@@ -46,8 +46,8 @@ internal fun MoviesScreen(
     ) {
         LazyVerticalStaggeredGrid(
             contentPadding = PaddingValues(16.dp),
-            verticalItemSpacing = 8.dp,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalItemSpacing = 16.dp,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             columns = StaggeredGridCells.Adaptive(150.dp)
         ) {
             items(state.movies) { movie ->

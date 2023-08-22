@@ -3,7 +3,6 @@ package ru.resodostudios.flick.feature.movies.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -47,7 +46,7 @@ fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
                         .build(),
                     contentDescription = "Image",
                     modifier = Modifier
-                        .defaultMinSize(minWidth = 200.dp)
+                        .fillMaxWidth()
                         .clip(RoundedCornerShape(12.dp)),
                     filterQuality = FilterQuality.Low,
                     contentScale = ContentScale.FillWidth,
@@ -56,7 +55,7 @@ fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
 
                 Surface(
                     modifier = Modifier
-                        .padding(start = 8.dp, top = 8.dp)
+                        .padding(8.dp)
                         .align(Alignment.TopStart)
                         .clip(RoundedCornerShape(12.dp)),
                     color = MaterialTheme.colorScheme.secondaryContainer
@@ -92,7 +91,7 @@ fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
                 )
 
                 Text(
-                    text = movie.genres?.take(2)?.joinToString(", ") ?: "Empty",
+                    text = movie.genres?.take(2)?.joinToString(", ") ?: "",
                     style = Typography.titleSmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
