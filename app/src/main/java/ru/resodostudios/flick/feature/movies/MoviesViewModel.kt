@@ -3,85 +3,41 @@ package ru.resodostudios.flick.feature.movies
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import ru.resodostudios.flick.core.network.model.Movie
-import ru.resodostudios.flick.feature.movies.domain.use_case.GetMoviesUseCase
-import ru.resodostudios.flick.feature.movies.domain.util.MoviesEvent
-import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
-import ru.resodostudios.flick.feature.search.domain.use_case.SearchMoviesUseCase
+import ru.resodostudios.flick.core.data.repository.MoviesRepository
+import ru.resodostudios.flick.core.model.data.Movie
 import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val moviesUseCase: GetMoviesUseCase,
-    private val searchUseCase: SearchMoviesUseCase
+    moviesRepository: MoviesRepository
 ) : ViewModel() {
 
-    private val _movies = MutableStateFlow(emptyList<Movie>())
-    private val _searchedMovies = MutableStateFlow(emptyList<SearchedMovie>())
-    private val _isLoading = MutableStateFlow(false)
-    private val _isError = MutableStateFlow(false)
-    private val _state = MutableStateFlow(MoviesUiState())
-
-    val state = combine(
-        _state,
-        _movies,
-        _isLoading,
-        _isError,
-        _searchedMovies
-    ) { state, movies, isLoading, isError, searchedMovies ->
-        state.copy(
-            movies = movies,
-            searchedMovies = searchedMovies,
-            isLoading = isLoading,
-            isError = isError
+    val moviesUiState: StateFlow<MoviesUiState> = moviesRepository.getMovies()
+        .map<List<Movie>, MoviesUiState>(MoviesUiState::Success)
+        .onStart { emit(MoviesUiState.Loading) }
+        .catch { emit(MoviesUiState.Error(it.localizedMessage?.toString() ?: "")) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = MoviesUiState.Loading,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MoviesUiState())
+}
 
-    init {
-        getMovies()
-    }
+sealed interface MoviesUiState {
 
-    fun onEvent(event: MoviesEvent) {
-        when (event) {
-            is MoviesEvent.Search -> {
-                searchMovies(event.query)
-            }
-        }
-    }
+    data object Loading : MoviesUiState
 
-    fun getMovies() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            moviesUseCase.invoke().let { response ->
-                if (response.isSuccessful) {
-                    _movies.value = response.body()!!
-                    _isLoading.value = false
-                    _isError.value = false
-                } else {
-                    _isLoading.value = false
-                    _isError.value = true
-                }
-            }
-        }
-    }
+    data class Success(
+        val movies: List<Movie>
+    ) : MoviesUiState
 
-    private fun searchMovies(query: String) {
-        viewModelScope.launch {
-            searchUseCase.invoke(query).let {
-                if (it.isSuccessful) {
-                    _searchedMovies.value = it.body()!!
-                    _isLoading.value = false
-                    _isError.value = false
-                } else {
-                    _isLoading.value = false
-                    _isError.value = true
-                }
-            }
-        }
-    }
+    data class Error(
+        val errorMessage: String
+    ) : MoviesUiState
 }

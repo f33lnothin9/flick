@@ -1,5 +1,6 @@
 package ru.resodostudios.flick.core.data.repository
 
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import ru.resodostudios.flick.core.network.model.Cast
 import ru.resodostudios.flick.core.network.model.Crew
@@ -7,7 +8,7 @@ import ru.resodostudios.flick.core.network.model.Movie
 
 interface MoviesRepository {
 
-    suspend fun getMovies(): Response<List<Movie>>
+    fun getMovies(): Flow<List<ru.resodostudios.flick.core.model.data.Movie>>
 
     suspend fun getMovie(id: Int): Response<Movie>
 

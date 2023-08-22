@@ -43,7 +43,7 @@ fun AnimatedShimmer() {
 
     Box(
         modifier = Modifier
-            .size(300.dp)
+            .size(215.dp)
             .background(brush)
     )
 }

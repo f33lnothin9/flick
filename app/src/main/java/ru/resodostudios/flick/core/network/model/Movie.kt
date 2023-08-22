@@ -16,7 +16,6 @@ data class Movie(
     val premiered: String? = null,
     val rating: Rating? = null,
     val runtime: Int? = null,
-    val schedule: Schedule? = null,
     val status: String? = null,
     val summary: String? = null
 )

@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.movies.components
+package ru.resodostudios.flick.feature.movies.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,25 +21,23 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ru.resodostudios.flick.core.designsystem.component.FlickSubcomposeAsyncImage
 import ru.resodostudios.flick.core.designsystem.theme.Typography
-import ru.resodostudios.flick.core.network.model.Movie
+import ru.resodostudios.flick.core.model.data.Movie
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
+fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
 
-    Card(onClick = onNavigate) {
+    Card(onClick = { onMovieClick(movie.id) }) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box {
-                movie.image?.medium?.let {
-                    FlickSubcomposeAsyncImage(
-                        imageUrl = it,
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+                FlickSubcomposeAsyncImage(
+                    imageUrl = movie.image.medium,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth()
+                )
 
                 Surface(
                     modifier = Modifier
@@ -49,7 +47,7 @@ fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
                     color = MaterialTheme.colorScheme.secondaryContainer
                 ) {
                     Text(
-                        text = movie.rating?.average.toString(),
+                        text = movie.rating.average.toString(),
                         modifier = Modifier
                             .padding(
                                 start = 8.dp,
@@ -79,7 +77,7 @@ fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
                 )
 
                 Text(
-                    text = movie.genres?.take(2)?.joinToString(", ") ?: "",
+                    text = movie.genres.take(2).joinToString(", "),
                     style = Typography.titleSmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
