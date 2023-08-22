@@ -64,6 +64,7 @@ dependencies {
 
     // Material Design 3
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material3.windowSizeClass)
 
     // UI Tests
     androidTestImplementation(libs.ui.test.junit4)
