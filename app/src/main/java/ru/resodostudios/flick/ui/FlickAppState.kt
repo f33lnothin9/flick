@@ -1,5 +1,7 @@
 package ru.resodostudios.flick.ui
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,6 +30,7 @@ import ru.resodostudios.flick.navigation.TopLevelDestination.PEOPLE
 @Composable
 fun rememberFlickAppState(
     networkMonitor: NetworkMonitor,
+    windowSizeClass: WindowSizeClass,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController()
 ): FlickAppState {
@@ -35,11 +38,13 @@ fun rememberFlickAppState(
     return remember(
         navController,
         coroutineScope,
-        networkMonitor
+        networkMonitor,
+        windowSizeClass
     ) {
         FlickAppState(
             navController,
             coroutineScope,
+            windowSizeClass,
             networkMonitor
         )
     }
@@ -48,6 +53,7 @@ fun rememberFlickAppState(
 class FlickAppState(
     val navController: NavHostController,
     val coroutineScope: CoroutineScope,
+    val windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor
 ) {
     val currentDestination: NavDestination?
@@ -61,6 +67,12 @@ class FlickAppState(
             favoritesNavigationRoute -> FAVORITES
             else -> null
         }
+
+    val shouldShowBottomBar: Boolean
+        get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
+
+    val shouldShowNavRail: Boolean
+        get() = !shouldShowBottomBar
 
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
