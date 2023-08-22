@@ -111,9 +111,6 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie.compose)
-
-    // Yandex Ads
-    implementation(libs.mobileads)
 }
 
 kapt {

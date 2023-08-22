@@ -13,7 +13,6 @@ kotlinxSerializationJson = "1.5.1"
 lifecycle = "2.6.1"
 lottie = "6.1.0"
 material3 = "1.2.0-alpha05"
-mobileAds = "5.10.0"
 navigation = "2.7.0"
 okHttp = "4.11.0"
 retrofit = "2.9.0"
@@ -41,7 +40,6 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-mobileads = { module = "com.yandex.android:mobileads", version.ref = "mobileAds" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverter" }
