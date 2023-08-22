@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AnimatedShimmer() {
-
     val shimmerColors = listOf(
         Color.LightGray.copy(alpha = 0.6f),
         Color.LightGray.copy(alpha = 0.2f),
@@ -44,7 +43,7 @@ fun AnimatedShimmer() {
 
     Box(
         modifier = Modifier
-            .size(250.dp)
+            .size(300.dp)
             .background(brush)
     )
 }

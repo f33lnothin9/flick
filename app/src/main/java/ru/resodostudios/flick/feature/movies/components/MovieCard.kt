@@ -15,16 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
-import ru.resodostudios.flick.core.designsystem.component.AnimatedShimmer
+import ru.resodostudios.flick.core.designsystem.component.FlickSubcomposeAsyncImage
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.network.model.Movie
 
@@ -38,20 +33,13 @@ fun MovieCard(movie: Movie, onNavigate: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box {
-                SubcomposeAsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(movie.image?.medium)
-                        .crossfade(400)
-                        .size(256)
-                        .build(),
-                    contentDescription = "Image",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(12.dp)),
-                    filterQuality = FilterQuality.Low,
-                    contentScale = ContentScale.FillWidth,
-                    loading = { AnimatedShimmer() }
-                )
+                movie.image?.medium?.let {
+                    FlickSubcomposeAsyncImage(
+                        imageUrl = it,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
 
                 Surface(
                     modifier = Modifier

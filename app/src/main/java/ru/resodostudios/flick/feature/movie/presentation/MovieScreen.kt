@@ -59,7 +59,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.designsystem.component.CoilImage
+import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.RetrySection
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.network.model.Movie
@@ -172,10 +172,12 @@ private fun Header(movie: Movie) {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.Top
     ) {
-        CoilImage(
+        FlickAsyncImage(
             url = movie.image?.medium.toString(),
-            width = 125.dp,
-            height = 176.dp
+            contentDescription = null,
+            modifier = Modifier
+                .size(width = 125.dp, height = 176.dp)
+                .clip(RoundedCornerShape(12.dp))
         )
 
         Column(
