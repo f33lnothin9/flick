@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.resodostudios.flick.core.data.repository.FavoritesRepository
+import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.network.model.Cast
 import ru.resodostudios.flick.core.network.model.Crew
 import ru.resodostudios.flick.core.network.model.Movie
-import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
-import ru.resodostudios.flick.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.domain.use_case.GetCastUseCase
 import ru.resodostudios.flick.feature.movie.domain.use_case.GetCrewUseCase
@@ -116,11 +116,12 @@ class MovieViewModel @Inject constructor(
     fun onEvent(event: FavoriteEvent) {
         when (event) {
             is FavoriteEvent.AddMovie -> {
-                val favoriteMovie = FavoriteMovieEntity(
+                val favoriteMovie = FavoriteMovie(
                     id = event.movie.id,
-                    image = event.movie.image?.medium,
+                    image = event.movie.image?.medium.toString(),
                     rating = event.movie.rating?.average,
-                    name = event.movie.name
+                    name = event.movie.name,
+                    genres = event.movie.genres
                 )
 
                 viewModelScope.launch {

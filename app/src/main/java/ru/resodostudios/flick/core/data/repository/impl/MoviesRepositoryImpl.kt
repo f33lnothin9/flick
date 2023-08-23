@@ -10,12 +10,12 @@ import retrofit2.HttpException
 import retrofit2.Response
 import ru.resodostudios.flick.core.common.network.Dispatcher
 import ru.resodostudios.flick.core.common.network.FlickDispatchers
-import ru.resodostudios.flick.core.data.model.asExternalModel
 import ru.resodostudios.flick.core.data.repository.MoviesRepository
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.Cast
 import ru.resodostudios.flick.core.network.model.Crew
 import ru.resodostudios.flick.core.network.model.Movie
+import ru.resodostudios.flick.core.network.model.asExternalModel
 import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
