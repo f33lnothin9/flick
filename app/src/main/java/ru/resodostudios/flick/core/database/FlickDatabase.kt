@@ -6,9 +6,11 @@ import ru.resodostudios.flick.core.database.dao.MovieDao
 import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 
 @Database(
-    entities = [FavoriteMovieEntity::class],
+    entities = [
+        FavoriteMovieEntity::class
+    ],
     version = 1,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class FlickDatabase : RoomDatabase() {
 
