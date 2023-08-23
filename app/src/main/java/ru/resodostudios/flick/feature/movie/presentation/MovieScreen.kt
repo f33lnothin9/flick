@@ -1,6 +1,5 @@
 package ru.resodostudios.flick.feature.movie.presentation
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -24,6 +23,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -40,7 +40,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,30 +65,39 @@ import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.RetrySection
 import ru.resodostudios.flick.core.designsystem.theme.Typography
+import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.network.model.Movie
+import ru.resodostudios.flick.core.ui.LoadingState
+import ru.resodostudios.flick.feature.favorites.FavoritesUiState
+import ru.resodostudios.flick.feature.favorites.FavoritesViewModel
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.presentation.components.MovieTopBar
 
 @Composable
 internal fun MovieRoute(
-    viewModel: MovieViewModel = hiltViewModel(),
+    movieViewModel: MovieViewModel = hiltViewModel(),
+    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     movieId: Int
 ) {
 
-    val movieState by viewModel.state.collectAsStateWithLifecycle()
+    val movieState by movieViewModel.state.collectAsStateWithLifecycle()
+    val favoritesState by favoritesViewModel.favoritesUiState.collectAsStateWithLifecycle(
+        initialValue = FavoritesUiState.Loading
+    )
 
-    viewModel.getMovie(movieId)
-    viewModel.getCast(movieId)
-    viewModel.getCrew(movieId)
+    movieViewModel.getMovie(movieId)
+    movieViewModel.getCast(movieId)
+    movieViewModel.getCrew(movieId)
 
     MovieScreen(
-        state = movieState,
-        onEvent = viewModel::onEvent,
+        movieState = movieState,
+        favoritesState = favoritesState,
+        onEvent = movieViewModel::onEvent,
         onRetry = {
-            viewModel.getMovie(movieId)
-            viewModel.getCast(movieId)
-            viewModel.getCrew(movieId)
+            movieViewModel.getMovie(movieId)
+            movieViewModel.getCast(movieId)
+            movieViewModel.getCrew(movieId)
         },
         onBackClick = onBackClick
     )
@@ -95,74 +106,106 @@ internal fun MovieRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MovieScreen(
-    state: MovieUiState,
+    movieState: MovieUiState,
+    favoritesState: FavoritesUiState,
     onEvent: (FavoriteEvent) -> Unit,
     onRetry: () -> Unit,
     onBackClick: () -> Unit
 ) {
 
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val context = LocalContext.current
 
-    var maxLines by remember { mutableIntStateOf(3) }
+    var maxLines by rememberSaveable { mutableIntStateOf(3) }
+    var isFavorite by rememberSaveable { mutableStateOf(false) }
 
-    Box {
-        Scaffold(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            topBar = {
-                MovieTopBar(
-                    scrollBehavior = scrollBehavior,
-                    onNavIconClick = onBackClick,
-                    actions = {
-                        IconButton(
-                            onClick = {
-                                onEvent(FavoriteEvent.AddMovie(state.movie))
-                                Toast.makeText(context, "Added to Favorites", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.FavoriteBorder,
-                                contentDescription = "Favorite"
-                            )
-                        }
-                    }
-                )
-            },
-            contentWindowInsets = WindowInsets.waterfall,
-            content = {
-                AnimatedVisibility(visible = !state.isLoading, enter = fadeIn()) {
-                    LazyColumn(
-                        contentPadding = it,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        content = {
-                            item {
-                                Header(movie = state.movie)
-                            }
-                            item {
-                                Body(
-                                    state = state,
-                                    onSummaryClick = {
-                                        maxLines = if (maxLines == 3) Int.MAX_VALUE else 3
-                                    },
-                                    maxLines = maxLines
-                                )
+    when (favoritesState) {
+        FavoritesUiState.Loading -> LoadingState()
+        is FavoritesUiState.Success -> {
+            for (favoriteMovie in favoritesState.movies) {
+                isFavorite = favoriteMovie.id == movieState.movie.id
+            }
+            Scaffold(
+                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                topBar = {
+                    MovieTopBar(
+                        scrollBehavior = scrollBehavior,
+                        onNavIconClick = onBackClick,
+                        actions = {
+                            if (isFavorite) {
+                                IconButton(
+                                    onClick = {
+                                        onEvent(
+                                            FavoriteEvent.DeleteMovie(
+                                                FavoriteMovie(
+                                                    id = movieState.movie.id,
+                                                    name = movieState.movie.name,
+                                                    genres = movieState.movie.genres,
+                                                    rating = movieState.movie.rating?.average,
+                                                    image = movieState.movie.image?.medium.toString()
+                                                )
+                                            )
+                                        )
+                                        isFavorite = false
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Favorite,
+                                        contentDescription = "Favorite"
+                                    )
+                                }
+                            } else {
+                                IconButton(
+                                    onClick = {
+                                        onEvent(FavoriteEvent.AddMovie(movieState.movie))
+                                        isFavorite = true
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.FavoriteBorder,
+                                        contentDescription = "Favorite"
+                                    )
+                                }
                             }
                         }
                     )
+                },
+                contentWindowInsets = WindowInsets.waterfall,
+                content = {
+                    AnimatedVisibility(visible = !movieState.isLoading, enter = fadeIn()) {
+                        LazyColumn(
+                            contentPadding = it,
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            content = {
+                                item {
+                                    Header(movie = movieState.movie)
+                                }
+                                item {
+                                    Body(
+                                        state = movieState,
+                                        onSummaryClick = {
+                                            maxLines = if (maxLines == 3) Int.MAX_VALUE else 3
+                                        },
+                                        maxLines = maxLines
+                                    )
+                                }
+                            }
+                        )
+                    }
                 }
-            }
-        )
-
-        if (state.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
+            )
         }
+    }
 
-        if (state.isError) {
-            RetrySection(onClick = onRetry)
+
+
+    if (movieState.isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
         }
+    }
+
+    if (movieState.isError) {
+        RetrySection(onClick = onRetry)
     }
 }
 
