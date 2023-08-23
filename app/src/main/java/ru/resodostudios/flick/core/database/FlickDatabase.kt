@@ -2,7 +2,7 @@ package ru.resodostudios.flick.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.resodostudios.flick.core.database.dao.MovieDao
+import ru.resodostudios.flick.core.database.dao.FavoriteMoviesDao
 import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 
 @Database(
@@ -14,5 +14,5 @@ import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 )
 abstract class FlickDatabase : RoomDatabase() {
 
-    abstract fun movieDao(): MovieDao
+    abstract fun movieDao(): FavoriteMoviesDao
 }

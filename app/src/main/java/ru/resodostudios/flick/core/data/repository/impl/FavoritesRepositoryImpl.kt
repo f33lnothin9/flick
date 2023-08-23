@@ -2,12 +2,12 @@ package ru.resodostudios.flick.core.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
 import ru.resodostudios.flick.core.data.repository.FavoritesRepository
-import ru.resodostudios.flick.core.database.dao.MovieDao
+import ru.resodostudios.flick.core.database.dao.FavoriteMoviesDao
 import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 import javax.inject.Inject
 
 class FavoritesRepositoryImpl @Inject constructor(
-    private val dao: MovieDao
+    private val dao: FavoriteMoviesDao
 ) : FavoritesRepository {
 
     override suspend fun upsertMovie(movie: FavoriteMovieEntity) = dao.upsertMovie(movie)

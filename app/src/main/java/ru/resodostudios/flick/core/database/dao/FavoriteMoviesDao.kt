@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 
 @Dao
-interface MovieDao {
+interface FavoriteMoviesDao {
 
     @Upsert
     suspend fun upsertMovie(movie: FavoriteMovieEntity)
