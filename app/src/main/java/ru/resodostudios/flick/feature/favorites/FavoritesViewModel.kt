@@ -16,12 +16,13 @@ class FavoritesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _movies =
-        repository.getMovies().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        repository.getMovies()
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     private val _state = MutableStateFlow(FavoritesUiState())
     val state = combine(_state, _movies) { state, movies ->
         state.copy(
             movies = movies
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), FavoritesUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), FavoritesUiState())
 }

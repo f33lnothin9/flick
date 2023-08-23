@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,19 +21,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Size
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.presentation.MovieViewModel
@@ -58,26 +56,21 @@ internal fun FavoritesScreen(
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_empty))
 
     if (state.movies.isNotEmpty()) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
+        LazyVerticalGrid(
+            modifier = Modifier.fillMaxSize(),
+            columns = GridCells.Adaptive(300.dp)
         ) {
             items(state.movies) { movie ->
                 ListItem(
                     headlineContent = { Text(text = movie.name.toString()) },
                     leadingContent = {
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(movie.image)
-                                .crossfade(400)
-                                .size(Size.ORIGINAL)
-                                .transformations()
-                                .build(),
-                            contentDescription = "Image",
+                        FlickAsyncImage(
+                            url = movie.image.toString(),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .clip(RoundedCornerShape(12.dp))
-                                .size(56.dp),
-                            filterQuality = FilterQuality.Low,
-                            contentScale = ContentScale.Crop
+                                .size(56.dp)
                         )
                     },
                     trailingContent = {
@@ -99,12 +92,12 @@ internal fun FavoritesScreen(
             contentAlignment = Alignment.Center
         ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.padding(bottom = 50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 LottieAnimation(
-                    modifier = Modifier.size(256.dp),
+                    modifier = Modifier.size(200.dp),
                     composition = lottieComposition
                 )
                 Text(

@@ -14,6 +14,7 @@ import coil.size.Size
 fun FlickAsyncImage(
     url: String,
     contentDescription: String?,
+    contentScale: ContentScale,
     modifier: Modifier = Modifier
 ) {
     AsyncImage(
@@ -24,7 +25,7 @@ fun FlickAsyncImage(
             .build(),
         contentDescription = contentDescription,
         modifier = modifier,
-        contentScale = ContentScale.FillWidth
+        contentScale = contentScale
     )
 }
 
