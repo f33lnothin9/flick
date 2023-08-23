@@ -34,7 +34,7 @@ fun LoadingState() {
 }
 
 @Composable
-fun ErrorState(errorMessage: String?, animationId: Int) {
+fun EmptyState(message: String?, animationId: Int) {
 
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(animationId))
     val progress by animateLottieCompositionAsState(
@@ -59,7 +59,7 @@ fun ErrorState(errorMessage: String?, animationId: Int) {
                 progress = { progress }
             )
             Text(
-                text = errorMessage.toString(),
+                text = message.toString(),
                 maxLines = 2,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,

@@ -25,7 +25,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.model.data.Person
-import ru.resodostudios.flick.core.ui.ErrorState
+import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.people.PeopleUiState.Error
 import ru.resodostudios.flick.feature.people.PeopleUiState.Loading
@@ -64,8 +64,8 @@ internal fun PeopleScreen(
             }
         }
 
-        is Error -> ErrorState(
-            errorMessage = peopleState.errorMessage,
+        is Error -> EmptyState(
+            message = peopleState.errorMessage,
             animationId = R.raw.anim_error_1
         )
     }

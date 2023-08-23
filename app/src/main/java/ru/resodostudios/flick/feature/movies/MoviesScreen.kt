@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.model.data.Movie
-import ru.resodostudios.flick.core.ui.ErrorState
+import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.movies.component.MovieCard
 
@@ -53,8 +53,8 @@ internal fun MoviesScreen(
             )
         }
 
-        is MoviesUiState.Error -> ErrorState(
-            errorMessage = moviesState.errorMessage,
+        is MoviesUiState.Error -> EmptyState(
+            message = moviesState.errorMessage,
             animationId = R.raw.anim_error_2
         )
     }
