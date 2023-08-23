@@ -1,7 +1,7 @@
 package ru.resodostudios.flick.feature.favorites
 
-import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
+import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 
 data class FavoritesUiState(
-    val movies: List<FavoriteMovie> = emptyList()
+    val movies: List<FavoriteMovieEntity> = emptyList()
 )

@@ -1,13 +1,13 @@
 package ru.resodostudios.flick.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.resodostudios.flick.feature.favorites.domain.model.FavoriteMovie
+import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 
 interface FavoritesRepository {
 
-    suspend fun upsertMovie(movie: FavoriteMovie)
+    suspend fun upsertMovie(movie: FavoriteMovieEntity)
 
-    suspend fun deleteMovie(movie: FavoriteMovie)
+    suspend fun deleteMovie(movie: FavoriteMovieEntity)
 
-    fun getMovies(): Flow<List<FavoriteMovie>>
+    fun getMovies(): Flow<List<FavoriteMovieEntity>>
 }
