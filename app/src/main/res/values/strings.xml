@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">Flick</string>
 
     <string name="top_app_bar_action_icon_description">Settings</string>
+    <string name="top_app_bar_navigation_icon_description">Search</string>
 
     <string name="movies">Movies</string>
     <string name="people">People</string>

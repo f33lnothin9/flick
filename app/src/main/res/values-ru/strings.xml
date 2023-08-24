@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="top_app_bar_action_icon_description">Настройки</string>
+    <string name="top_app_bar_navigation_icon_description">Поиск</string>
 
     <string name="movies">Кино</string>
     <string name="people">Люди</string>

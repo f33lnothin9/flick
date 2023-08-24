@@ -2,7 +2,6 @@ package ru.resodostudios.flick.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -45,7 +44,6 @@ import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.navigation.FlickNavHost
 import ru.resodostudios.flick.navigation.TopLevelDestination
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FlickApp(
     networkMonitor: NetworkMonitor,
@@ -112,10 +110,15 @@ fun FlickApp(
                 if (destination != null) {
                     FlickTopAppBar(
                         titleRes = destination.titleTextId,
+                        navigationIcon = FlickIcons.Search,
+                        navigationIconContentDescription = stringResource(
+                            id = R.string.top_app_bar_navigation_icon_description
+                        ),
                         actionIcon = FlickIcons.Settings,
                         actionIconContentDescription = stringResource(
                             id = R.string.top_app_bar_action_icon_description,
                         ),
+                        onNavigationClick = { },
                         onActionClick = { showSettingsDialog = true }
                     )
                 }
