@@ -118,7 +118,7 @@ fun FlickApp(
                         actionIconContentDescription = stringResource(
                             id = R.string.top_app_bar_action_icon_description,
                         ),
-                        onNavigationClick = { },
+                        onNavigationClick = { appState.navigateToSearch() },
                         onActionClick = { showSettingsDialog = true }
                     )
                 }

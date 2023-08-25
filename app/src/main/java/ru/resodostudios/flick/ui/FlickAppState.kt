@@ -22,6 +22,7 @@ import ru.resodostudios.flick.feature.movies.navigation.moviesRoute
 import ru.resodostudios.flick.feature.movies.navigation.navigateToMoviesGraph
 import ru.resodostudios.flick.feature.people.navigation.navigateToPeople
 import ru.resodostudios.flick.feature.people.navigation.peopleNavigationRoute
+import ru.resodostudios.flick.feature.search.navigation.navigateToSearch
 import ru.resodostudios.flick.navigation.TopLevelDestination
 import ru.resodostudios.flick.navigation.TopLevelDestination.FAVORITES
 import ru.resodostudios.flick.navigation.TopLevelDestination.MOVIES
@@ -82,7 +83,7 @@ class FlickAppState(
             initialValue = false,
         )
 
-    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
+    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
@@ -98,5 +99,9 @@ class FlickAppState(
             PEOPLE -> navController.navigateToPeople(topLevelNavOptions)
             FAVORITES -> navController.navigateToFavorites(topLevelNavOptions)
         }
+    }
+
+    fun navigateToSearch() {
+        navController.navigateToSearch()
     }
 }

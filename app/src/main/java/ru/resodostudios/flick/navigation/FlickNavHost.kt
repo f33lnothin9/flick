@@ -8,6 +8,7 @@ import ru.resodostudios.flick.feature.movie.navigation.navigateToMovie
 import ru.resodostudios.flick.feature.movies.navigation.MOVIES_GRAPH_ROUTE_PATTERN
 import ru.resodostudios.flick.feature.movies.navigation.moviesGraph
 import ru.resodostudios.flick.feature.people.navigation.peopleScreen
+import ru.resodostudios.flick.feature.search.navigation.searchScreen
 import ru.resodostudios.flick.ui.FlickAppState
 
 @Composable
@@ -32,5 +33,10 @@ fun FlickNavHost(
         )
         peopleScreen()
         favoritesScreen()
+        searchScreen(
+            onBackClick = navController::popBackStack,
+            onMovieClick = { },
+            onPersonClick = { }
+        )
     }
 }
