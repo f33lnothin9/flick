@@ -1,5 +1,6 @@
-package ru.resodostudios.flick.feature.search.presentation.components
+package ru.resodostudios.flick.core.designsystem.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,23 +25,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
+    @StringRes titleRes: Int,
     onSearch: (String) -> Unit,
-    onClearSearch: (String) -> Unit,
-    onMenuClick: () -> Unit,
-    content: LazyListScope.() -> Unit,
-    title: String
+    onBackClick: () -> Unit,
+    content: LazyListScope.() -> Unit
 ) {
 
-    var text by rememberSaveable { mutableStateOf("") }
-    var active by rememberSaveable { mutableStateOf(false) }
+    var query by rememberSaveable { mutableStateOf("") }
+    var active by rememberSaveable { mutableStateOf(true) }
 
     val focusManager = LocalFocusManager.current
 
@@ -53,38 +53,27 @@ fun SearchBar(
     ) {
         SearchBar(
             modifier = Modifier.align(Alignment.TopCenter),
-            query = text,
+            query = query,
             onQueryChange = {
-                text = it
+                query = it
                 onSearch(it)
             },
             onSearch = { focusManager.clearFocus() },
             active = active,
             onActiveChange = { active = it },
-            placeholder = { Text(title) },
+            placeholder = { Text(text = stringResource(id = titleRes)) },
             leadingIcon = {
-                if (active) {
-                    IconButton(
-                        onClick = {
-                            active = false
-                            text = ""
-                            onClearSearch("")
-                        }
-                    ) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = null)
-                    }
-                } else {
-                    IconButton(onClick = onMenuClick) {
-                        Icon(Icons.Default.Menu, contentDescription = null)
-                    }
+                IconButton(
+                    onClick = onBackClick
+                ) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = null)
                 }
             },
             trailingIcon = {
-                if (text.isNotBlank()) {
+                if (query.isNotBlank()) {
                     IconButton(
                         onClick = {
-                            text = ""
-                            onClearSearch("")
+                            query = ""
                         }
                     ) {
                         Icon(Icons.Default.Close, contentDescription = null)
