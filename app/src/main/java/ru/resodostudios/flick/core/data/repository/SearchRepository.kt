@@ -1,12 +1,12 @@
 package ru.resodostudios.flick.core.data.repository
 
-import retrofit2.Response
-import ru.resodostudios.flick.core.network.model.NetworkSearchedMovie
-import ru.resodostudios.flick.core.network.model.NetworkSearchedPeople
+import kotlinx.coroutines.flow.Flow
+import ru.resodostudios.flick.core.model.data.SearchMovie
+import ru.resodostudios.flick.core.model.data.SearchPeople
 
 interface SearchRepository {
 
-    suspend fun searchMovies(query: String): Response<List<NetworkSearchedMovie>>
+    fun searchMovies(query: String): Flow<List<SearchMovie>>
 
-    suspend fun searchPeople(query: String): Response<List<NetworkSearchedPeople>>
+    fun searchPeople(query: String): Flow<List<SearchPeople>>
 }

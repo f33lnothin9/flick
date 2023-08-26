@@ -1,38 +1,36 @@
 package ru.resodostudios.flick.core.data.repository.impl
 
-import okhttp3.ResponseBody.Companion.toResponseBody
-import okio.IOException
-import retrofit2.HttpException
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import ru.resodostudios.flick.core.common.network.Dispatcher
+import ru.resodostudios.flick.core.common.network.FlickDispatchers
 import ru.resodostudios.flick.core.data.repository.SearchRepository
+import ru.resodostudios.flick.core.model.data.SearchMovie
+import ru.resodostudios.flick.core.model.data.SearchPeople
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
-import ru.resodostudios.flick.core.network.model.NetworkSearchedMovie
-import ru.resodostudios.flick.core.network.model.NetworkSearchedPeople
+import ru.resodostudios.flick.core.network.model.asExternalModel
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
+    @Dispatcher(FlickDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     private val datasource: FlickNetworkDataSource
 ) : SearchRepository {
 
-    override suspend fun searchMovies(query: String): Response<List<NetworkSearchedMovie>> {
-        val response = try {
-            datasource.searchMovies(query)
-        } catch (e: HttpException) {
-            return Response.error(e.code(), e.message?.toResponseBody()!!)
-        } catch(e: IOException) {
-            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
-        }
-        return Response.success(response.body())
-    }
+    override fun searchMovies(query: String): Flow<List<SearchMovie>> = flow {
+        emit(
+            datasource
+                .searchMovies(query)
+                .map { it.asExternalModel() }
+        )
+    }.flowOn(ioDispatcher)
 
-    override suspend fun searchPeople(query: String): Response<List<NetworkSearchedPeople>> {
-        val response = try {
-            datasource.searchPeople(query)
-        } catch (e: HttpException) {
-            return Response.error(e.code(), e.message?.toResponseBody()!!)
-        } catch(e: IOException) {
-            return Response.error(e.hashCode(), e.message?.toResponseBody()!!)
-        }
-        return Response.success(response.body())
-    }
+    override fun searchPeople(query: String): Flow<List<SearchPeople>> = flow {
+        emit(
+            datasource
+                .searchPeople(query)
+                .map { it.asExternalModel() }
+        )
+    }.flowOn(ioDispatcher)
 }
