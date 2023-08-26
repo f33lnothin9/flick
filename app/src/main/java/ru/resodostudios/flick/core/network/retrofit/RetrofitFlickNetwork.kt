@@ -14,8 +14,8 @@ import ru.resodostudios.flick.core.network.model.Crew
 import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
-import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
-import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
+import ru.resodostudios.flick.core.network.model.NetworkSearchedMovie
+import ru.resodostudios.flick.core.network.model.NetworkSearchedPeople
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,12 +35,12 @@ private interface RetrofitFlickNetworkApi {
     @GET("search/shows")
     suspend fun searchMovies(
         @Query("q") query: String
-    ): Response<List<SearchedMovie>>
+    ): Response<List<NetworkSearchedMovie>>
 
     @GET("search/people")
     suspend fun searchPeople(
         @Query("q") query: String
-    ): Response<List<SearchedPeople>>
+    ): Response<List<NetworkSearchedPeople>>
 
     @GET("shows/{id}/cast")
     suspend fun getCast(
@@ -77,10 +77,10 @@ class RetrofitFlickNetwork @Inject constructor(
     override suspend fun getPeople(): List<NetworkPerson> =
         networkApi.getPeople()
 
-    override suspend fun searchMovies(query: String): Response<List<SearchedMovie>> =
+    override suspend fun searchMovies(query: String): Response<List<NetworkSearchedMovie>> =
         networkApi.searchMovies(query = query)
 
-    override suspend fun searchPeople(query: String): Response<List<SearchedPeople>> =
+    override suspend fun searchPeople(query: String): Response<List<NetworkSearchedPeople>> =
         networkApi.searchPeople(query = query)
 
     override suspend fun getCast(id: Int): Response<List<Cast>> =

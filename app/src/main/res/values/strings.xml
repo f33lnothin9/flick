@@ -7,6 +7,7 @@
     <string name="movies">Movies</string>
     <string name="people">People</string>
     <string name="favorites">Favorites</string>
+    <string name="search">Search</string>
 
     <string name="not_connected">⛔ You aren’t connected to the internet</string>
 </resources>

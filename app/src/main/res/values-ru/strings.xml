@@ -6,5 +6,6 @@
     <string name="movies">Кино</string>
     <string name="people">Люди</string>
     <string name="favorites">Избранное</string>
+    <string name="search">Поиск</string>
     <string name="not_connected">⛔ Вы не подключены к интернету</string>
 </resources>

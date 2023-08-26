@@ -6,8 +6,8 @@ import ru.resodostudios.flick.core.network.model.Crew
 import ru.resodostudios.flick.core.network.model.Movie
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
-import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
-import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
+import ru.resodostudios.flick.core.network.model.NetworkSearchedMovie
+import ru.resodostudios.flick.core.network.model.NetworkSearchedPeople
 
 interface FlickNetworkDataSource {
 
@@ -17,9 +17,9 @@ interface FlickNetworkDataSource {
 
     suspend fun getPeople(): List<NetworkPerson>
 
-    suspend fun searchMovies(query: String): Response<List<SearchedMovie>>
+    suspend fun searchMovies(query: String): Response<List<NetworkSearchedMovie>>
 
-    suspend fun searchPeople(query: String): Response<List<SearchedPeople>>
+    suspend fun searchPeople(query: String): Response<List<NetworkSearchedPeople>>
 
     suspend fun getCast(id: Int): Response<List<Cast>>
 

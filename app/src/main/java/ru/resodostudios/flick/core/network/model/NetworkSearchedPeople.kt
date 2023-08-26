@@ -1,9 +1,9 @@
-package ru.resodostudios.flick.feature.search.data.model
+package ru.resodostudios.flick.core.network.model
 
 import kotlinx.serialization.Serializable
 import ru.resodostudios.flick.core.network.model.NetworkPerson
 
 @Serializable
-data class SearchedPeople(
+data class NetworkSearchedPeople(
     val person: NetworkPerson? = null
 )

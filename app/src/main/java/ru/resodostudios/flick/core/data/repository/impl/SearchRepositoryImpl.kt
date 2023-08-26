@@ -6,15 +6,15 @@ import retrofit2.HttpException
 import retrofit2.Response
 import ru.resodostudios.flick.core.data.repository.SearchRepository
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
-import ru.resodostudios.flick.feature.search.data.model.SearchedMovie
-import ru.resodostudios.flick.feature.search.data.model.SearchedPeople
+import ru.resodostudios.flick.core.network.model.NetworkSearchedMovie
+import ru.resodostudios.flick.core.network.model.NetworkSearchedPeople
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
     private val datasource: FlickNetworkDataSource
 ) : SearchRepository {
 
-    override suspend fun searchMovies(query: String): Response<List<SearchedMovie>> {
+    override suspend fun searchMovies(query: String): Response<List<NetworkSearchedMovie>> {
         val response = try {
             datasource.searchMovies(query)
         } catch (e: HttpException) {
@@ -25,7 +25,7 @@ class SearchRepositoryImpl @Inject constructor(
         return Response.success(response.body())
     }
 
-    override suspend fun searchPeople(query: String): Response<List<SearchedPeople>> {
+    override suspend fun searchPeople(query: String): Response<List<NetworkSearchedPeople>> {
         val response = try {
             datasource.searchPeople(query)
         } catch (e: HttpException) {
