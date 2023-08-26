@@ -41,6 +41,7 @@ import ru.resodostudios.flick.core.designsystem.component.FlickNavigationRail
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationRailItem
 import ru.resodostudios.flick.core.designsystem.component.FlickTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
+import ru.resodostudios.flick.feature.settings.SettingsBottomSheet
 import ru.resodostudios.flick.navigation.FlickNavHost
 import ru.resodostudios.flick.navigation.TopLevelDestination
 
@@ -67,8 +68,14 @@ fun FlickApp(
         }
     }
 
-    var showSettingsDialog by rememberSaveable {
+    var showSettings by rememberSaveable {
         mutableStateOf(false)
+    }
+
+    if (showSettings) {
+        SettingsBottomSheet(
+            onDismiss = { showSettings = false }
+        )
     }
 
     Scaffold(
@@ -119,7 +126,7 @@ fun FlickApp(
                             id = R.string.top_app_bar_action_icon_description,
                         ),
                         onNavigationClick = { appState.navigateToSearch() },
-                        onActionClick = { showSettingsDialog = true }
+                        onActionClick = { showSettings = true }
                     )
                 }
 

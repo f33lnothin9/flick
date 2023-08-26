@@ -7,5 +7,7 @@
     <string name="people">Люди</string>
     <string name="favorites">Избранное</string>
     <string name="search">Поиск</string>
+    <string name="about">О нас</string>
     <string name="not_connected">⛔ Вы не подключены к интернету</string>
+    <string name="version">Версия</string>
 </resources>
