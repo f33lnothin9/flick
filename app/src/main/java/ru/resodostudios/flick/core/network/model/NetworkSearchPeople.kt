@@ -5,7 +5,7 @@ import ru.resodostudios.flick.core.model.data.SearchPeople
 
 @Serializable
 data class NetworkSearchPeople(
-    val person: NetworkPerson? = null
+    val person: NetworkPerson = NetworkPerson()
 )
 
 fun NetworkSearchPeople.asExternalModel() = SearchPeople(

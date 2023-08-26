@@ -1,14 +1,11 @@
 package ru.resodostudios.flick.core.designsystem.component
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
@@ -28,7 +25,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +33,7 @@ fun SearchBar(
     @StringRes titleRes: Int,
     onSearch: (String) -> Unit,
     onBackClick: () -> Unit,
-    content: LazyListScope.() -> Unit
+    content: @Composable (ColumnScope.() -> Unit)
 ) {
 
     var query by rememberSaveable { mutableStateOf("") }
@@ -80,14 +76,8 @@ fun SearchBar(
                     }
                 }
             },
-            windowInsets = WindowInsets.statusBars
-        ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                content = content
-            )
-        }
+            windowInsets = WindowInsets.statusBars,
+            content = content
+        )
     }
 }
