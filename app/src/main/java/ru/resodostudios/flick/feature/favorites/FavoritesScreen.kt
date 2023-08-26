@@ -31,6 +31,7 @@ import ru.resodostudios.flick.feature.movie.presentation.MovieViewModel
 
 @Composable
 internal fun FavoritesRoute(
+    onMovieClick: (Int) -> Unit,
     favoriteViewModel: FavoritesViewModel = hiltViewModel(),
     movieViewModel: MovieViewModel = hiltViewModel()
 ) {
@@ -40,12 +41,14 @@ internal fun FavoritesRoute(
 
     FavoritesScreen(
         favoritesState = favoritesState,
-        onDeleteClick = movieViewModel::onEvent
+        onDeleteClick = movieViewModel::onEvent,
+        onMovieClick = onMovieClick
     )
 }
 
 @Composable
 internal fun FavoritesScreen(
+    onMovieClick: (Int) -> Unit,
     favoritesState: FavoritesUiState,
     onDeleteClick: (FavoriteEvent) -> Unit
 ) {
@@ -59,6 +62,7 @@ internal fun FavoritesScreen(
             ) {
                 favorites(
                     movies = favoritesState.movies,
+                    onMovieClick = onMovieClick,
                     onDeleteClick = onDeleteClick
                 )
             }
@@ -73,6 +77,7 @@ internal fun FavoritesScreen(
 
 private fun LazyGridScope.favorites(
     movies: List<FavoriteMovie>,
+    onMovieClick: (Int) -> Unit,
     onDeleteClick: (FavoriteEvent) -> Unit
 ) {
     items(movies) { movie ->
@@ -103,7 +108,7 @@ private fun LazyGridScope.favorites(
                     }"
                 )
             },
-            modifier = Modifier.clickable { }
+            modifier = Modifier.clickable { onMovieClick(movie.id) }
         )
     }
 }

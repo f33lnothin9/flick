@@ -12,10 +12,14 @@ fun NavController.navigateToFavorites(navOptions: NavOptions? = null) {
     this.navigate(favoritesNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.favoritesScreen() {
+fun NavGraphBuilder.favoritesScreen(
+    onMovieClick: (Int) -> Unit
+) {
     composable(
         route = favoritesNavigationRoute
     ) {
-        FavoritesRoute()
+        FavoritesRoute(
+            onMovieClick = onMovieClick
+        )
     }
 }

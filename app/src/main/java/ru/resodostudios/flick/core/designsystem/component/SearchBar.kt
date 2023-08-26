@@ -37,7 +37,6 @@ fun SearchBar(
 ) {
 
     var query by rememberSaveable { mutableStateOf("") }
-    var active by rememberSaveable { mutableStateOf(true) }
 
     val focusManager = LocalFocusManager.current
 
@@ -55,22 +54,18 @@ fun SearchBar(
                 onSearch(it)
             },
             onSearch = { focusManager.clearFocus() },
-            active = active,
-            onActiveChange = { active = it },
+            active = true,
+            onActiveChange = { },
             placeholder = { Text(text = stringResource(id = titleRes)) },
             leadingIcon = {
-                IconButton(
-                    onClick = onBackClick
-                ) {
+                IconButton(onClick = onBackClick) {
                     Icon(Icons.Default.ArrowBack, contentDescription = null)
                 }
             },
             trailingIcon = {
                 if (query.isNotBlank()) {
                     IconButton(
-                        onClick = {
-                            query = ""
-                        }
+                        onClick = { query = "" }
                     ) {
                         Icon(Icons.Default.Close, contentDescription = null)
                     }
