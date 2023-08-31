@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.kotlinSerialization)
-    kotlin("kapt")
 }
 
 android {
@@ -88,7 +87,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Retrofit
@@ -111,10 +110,6 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie.compose)
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 ksp {
