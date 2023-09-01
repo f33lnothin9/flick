@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -77,7 +78,11 @@ private fun LazyGridScope.people(
     items(people) { person ->
         ListItem(
             headlineContent = { Text(text = person.name) },
-            supportingContent = { Text(text = person.country.name) },
+            supportingContent = {
+                Text(
+                    text = person.country.name.ifBlank { stringResource(id = R.string.country_empty) }
+                )
+            },
             leadingContent = {
                 Box {
                     AsyncImage(
