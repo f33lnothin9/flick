@@ -68,9 +68,9 @@ fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
             ) {
                 Text(
                     text = movie.name,
-                    maxLines = 2,
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = Typography.titleLarge,
+                    style = Typography.titleMedium,
                     textAlign = TextAlign.Start,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier
@@ -78,7 +78,7 @@ fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
 
                 Text(
                     text = movie.genres.take(2).joinToString(", "),
-                    style = Typography.titleSmall,
+                    style = Typography.bodyMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )

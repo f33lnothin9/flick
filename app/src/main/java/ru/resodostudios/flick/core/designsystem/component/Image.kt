@@ -20,7 +20,7 @@ fun FlickAsyncImage(
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
-            .crossfade(true)
+            .crossfade(500)
             .size(Size.ORIGINAL)
             .build(),
         contentDescription = contentDescription,
@@ -38,7 +38,7 @@ fun FlickSubcomposeAsyncImage(
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
-            .crossfade(true)
+            .crossfade(500)
             .size(Size.ORIGINAL)
             .build(),
         contentDescription = contentDescription,
