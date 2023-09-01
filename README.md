@@ -12,7 +12,7 @@ It's an app written in [Kotlin][1] that shows movies using [Jetpack Compose][7] 
 - **Favorites** - Keep track of your favorite TV shows by adding them to your favorites list.
 
 ## Screenshots
-![Screenshots](images/Flick.png "Screenshots")
+![Screenshots](images/Flick.jpg "Screenshots")
 
 ## Libraries
 * [ViewModel][4]
