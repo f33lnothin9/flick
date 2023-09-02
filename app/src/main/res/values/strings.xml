@@ -11,6 +11,7 @@
     <string name="about">About</string>
     <string name="version">Version</string>
     <string name="country_empty">Unknown country</string>
+    <string name="summary">Summary</string>
 
     <string name="not_connected">⛔ You aren’t connected to the internet</string>
 </resources>

@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.waterfall
@@ -25,8 +23,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -51,6 +47,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -112,10 +109,8 @@ internal fun MovieScreen(
     onRetry: () -> Unit,
     onBackClick: () -> Unit
 ) {
-
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    var maxLines by rememberSaveable { mutableIntStateOf(3) }
     var isFavorite by rememberSaveable { mutableStateOf(false) }
 
     when (favoritesState) {
@@ -181,11 +176,7 @@ internal fun MovieScreen(
                                 }
                                 item {
                                     Body(
-                                        state = movieState,
-                                        onSummaryClick = {
-                                            maxLines = if (maxLines == 3) Int.MAX_VALUE else 3
-                                        },
-                                        maxLines = maxLines
+                                        state = movieState
                                     )
                                 }
                             }
@@ -196,17 +187,8 @@ internal fun MovieScreen(
         }
     }
 
-
-
-    if (movieState.isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    }
-
-    if (movieState.isError) {
-        RetrySection(onClick = onRetry)
-    }
+    if (movieState.isLoading) LoadingState()
+    if (movieState.isError) RetrySection(onClick = onRetry)
 }
 
 @Composable
@@ -285,39 +267,29 @@ private fun Header(movie: Movie) {
     HorizontalDivider()
 }
 
-@ExperimentalMaterial3Api
 @Composable
-private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int) {
-
-    Spacer(modifier = Modifier.height(8.dp))
-
+private fun Body(state: MovieUiState) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Card(
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-            onClick = onSummaryClick
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(16.dp)
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = "Summary",
-                    style = Typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                Text(
-                    text = HtmlCompat.fromHtml(
-                        state.movie.summary ?: "",
-                        HtmlCompat.FROM_HTML_MODE_COMPACT
-                    ).toString(),
-                    style = Typography.bodyLarge,
-                    maxLines = maxLines,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
+            Text(
+                text = stringResource(id = R.string.summary),
+                style = Typography.titleMedium,
+                color = MaterialTheme.colorScheme.secondary
+            )
+            Text(
+                text = HtmlCompat.fromHtml(
+                    state.movie.summary.toString(),
+                    HtmlCompat.FROM_HTML_MODE_COMPACT
+                ).toString(),
+                style = Typography.bodyMedium,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
         }
 
         var castRows by remember { mutableIntStateOf(4) }
@@ -331,14 +303,13 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
         if (state.cast.isNotEmpty()) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 Text(
                     text = "Cast",
-                    style = Typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(start = 32.dp, top = 16.dp)
+                    style = Typography.titleMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(start = 16.dp)
                 )
 
                 LazyHorizontalGrid(
@@ -346,16 +317,15 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                     modifier = Modifier
                         .then(
                             when (state.cast.size) {
-                                3 -> Modifier.height(216.dp)
-                                2 -> Modifier.height(144.dp)
-                                1 -> Modifier.height(72.dp)
-                                else -> Modifier.height(288.dp)
+                                3 -> Modifier.height(180.dp)
+                                2 -> Modifier.height(120.dp)
+                                1 -> Modifier.height(60.dp)
+                                else -> Modifier.height(240.dp)
                             }
                         )
                 ) {
                     items(state.cast) { cast ->
                         ListItem(
-                            modifier = Modifier.padding(start = 16.dp),
                             headlineContent = { Text(text = cast.person?.name.toString()) },
                             leadingContent = {
                                 Box {
@@ -368,7 +338,7 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                                             .transformations(CircleCropTransformation())
                                             .build(),
                                         contentDescription = "Image",
-                                        modifier = Modifier.size(56.dp),
+                                        modifier = Modifier.size(40.dp),
                                         filterQuality = FilterQuality.Low
                                     )
                                 }
@@ -387,15 +357,14 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
             ) {
                 Text(
                     text = "Crew",
-                    style = Typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(start = 32.dp)
+                    style = Typography.titleMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(start = 16.dp)
                 )
 
                 LazyRow {
                     items(state.crew) { crew ->
                         ListItem(
-                            modifier = Modifier.padding(start = 16.dp),
                             headlineContent = { Text(text = crew.person?.name.toString()) },
                             leadingContent = {
                                 Box {
@@ -408,7 +377,7 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                                             .transformations(CircleCropTransformation())
                                             .build(),
                                         contentDescription = "Image",
-                                        modifier = Modifier.size(56.dp),
+                                        modifier = Modifier.size(40.dp),
                                         filterQuality = FilterQuality.Low
                                     )
                                 }
@@ -419,11 +388,5 @@ private fun Body(state: MovieUiState, onSummaryClick: () -> Unit, maxLines: Int)
                 }
             }
         }
-
-        Spacer(
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-                .navigationBarsPadding()
-        )
     }
 }

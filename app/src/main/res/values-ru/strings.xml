@@ -9,6 +9,7 @@
     <string name="search">Поиск</string>
     <string name="about">О нас</string>
     <string name="country_empty">Страна не указана</string>
+    <string name="summary">Описание</string>
     <string name="not_connected">⛔ Вы не подключены к интернету</string>
     <string name="version">Версия</string>
 </resources>
