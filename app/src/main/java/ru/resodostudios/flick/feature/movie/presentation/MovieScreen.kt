@@ -242,7 +242,7 @@ private fun Header(movie: Movie) {
 
                 Text(
                     text = (movie.network?.country?.name
-                        ?: "Unknown") + ", ${movie.averageRuntime} minutes",
+                        ?: "Unknown") + ", ${movie.averageRuntime} " + stringResource(id = R.string.minutes),
                     style = Typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
@@ -300,7 +300,7 @@ private fun Body(state: MovieUiState) {
                 modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 Text(
-                    text = "Cast",
+                    text = stringResource(id = R.string.cast),
                     style = Typography.titleMedium,
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.padding(start = 16.dp)
@@ -346,7 +346,7 @@ private fun Body(state: MovieUiState) {
                 modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 Text(
-                    text = "Crew",
+                    text = stringResource(id = R.string.crew),
                     style = Typography.titleMedium,
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.padding(start = 16.dp)

@@ -12,6 +12,9 @@
     <string name="version">Version</string>
     <string name="country_empty">Unknown country</string>
     <string name="summary">Summary</string>
+    <string name="minutes">minutes</string>
+    <string name="crew">Crew</string>
+    <string name="cast">Cast</string>
 
     <string name="not_connected">⛔ You aren’t connected to the internet</string>
 </resources>
