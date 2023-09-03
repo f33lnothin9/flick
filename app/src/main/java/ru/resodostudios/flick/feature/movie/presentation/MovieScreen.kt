@@ -2,7 +2,6 @@ package ru.resodostudios.flick.feature.movie.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,10 +42,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -55,9 +52,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.transform.CircleCropTransformation
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.RetrySection
@@ -329,17 +323,13 @@ private fun Body(state: MovieUiState) {
                             headlineContent = { Text(text = cast.person?.name.toString()) },
                             leadingContent = {
                                 Box {
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(cast.person?.image?.medium)
-                                            .crossfade(400)
-                                            .size(256)
-                                            .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
-                                            .transformations(CircleCropTransformation())
-                                            .build(),
-                                        contentDescription = "Image",
-                                        modifier = Modifier.size(40.dp),
-                                        filterQuality = FilterQuality.Low
+                                    FlickAsyncImage(
+                                        url = cast.person?.image?.medium.toString(),
+                                        contentDescription = "Person image",
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(100))
+                                            .size(40.dp),
+                                        contentScale = ContentScale.Crop
                                     )
                                 }
                             },
@@ -368,17 +358,13 @@ private fun Body(state: MovieUiState) {
                             headlineContent = { Text(text = crew.person?.name.toString()) },
                             leadingContent = {
                                 Box {
-                                    AsyncImage(
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(crew.person?.image?.medium)
-                                            .crossfade(400)
-                                            .size(256)
-                                            .error(if (isSystemInDarkTheme()) R.drawable.ic_outlined_face_white else R.drawable.ic_outlined_face)
-                                            .transformations(CircleCropTransformation())
-                                            .build(),
-                                        contentDescription = "Image",
-                                        modifier = Modifier.size(40.dp),
-                                        filterQuality = FilterQuality.Low
+                                    FlickAsyncImage(
+                                        url = crew.person?.image?.medium.toString(),
+                                        contentDescription = "Person image",
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(100))
+                                            .size(40.dp),
+                                        contentScale = ContentScale.Crop
                                     )
                                 }
                             },
