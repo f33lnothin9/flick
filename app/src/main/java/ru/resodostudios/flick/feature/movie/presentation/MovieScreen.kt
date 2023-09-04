@@ -36,7 +36,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -166,10 +165,10 @@ internal fun MovieScreen(
                             verticalArrangement = Arrangement.spacedBy(8.dp),
                             content = {
                                 item {
-                                    Header(movie = movieState.movie)
+                                    MovieHeader(movie = movieState.movie)
                                 }
                                 item {
-                                    Body(
+                                    MovieBody(
                                         state = movieState
                                     )
                                 }
@@ -186,7 +185,7 @@ internal fun MovieScreen(
 }
 
 @Composable
-private fun Header(movie: Movie) {
+private fun MovieHeader(movie: Movie) {
     Row(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -262,7 +261,7 @@ private fun Header(movie: Movie) {
 }
 
 @Composable
-private fun Body(state: MovieUiState) {
+private fun MovieBody(state: MovieUiState) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -286,13 +285,9 @@ private fun Body(state: MovieUiState) {
             )
         }
 
-        var castRows by remember { mutableIntStateOf(4) }
+        var castSize by rememberSaveable { mutableIntStateOf(224) }
 
-        when (state.cast.size) {
-            3 -> castRows = 3
-            2 -> castRows = 2
-            1 -> castRows = 1
-        }
+        if (state.cast.size < 4 && state.cast.isNotEmpty()) castSize = 56 * state.cast.size
 
         if (state.cast.isNotEmpty()) {
             Column(
@@ -307,16 +302,8 @@ private fun Body(state: MovieUiState) {
                 )
 
                 LazyHorizontalGrid(
-                    rows = GridCells.Fixed(castRows),
-                    modifier = Modifier
-                        .then(
-                            when (state.cast.size) {
-                                3 -> Modifier.height(180.dp)
-                                2 -> Modifier.height(120.dp)
-                                1 -> Modifier.height(60.dp)
-                                else -> Modifier.height(240.dp)
-                            }
-                        )
+                    rows = GridCells.Adaptive(56.dp),
+                    modifier = Modifier.height(castSize.dp)
                 ) {
                     items(state.cast) { cast ->
                         ListItem(
