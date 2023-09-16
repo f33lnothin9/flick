@@ -1,6 +1,7 @@
 package ru.resodostudios.flick.core.designsystem.icon
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.LocalMovies
@@ -21,4 +22,5 @@ object FlickIcons {
     val Settings = Icons.Outlined.Settings
     val Delete = Icons.Outlined.Delete
     val Search = Icons.Outlined.Search
+    val ArrowBack = Icons.AutoMirrored.Outlined.ArrowBack
 }
