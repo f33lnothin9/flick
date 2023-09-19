@@ -1,5 +1,5 @@
 package ru.resodostudios.flick.core.model.data
 
-data class SearchPeople(
+data class SearchPerson(
     val person: Person
 )

@@ -12,22 +12,22 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import ru.resodostudios.flick.core.data.repository.SearchRepository
-import ru.resodostudios.flick.core.model.data.SearchMovie
+import ru.resodostudios.flick.core.domain.GetSearchContentsUseCase
+import ru.resodostudios.flick.core.model.data.SearchResult
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchRepository: SearchRepository,
+    getSearchContentsUseCase: GetSearchContentsUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val searchQuery = savedStateHandle.getStateFlow(key = SEARCH_QUERY, initialValue = "")
 
     val searchUiState: StateFlow<SearchUiState> = searchQuery.flatMapLatest { query ->
-        searchRepository.searchMovies(query)
-            .map<List<SearchMovie>, SearchUiState>(SearchUiState::Success)
+        getSearchContentsUseCase(query)
+            .map<SearchResult, SearchUiState>(SearchUiState::Success)
             .onStart { emit(SearchUiState.Loading) }
             .catch { emit(SearchUiState.Error(it.localizedMessage?.toString() ?: "")) }
     }.stateIn(
@@ -39,19 +39,19 @@ class SearchViewModel @Inject constructor(
     fun onSearchQueryChanged(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
     }
+}
 
-    sealed interface SearchUiState {
+sealed interface SearchUiState {
 
-        data object Loading : SearchUiState
+    data object Loading : SearchUiState
 
-        data class Success(
-            val searchMovies: List<SearchMovie>
-        ) : SearchUiState
+    data class Success(
+        val data: SearchResult
+    ) : SearchUiState
 
-        data class Error(
-            val errorMessage: String
-        ) : SearchUiState
-    }
+    data class Error(
+        val errorMessage: String
+    ) : SearchUiState
 }
 
 private const val SEARCH_QUERY = "searchQuery"

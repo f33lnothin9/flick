@@ -8,7 +8,7 @@ import ru.resodostudios.flick.core.common.network.Dispatcher
 import ru.resodostudios.flick.core.common.network.FlickDispatchers
 import ru.resodostudios.flick.core.data.repository.SearchRepository
 import ru.resodostudios.flick.core.model.data.SearchMovie
-import ru.resodostudios.flick.core.model.data.SearchPeople
+import ru.resodostudios.flick.core.model.data.SearchPerson
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.asExternalModel
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class SearchRepositoryImpl @Inject constructor(
         )
     }.flowOn(ioDispatcher)
 
-    override fun searchPeople(query: String): Flow<List<SearchPeople>> = flow {
+    override fun searchPeople(query: String): Flow<List<SearchPerson>> = flow {
         emit(
             datasource
                 .searchPeople(query)
