@@ -51,7 +51,9 @@ fun FlickNavHost(
             onMovieClick = { movieId ->
                 navController.navigateToMovie(movieId)
             },
-            onPersonClick = { }
+            onPersonClick = { personId ->
+                navController.navigateToPerson(personId)
+            }
         )
     }
 }

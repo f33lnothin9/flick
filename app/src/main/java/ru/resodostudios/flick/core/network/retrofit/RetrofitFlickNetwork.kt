@@ -30,6 +30,11 @@ private interface RetrofitFlickNetworkApi {
     @GET("people")
     suspend fun getPeople(): List<NetworkPerson>
 
+    @GET("people/{id}")
+    suspend fun getPerson(
+        @Path("id") id: Int
+    ): NetworkPerson
+
     @GET("search/shows")
     suspend fun searchMovies(
         @Query("q") query: String
@@ -74,6 +79,9 @@ class RetrofitFlickNetwork @Inject constructor(
 
     override suspend fun getPeople(): List<NetworkPerson> =
         networkApi.getPeople()
+
+    override suspend fun getPerson(id: Int): NetworkPerson =
+        networkApi.getPerson(id = id)
 
     override suspend fun searchMovies(query: String): List<NetworkSearchMovie> =
         networkApi.searchMovies(query = query)
