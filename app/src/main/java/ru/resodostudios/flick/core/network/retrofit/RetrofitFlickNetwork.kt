@@ -3,15 +3,13 @@ package ru.resodostudios.flick.core.network.retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
-import ru.resodostudios.flick.core.network.model.Cast
-import ru.resodostudios.flick.core.network.model.Crew
-import ru.resodostudios.flick.core.network.model.Movie
+import ru.resodostudios.flick.core.network.model.NetworkCast
+import ru.resodostudios.flick.core.network.model.NetworkCrew
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
 import ru.resodostudios.flick.core.network.model.NetworkSearchMovie
@@ -27,7 +25,7 @@ private interface RetrofitFlickNetworkApi {
     @GET("shows/{id}")
     suspend fun getMovie(
         @Path("id") id: Int
-    ): Response<Movie>
+    ): NetworkMovie
 
     @GET("people")
     suspend fun getPeople(): List<NetworkPerson>
@@ -45,12 +43,12 @@ private interface RetrofitFlickNetworkApi {
     @GET("shows/{id}/cast")
     suspend fun getCast(
         @Path("id") id: Int
-    ): Response<List<Cast>>
+    ): List<NetworkCast>
 
     @GET("shows/{id}/crew")
     suspend fun getCrew(
         @Path("id") id: Int
-    ): Response<List<Crew>>
+    ): List<NetworkCrew>
 }
 
 private const val FLICK_BASE_URL = "https://api.tvmaze.com/"
@@ -71,7 +69,7 @@ class RetrofitFlickNetwork @Inject constructor(
     override suspend fun getMovies(): List<NetworkMovie> =
         networkApi.getMovies()
 
-    override suspend fun getMovie(id: Int): Response<Movie> =
+    override suspend fun getMovie(id: Int): NetworkMovie =
         networkApi.getMovie(id = id)
 
     override suspend fun getPeople(): List<NetworkPerson> =
@@ -83,9 +81,9 @@ class RetrofitFlickNetwork @Inject constructor(
     override suspend fun searchPeople(query: String): List<NetworkSearchPeople> =
         networkApi.searchPeople(query = query)
 
-    override suspend fun getCast(id: Int): Response<List<Cast>> =
+    override suspend fun getCast(id: Int): List<NetworkCast> =
         networkApi.getCast(id = id)
 
-    override suspend fun getCrew(id: Int): Response<List<Crew>> =
+    override suspend fun getCrew(id: Int): List<NetworkCrew> =
         networkApi.getCrew(id = id)
 }

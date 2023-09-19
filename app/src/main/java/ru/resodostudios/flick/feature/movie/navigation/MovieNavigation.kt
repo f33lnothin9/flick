@@ -1,6 +1,6 @@
 package ru.resodostudios.flick.feature.movie.navigation
 
-import androidx.compose.runtime.remember
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -9,6 +9,11 @@ import androidx.navigation.navArgument
 import ru.resodostudios.flick.feature.movie.presentation.MovieRoute
 
 internal const val movieIdArg = "movieId"
+
+internal class MovieArgs(val movieId: Int) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(savedStateHandle.get<Int>(movieIdArg) ?: 0)
+}
 
 fun NavController.navigateToMovie(movieId: Int) {
     this.navigate("movie_route/$movieId") {
@@ -25,13 +30,8 @@ fun NavGraphBuilder.movieScreen(
             navArgument(movieIdArg) { type = NavType.IntType },
         )
     ) {
-        val movieId = remember { it.arguments?.getInt(movieIdArg) }
-
-        if (movieId != null) {
-            MovieRoute(
-                onBackClick = onBackClick,
-                movieId = movieId
-            )
-        }
+        MovieRoute(
+            onBackClick = onBackClick
+        )
     }
 }

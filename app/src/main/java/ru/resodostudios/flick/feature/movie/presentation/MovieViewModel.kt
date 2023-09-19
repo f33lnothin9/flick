@@ -1,139 +1,79 @@
 package ru.resodostudios.flick.feature.movie.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.core.data.repository.FavoritesRepository
+import ru.resodostudios.flick.core.domain.GetMovieExtendedUseCase
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
-import ru.resodostudios.flick.core.network.model.Cast
-import ru.resodostudios.flick.core.network.model.Crew
-import ru.resodostudios.flick.core.network.model.Movie
+import ru.resodostudios.flick.core.model.data.MovieExtended
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
-import ru.resodostudios.flick.feature.movie.domain.use_case.GetCastUseCase
-import ru.resodostudios.flick.feature.movie.domain.use_case.GetCrewUseCase
-import ru.resodostudios.flick.feature.movie.domain.use_case.GetMovieUseCase
+import ru.resodostudios.flick.feature.movie.navigation.MovieArgs
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val movieUseCase: GetMovieUseCase,
-    private val getCastUseCase: GetCastUseCase,
-    private val getCrewUseCase: GetCrewUseCase,
-    private val repository: FavoritesRepository
+    private val favoritesRepository: FavoritesRepository,
+    getMovieExtendedUseCase: GetMovieExtendedUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _movie = MutableStateFlow(Movie())
-    private val _cast = MutableStateFlow(emptyList<Cast>())
-    private val _crew = MutableStateFlow(emptyList<Crew>())
-    private val _state = MutableStateFlow(MovieUiState())
+    private val movieArgs: MovieArgs = MovieArgs(savedStateHandle)
 
-    val state = combine(
-        _state,
-        _movie,
-        _cast,
-        _crew
-    ) { state, movie, cast, crew ->
-        state.copy(
-            movie = movie,
-            cast = cast,
-            crew = crew
+    private val movieId = movieArgs.movieId
+
+    val movieUiState: StateFlow<MovieUiState> = getMovieExtendedUseCase.invoke(movieId)
+        .map<MovieExtended, MovieUiState>(MovieUiState::Success)
+        .onStart { emit(MovieUiState.Loading) }
+        .catch { emit(MovieUiState.Error(it.localizedMessage?.toString() ?: "")) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = MovieUiState.Loading,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MovieUiState())
-
-    fun getMovie(id: Int) {
-        viewModelScope.launch {
-            movieUseCase.invoke(id).let {
-                if (it.isSuccessful) {
-                    _movie.value = it.body()!!
-                    _state.update { state ->
-                        state.copy(
-                            isError = false
-                        )
-                    }
-                } else {
-                    _state.update { state ->
-                        state.copy(
-                            isLoading = false,
-                            isError = true
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    fun getCast(id: Int) {
-        viewModelScope.launch {
-            getCastUseCase.invoke(id).let {
-                if (it.isSuccessful) {
-                    _cast.value = it.body()!!
-                    _state.update { state ->
-                        state.copy(
-                            isError = false
-                        )
-                    }
-                } else {
-                    _state.update { state ->
-                        state.copy(
-                            isLoading = false,
-                            isError = true
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    fun getCrew(id: Int) {
-        viewModelScope.launch {
-            getCrewUseCase.invoke(id).let {
-                if (it.isSuccessful) {
-                    _crew.value = it.body()!!
-                    _state.update { state ->
-                        state.copy(
-                            isLoading = false,
-                            isError = false
-                        )
-                    }
-                } else {
-                    _state.update { state ->
-                        state.copy(
-                            isLoading = false,
-                            isError = true
-                        )
-                    }
-                }
-            }
-        }
-    }
 
     fun onEvent(event: FavoriteEvent) {
         when (event) {
             is FavoriteEvent.AddMovie -> {
                 val favoriteMovie = FavoriteMovie(
                     id = event.movie.id,
-                    image = event.movie.image?.medium.toString(),
-                    rating = event.movie.rating?.average,
+                    image = event.movie.image.medium,
+                    rating = event.movie.rating.average,
                     name = event.movie.name,
                     genres = event.movie.genres
                 )
 
                 viewModelScope.launch {
-                    repository.upsertMovie(favoriteMovie)
+                    favoritesRepository.upsertMovie(favoriteMovie)
                 }
             }
 
             is FavoriteEvent.DeleteMovie -> {
                 viewModelScope.launch {
-                    repository.deleteMovie(event.movie)
+                    favoritesRepository.deleteMovie(event.movie)
                 }
             }
         }
     }
+}
+
+sealed interface MovieUiState {
+
+    data object Loading : MovieUiState
+
+    data class Success(
+        val data: MovieExtended
+    ) : MovieUiState
+
+    data class Error(
+        val errorMessage: String
+    ) : MovieUiState
 }

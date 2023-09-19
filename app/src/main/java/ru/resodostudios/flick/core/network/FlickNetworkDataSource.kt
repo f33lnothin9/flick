@@ -1,9 +1,7 @@
 package ru.resodostudios.flick.core.network
 
-import retrofit2.Response
-import ru.resodostudios.flick.core.network.model.Cast
-import ru.resodostudios.flick.core.network.model.Crew
-import ru.resodostudios.flick.core.network.model.Movie
+import ru.resodostudios.flick.core.network.model.NetworkCast
+import ru.resodostudios.flick.core.network.model.NetworkCrew
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
 import ru.resodostudios.flick.core.network.model.NetworkSearchMovie
@@ -13,7 +11,7 @@ interface FlickNetworkDataSource {
 
     suspend fun getMovies(): List<NetworkMovie>
 
-    suspend fun getMovie(id: Int): Response<Movie>
+    suspend fun getMovie(id: Int): NetworkMovie
 
     suspend fun getPeople(): List<NetworkPerson>
 
@@ -21,7 +19,7 @@ interface FlickNetworkDataSource {
 
     suspend fun searchPeople(query: String): List<NetworkSearchPeople>
 
-    suspend fun getCast(id: Int): Response<List<Cast>>
+    suspend fun getCast(id: Int): List<NetworkCast>
 
-    suspend fun getCrew(id: Int): Response<List<Crew>>
+    suspend fun getCrew(id: Int): List<NetworkCrew>
 }
