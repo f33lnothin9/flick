@@ -14,12 +14,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isTraversalGroup
@@ -39,6 +43,7 @@ fun SearchBar(
     var query by rememberSaveable { mutableStateOf("") }
 
     val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
 
     Box(
         Modifier
@@ -47,7 +52,9 @@ fun SearchBar(
             .fillMaxWidth()
     ) {
         SearchBar(
-            modifier = Modifier.align(Alignment.TopCenter),
+            modifier = Modifier
+                .focusRequester(focusRequester)
+                .align(Alignment.TopCenter),
             query = query,
             onQueryChange = {
                 query = it
@@ -56,7 +63,7 @@ fun SearchBar(
             onSearch = { focusManager.clearFocus() },
             active = true,
             onActiveChange = { },
-            placeholder = { Text(text = stringResource(id = titleRes)) },
+            placeholder = { Text(text = stringResource(titleRes)) },
             leadingIcon = {
                 IconButton(onClick = onBackClick) {
                     Icon(FlickIcons.ArrowBack, contentDescription = null)
@@ -74,5 +81,8 @@ fun SearchBar(
             windowInsets = WindowInsets.statusBars,
             content = content
         )
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
+        }
     }
 }
