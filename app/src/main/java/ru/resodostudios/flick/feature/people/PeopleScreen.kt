@@ -1,5 +1,6 @@
 package ru.resodostudios.flick.feature.people
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -30,17 +31,20 @@ import ru.resodostudios.flick.feature.people.PeopleUiState.Success
 
 @Composable
 internal fun PeopleRoute(
+    onPersonClick: (Int) -> Unit,
     viewModel: PeopleViewModel = hiltViewModel()
 ) {
     val peopleState by viewModel.peopleUiState.collectAsStateWithLifecycle()
     PeopleScreen(
-        peopleState = peopleState
+        peopleState = peopleState,
+        onPersonClick = onPersonClick
     )
 }
 
 @Composable
 internal fun PeopleScreen(
-    peopleState: PeopleUiState
+    peopleState: PeopleUiState,
+    onPersonClick: (Int) -> Unit
 ) {
     when (peopleState) {
         Loading -> LoadingState()
@@ -50,7 +54,8 @@ internal fun PeopleScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 people(
-                    people = peopleState.people
+                    people = peopleState.people,
+                    onPersonClick = onPersonClick
                 )
             }
         }
@@ -63,7 +68,8 @@ internal fun PeopleScreen(
 }
 
 private fun LazyGridScope.people(
-    people: List<Person>
+    people: List<Person>,
+    onPersonClick: (Int) -> Unit
 ) {
     items(people) { person ->
         ListItem(
@@ -82,7 +88,8 @@ private fun LazyGridScope.people(
                         contentScale = ContentScale.Crop
                     )
                 }
-            }
+            },
+            modifier = Modifier.clickable { onPersonClick(person.id) }
         )
     }
 }

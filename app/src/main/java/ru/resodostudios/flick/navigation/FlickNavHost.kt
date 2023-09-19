@@ -7,7 +7,9 @@ import ru.resodostudios.flick.feature.movie.navigation.movieScreen
 import ru.resodostudios.flick.feature.movie.navigation.navigateToMovie
 import ru.resodostudios.flick.feature.movies.navigation.MOVIES_GRAPH_ROUTE_PATTERN
 import ru.resodostudios.flick.feature.movies.navigation.moviesGraph
-import ru.resodostudios.flick.feature.people.navigation.peopleScreen
+import ru.resodostudios.flick.feature.people.navigation.peopleGraph
+import ru.resodostudios.flick.feature.person.navigation.navigateToPerson
+import ru.resodostudios.flick.feature.person.navigation.personScreen
 import ru.resodostudios.flick.feature.search.navigation.searchScreen
 import ru.resodostudios.flick.ui.FlickAppState
 
@@ -31,7 +33,16 @@ fun FlickNavHost(
                 )
             }
         )
-        peopleScreen()
+        peopleGraph(
+            onPersonClick = { personId ->
+                navController.navigateToPerson(personId)
+            },
+            nestedGraphs = {
+                personScreen(
+                    onBackClick = navController::popBackStack
+                )
+            }
+        )
         favoritesScreen(
             onMovieClick = navController::navigateToMovie
         )

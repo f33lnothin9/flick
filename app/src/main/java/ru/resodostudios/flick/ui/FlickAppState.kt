@@ -21,7 +21,7 @@ import ru.resodostudios.flick.feature.favorites.navigation.navigateToFavorites
 import ru.resodostudios.flick.feature.movies.navigation.moviesRoute
 import ru.resodostudios.flick.feature.movies.navigation.navigateToMoviesGraph
 import ru.resodostudios.flick.feature.people.navigation.navigateToPeople
-import ru.resodostudios.flick.feature.people.navigation.peopleNavigationRoute
+import ru.resodostudios.flick.feature.people.navigation.peopleRoute
 import ru.resodostudios.flick.feature.search.navigation.navigateToSearch
 import ru.resodostudios.flick.navigation.TopLevelDestination
 import ru.resodostudios.flick.navigation.TopLevelDestination.FAVORITES
@@ -64,7 +64,7 @@ class FlickAppState(
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
             moviesRoute -> MOVIES
-            peopleNavigationRoute -> PEOPLE
+            peopleRoute -> PEOPLE
             favoritesNavigationRoute -> FAVORITES
             else -> null
         }
