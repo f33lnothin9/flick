@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.movie.presentation
+package ru.resodostudios.flick.feature.movie
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import ru.resodostudios.flick.feature.movie.presentation.MovieRoute
+import ru.resodostudios.flick.feature.movie.MovieRoute
 
 internal const val movieIdArg = "movieId"
 

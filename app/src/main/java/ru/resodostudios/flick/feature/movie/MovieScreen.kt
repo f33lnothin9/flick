@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.movie.presentation
+package ru.resodostudios.flick.feature.movie
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,20 +17,14 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -52,13 +46,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.theme.Typography
-import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
-import ru.resodostudios.flick.feature.movie.presentation.components.MovieTopBar
+import ru.resodostudios.flick.feature.movie.components.MovieTopBar
 
 @Composable
 internal fun MovieRoute(
@@ -92,7 +85,7 @@ internal fun MovieScreen(
                 topBar = {
                     MovieTopBar(
                         scrollBehavior = scrollBehavior,
-                        onBackClick = onBackClick,
+                        onNavIconClick = onBackClick,
                         movieExtended = movieState.data,
                         onEvent = onEvent
                     )
@@ -304,51 +297,4 @@ private fun MovieBody(movieExtended: MovieExtended) {
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun MovieTopBar(
-    scrollBehavior: TopAppBarScrollBehavior,
-    onBackClick: () -> Unit,
-    movieExtended: MovieExtended,
-    onEvent: (FavoriteEvent) -> Unit
-) {
-    MovieTopBar(
-        scrollBehavior = scrollBehavior,
-        onNavIconClick = onBackClick,
-        actions = {
-            if (movieExtended.isFavorite) {
-                IconButton(
-                    onClick = {
-                        onEvent(
-                            FavoriteEvent.DeleteMovie(
-                                FavoriteMovie(
-                                    id = movieExtended.movie.id,
-                                    name = movieExtended.movie.name,
-                                    genres = movieExtended.movie.genres,
-                                    rating = movieExtended.movie.rating.average,
-                                    image = movieExtended.movie.image.medium
-                                )
-                            )
-                        )
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Favorite,
-                        contentDescription = "Favorite"
-                    )
-                }
-            } else {
-                IconButton(
-                    onClick = { onEvent(FavoriteEvent.AddMovie(movieExtended.movie)) }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.FavoriteBorder,
-                        contentDescription = "Favorite"
-                    )
-                }
-            }
-        }
-    )
 }
