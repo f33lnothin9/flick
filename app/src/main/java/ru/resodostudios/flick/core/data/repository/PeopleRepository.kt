@@ -6,4 +6,6 @@ import ru.resodostudios.flick.core.model.data.Person
 interface PeopleRepository {
 
     fun getPeople(): Flow<List<Person>>
+    
+    fun getPerson(id: Int): Flow<Person>
 }

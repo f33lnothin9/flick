@@ -24,4 +24,10 @@ class PeopleRepositoryImpl @Inject constructor(
                 .map { it.asExternalModel() }
         )
     }.flowOn(ioDispatcher)
+
+    override fun getPerson(id: Int): Flow<Person> = flow {
+        emit(
+            datasource.getPerson(id).asExternalModel()
+        )
+    }.flowOn(ioDispatcher)
 }
