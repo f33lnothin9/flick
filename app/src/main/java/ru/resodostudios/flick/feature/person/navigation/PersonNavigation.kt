@@ -30,6 +30,8 @@ fun NavGraphBuilder.personScreen(
             navArgument(personIdArg) { type = NavType.IntType },
         )
     ) {
-        PersonRoute()
+        PersonRoute(
+            onBackClick = onBackClick
+        )
     }
 }
