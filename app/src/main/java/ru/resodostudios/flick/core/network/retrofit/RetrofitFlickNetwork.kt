@@ -9,6 +9,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.NetworkCast
+import ru.resodostudios.flick.core.network.model.NetworkCastCredits
 import ru.resodostudios.flick.core.network.model.NetworkCrew
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
@@ -54,6 +55,11 @@ private interface RetrofitFlickNetworkApi {
     suspend fun getCrew(
         @Path("id") id: Int
     ): List<NetworkCrew>
+
+    @GET("people/{id}/castcredits?embed[]=show&embed[]=character")
+    suspend fun getCastCredits(
+        @Path("id") id: Int
+    ): List<NetworkCastCredits>
 }
 
 private const val FLICK_BASE_URL = "https://api.tvmaze.com/"
@@ -94,4 +100,7 @@ class RetrofitFlickNetwork @Inject constructor(
 
     override suspend fun getCrew(id: Int): List<NetworkCrew> =
         networkApi.getCrew(id = id)
+
+    override suspend fun getCastCredits(id: Int): List<NetworkCastCredits> =
+        networkApi.getCastCredits(id = id)
 }

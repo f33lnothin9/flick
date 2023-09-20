@@ -1,6 +1,7 @@
 package ru.resodostudios.flick.core.network
 
 import ru.resodostudios.flick.core.network.model.NetworkCast
+import ru.resodostudios.flick.core.network.model.NetworkCastCredits
 import ru.resodostudios.flick.core.network.model.NetworkCrew
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
@@ -24,4 +25,6 @@ interface FlickNetworkDataSource {
     suspend fun getCast(id: Int): List<NetworkCast>
 
     suspend fun getCrew(id: Int): List<NetworkCrew>
+
+    suspend fun getCastCredits(id: Int): List<NetworkCastCredits>
 }
