@@ -1,9 +1,11 @@
 package ru.resodostudios.flick.core.network.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class NetworkEmbedded(
     val character: NetworkCharacter = NetworkCharacter(),
-    val show: NetworkMovie = NetworkMovie()
+    @SerialName(value = "show")
+    val movie: NetworkMovie = NetworkMovie()
 )

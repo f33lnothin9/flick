@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flowOn
 import ru.resodostudios.flick.core.common.network.Dispatcher
 import ru.resodostudios.flick.core.common.network.FlickDispatchers.IO
 import ru.resodostudios.flick.core.data.repository.PeopleRepository
+import ru.resodostudios.flick.core.model.data.CastCredits
 import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.asExternalModel
@@ -28,6 +29,14 @@ class PeopleRepositoryImpl @Inject constructor(
     override fun getPerson(id: Int): Flow<Person> = flow {
         emit(
             datasource.getPerson(id).asExternalModel()
+        )
+    }.flowOn(ioDispatcher)
+
+    override fun getCastCredits(id: Int): Flow<List<CastCredits>> = flow {
+        emit(
+            datasource
+                .getCastCredits(id)
+                .map { it.asExternalModel() }
         )
     }.flowOn(ioDispatcher)
 }
