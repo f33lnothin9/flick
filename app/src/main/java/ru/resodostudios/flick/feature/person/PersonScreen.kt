@@ -8,5 +8,5 @@ internal fun PersonRoute(
     personViewModel: PersonViewModel = hiltViewModel()
 ) {
 
-    
+
 }
