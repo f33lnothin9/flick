@@ -49,6 +49,11 @@ import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.model.data.PersonExtended
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import kotlin.math.abs
 
 @Composable
 internal fun PersonRoute(
@@ -101,7 +106,9 @@ internal fun PersonScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         content = {
                             item {
-                                PersonHeader(person = personState.data.person)
+                                PersonHeader(
+                                    person = personState.data.person
+                                )
                             }
                             item {
                                 PersonBody(
@@ -153,23 +160,26 @@ private fun PersonHeader(person: Person) {
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = person.country.name + ", ${person.country.code}",
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
+                if (person.country.name.isNotBlank()) {
+                    Text(
+                        text = person.country.name + ", ${person.country.code}",
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
+
+                PersonDate(
+                    birthday = person.birthday,
+                    deathday = person.deathday
                 )
 
-                Text(
-                    text = person.birthday + " - ${person.deathday}",
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
-
-                Text(
-                    text = person.gender,
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
+                if (person.gender.isNotBlank()) {
+                    Text(
+                        text = person.gender,
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
             }
         }
     }
@@ -177,6 +187,31 @@ private fun PersonHeader(person: Person) {
     Spacer(modifier = Modifier.height(16.dp))
 
     HorizontalDivider()
+}
+
+@Composable
+private fun PersonDate(birthday: String, deathday: String) {
+    if (birthday.isNotBlank()) {
+        val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        val birthDate = dateFormat.parse(birthday)
+        val currentDate =
+            if (deathday.isNotBlank()) dateFormat.parse(deathday) else inputFormat.parse(Date().toString())
+
+        val ageInMillis = abs(currentDate!!.time - birthDate!!.time)
+
+        val ageCalendar = Calendar.getInstance()
+        ageCalendar.timeInMillis = ageInMillis
+
+        val age = ageCalendar.get(Calendar.YEAR) - 1970
+
+        Text(
+            text = formatDate(birthday) + (if (deathday.isNotBlank()) " - " + formatDate(deathday) else "") + ", $age years",
+            style = Typography.labelLarge,
+            textAlign = TextAlign.Start
+        )
+    }
 }
 
 @Composable
@@ -227,4 +262,13 @@ private fun PersonBody(personExtended: PersonExtended) {
             }
         }
     }
+}
+
+
+fun formatDate(date: String): String {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    val rawDate = inputFormat.parse(date)
+
+    return outputFormat.format(rawDate!!)
 }
