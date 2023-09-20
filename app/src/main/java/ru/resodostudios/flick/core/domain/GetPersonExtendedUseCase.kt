@@ -1,7 +1,7 @@
 package ru.resodostudios.flick.core.domain
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import ru.resodostudios.flick.core.data.repository.PeopleRepository
 import ru.resodostudios.flick.core.model.data.PersonExtended
 import javax.inject.Inject
@@ -11,9 +11,13 @@ class GetPersonExtendedUseCase @Inject constructor(
 ) {
 
     operator fun invoke(id: Int): Flow<PersonExtended> {
-        return peopleRepository.getPerson(id).map { person ->
+        return combine(
+            peopleRepository.getPerson(id),
+            peopleRepository.getCastCredits(id)
+        ) { person, castCredits ->
             PersonExtended(
-                person = person
+                person = person,
+                castCredits = castCredits
             )
         }
     }
