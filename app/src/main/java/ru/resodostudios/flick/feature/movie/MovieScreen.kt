@@ -11,11 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -27,9 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +41,7 @@ import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
+import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.favorites.FavoriteEvent
@@ -234,27 +228,11 @@ private fun MovieBody(movieExtended: MovieExtended) {
             )
         }
 
-        var castSize by rememberSaveable { mutableIntStateOf(224) }
-
-        if (movieExtended.cast.size < 4 && movieExtended.cast.isNotEmpty()) castSize =
-            56 * movieExtended.cast.size
-
         if (movieExtended.cast.isNotEmpty()) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(bottom = 16.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.cast),
-                    style = Typography.titleMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-
-                LazyHorizontalGrid(
-                    rows = GridCells.Adaptive(56.dp),
-                    modifier = Modifier.height(castSize.dp)
-                ) {
+            BodySection(
+                title = R.string.cast,
+                itemsSize = movieExtended.cast.size,
+                content = {
                     items(movieExtended.cast) { cast ->
                         ListItem(
                             headlineContent = { Text(text = cast.person.name) },
@@ -264,8 +242,8 @@ private fun MovieBody(movieExtended: MovieExtended) {
                                         url = cast.person.image.medium,
                                         contentDescription = "Person image",
                                         modifier = Modifier
-                                            .clip(RoundedCornerShape(100))
-                                            .size(40.dp),
+                                            .clip(RoundedCornerShape(12.dp))
+                                            .size(56.dp),
                                         contentScale = ContentScale.Crop
                                     )
                                 }
@@ -274,22 +252,14 @@ private fun MovieBody(movieExtended: MovieExtended) {
                         )
                     }
                 }
-            }
+            )
         }
 
         if (movieExtended.crew.isNotEmpty()) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(bottom = 16.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.crew),
-                    style = Typography.titleMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-
-                LazyRow {
+            BodySection(
+                title = R.string.crew,
+                itemsSize = movieExtended.crew.size,
+                content = {
                     items(movieExtended.crew) { crew ->
                         ListItem(
                             headlineContent = { Text(text = crew.person.name) },
@@ -299,8 +269,8 @@ private fun MovieBody(movieExtended: MovieExtended) {
                                         url = crew.person.image.medium,
                                         contentDescription = "Person image",
                                         modifier = Modifier
-                                            .clip(RoundedCornerShape(100))
-                                            .size(40.dp),
+                                            .clip(RoundedCornerShape(12.dp))
+                                            .size(56.dp),
                                         contentScale = ContentScale.Crop
                                     )
                                 }
@@ -309,7 +279,7 @@ private fun MovieBody(movieExtended: MovieExtended) {
                         )
                     }
                 }
-            }
+            )
         }
     }
 }
