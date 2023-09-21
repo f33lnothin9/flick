@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.MovieExtended
-import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
+import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -50,7 +50,7 @@ import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
-import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
+import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.components.MovieTopBar
 import ru.resodostudios.flick.feature.person.formatDate
 

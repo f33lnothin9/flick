@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.favorites.domain.util
+package ru.resodostudios.flick.feature.favorites
 
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Movie

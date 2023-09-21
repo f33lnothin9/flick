@@ -15,7 +15,7 @@ import ru.resodostudios.flick.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetMovieExtendedUseCase
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.MovieExtended
-import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
+import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.navigation.MovieArgs
 import javax.inject.Inject
 
