@@ -167,37 +167,50 @@ private fun MovieHeader(movie: Movie) {
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = movie.genres.take(3).joinToString(", "),
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                if (movie.genres.isNotEmpty()) {
+                    Text(
+                        text = movie.genres.take(3).joinToString(", "),
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
 
+                if (movie.premiered.isNotBlank()) {
+                    Text(
+                        text = formatDate(movie.premiered),
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
+
+                val countryInfo = listOf(movie.network.country.name, movie.network.country.code)
+                if (movie.network.country.name.isNotBlank()) {
+                    Text(
+                        text = countryInfo.joinToString(", "),
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
+
+                val statusInfo = listOf(
+                    movie.status,
+                    "${movie.averageRuntime} ${stringResource(R.string.minutes)}"
+                )
                 Text(
-                    text = formatDate(movie.premiered),
+                    text = statusInfo.joinToString(", "),
                     style = Typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
 
-                Text(
-                    text = "${movie.network.country.name}, ${movie.network.country.code}",
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
-
-                Text(
-                    text = movie.status + ", ${movie.averageRuntime} ${stringResource(R.string.minutes)}",
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
-
-                Text(
-                    text = movie.language,
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
+                if (movie.language.isNotBlank()) {
+                    Text(
+                        text = movie.language,
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
             }
         }
     }
