@@ -34,7 +34,6 @@ class PersonViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = PersonUiState.Loading,
         )
-
 }
 
 sealed interface PersonUiState {

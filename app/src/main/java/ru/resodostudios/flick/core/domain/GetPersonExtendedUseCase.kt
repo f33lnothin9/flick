@@ -13,11 +13,13 @@ class GetPersonExtendedUseCase @Inject constructor(
     operator fun invoke(id: Int): Flow<PersonExtended> {
         return combine(
             peopleRepository.getPerson(id),
-            peopleRepository.getCastCredits(id)
-        ) { person, castCredits ->
+            peopleRepository.getCastCredits(id),
+            peopleRepository.getCrewCredits(id)
+        ) { person, castCredits, crewCredits ->
             PersonExtended(
                 person = person,
-                castCredits = castCredits
+                castCredits = castCredits,
+                crewCredits = crewCredits
             )
         }
     }
