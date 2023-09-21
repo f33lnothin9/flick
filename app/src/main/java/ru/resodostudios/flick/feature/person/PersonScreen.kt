@@ -168,7 +168,7 @@ private fun PersonHeader(person: Person) {
                     )
                 }
 
-                PersonDate(
+                PersonHeaderDate(
                     birthday = person.birthday,
                     deathday = person.deathday
                 )
@@ -190,7 +190,7 @@ private fun PersonHeader(person: Person) {
 }
 
 @Composable
-private fun PersonDate(birthday: String, deathday: String) {
+private fun PersonHeaderDate(birthday: String, deathday: String) {
     if (birthday.isNotBlank()) {
         val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -219,45 +219,97 @@ private fun PersonBody(personExtended: PersonExtended) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        PersonBodyCastCredits(personExtended = personExtended)
+        PersonBodyCrewCredits(personExtended = personExtended)
+    }
+}
+
+@Composable
+fun PersonBodyCastCredits(personExtended: PersonExtended) {
+    if (personExtended.castCredits.isNotEmpty()) {
         var castSize by rememberSaveable { mutableIntStateOf(288) }
 
-        if (personExtended.castCredits.size < 4 && personExtended.castCredits.isNotEmpty()) castSize =
+        if (personExtended.castCredits.size < 4) castSize =
             72 * personExtended.castCredits.size
 
-        if (personExtended.castCredits.isNotEmpty()) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(bottom = 16.dp, top = 8.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.cast_credits),
-                    style = Typography.titleMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(bottom = 16.dp, top = 8.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.cast_credits),
+                style = Typography.titleMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(start = 16.dp)
+            )
 
-                LazyHorizontalGrid(
-                    rows = GridCells.Adaptive(72.dp),
-                    modifier = Modifier.height(castSize.dp)
-                ) {
-                    items(personExtended.castCredits) { castCredit ->
-                        ListItem(
-                            headlineContent = { Text(text = castCredit.embedded.movie.name) },
-                            leadingContent = {
-                                Box {
-                                    FlickAsyncImage(
-                                        url = castCredit.embedded.movie.image.medium,
-                                        contentDescription = "Movie image",
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .size(56.dp),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                }
-                            },
-                            supportingContent = { Text(text = castCredit.embedded.character.name) }
-                        )
-                    }
+            LazyHorizontalGrid(
+                rows = GridCells.Adaptive(72.dp),
+                modifier = Modifier.height(castSize.dp)
+            ) {
+                items(personExtended.castCredits) { castCredit ->
+                    ListItem(
+                        headlineContent = { Text(text = castCredit.embedded.movie.name) },
+                        leadingContent = {
+                            Box {
+                                FlickAsyncImage(
+                                    url = castCredit.embedded.movie.image.medium,
+                                    contentDescription = "Movie image",
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .size(56.dp),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
+                        },
+                        supportingContent = { Text(text = castCredit.embedded.character.name) }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PersonBodyCrewCredits(personExtended: PersonExtended) {
+    if (personExtended.crewCredits.isNotEmpty()) {
+        var crewSize by rememberSaveable { mutableIntStateOf(288) }
+
+        if (personExtended.crewCredits.size < 4) crewSize =
+            72 * personExtended.crewCredits.size
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(bottom = 16.dp, top = 8.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.crew_credits),
+                style = Typography.titleMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+
+            LazyHorizontalGrid(
+                rows = GridCells.Adaptive(72.dp),
+                modifier = Modifier.height(crewSize.dp)
+            ) {
+                items(personExtended.crewCredits) { crewCredit ->
+                    ListItem(
+                        headlineContent = { Text(text = crewCredit.embedded.movie.name) },
+                        leadingContent = {
+                            Box {
+                                FlickAsyncImage(
+                                    url = crewCredit.embedded.movie.image.medium,
+                                    contentDescription = "Movie image",
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(12.dp))
+                                        .size(56.dp),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
+                        },
+                        supportingContent = { Text(text = crewCredit.type) }
+                    )
                 }
             }
         }
