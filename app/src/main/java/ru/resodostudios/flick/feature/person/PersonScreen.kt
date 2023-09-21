@@ -316,7 +316,6 @@ fun PersonBodyCrewCredits(personExtended: PersonExtended) {
     }
 }
 
-
 fun formatDate(date: String): String {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())

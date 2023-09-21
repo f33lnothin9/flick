@@ -52,6 +52,7 @@ import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.favorites.domain.util.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.components.MovieTopBar
+import ru.resodostudios.flick.feature.person.formatDate
 
 @Composable
 internal fun MovieRoute(
@@ -112,7 +113,7 @@ internal fun MovieScreen(
 
         is MovieUiState.Error -> EmptyState(
             message = movieState.errorMessage,
-            animationId = R.raw.anim_error_1
+            animationId = R.raw.anim_error_2
         )
     }
 }
@@ -164,18 +165,32 @@ private fun MovieHeader(movie: Movie) {
                 )
             }
 
-            Column {
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
                 Text(
-                    text = movie.premiered.take(4) + " • " + movie.genres.take(2)
-                        .joinToString(", "),
+                    text = movie.genres.take(3).joinToString(", "),
+                    style = Typography.labelLarge,
+                    textAlign = TextAlign.Start,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Text(
+                    text = formatDate(movie.premiered),
                     style = Typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
 
                 Text(
-                    text = movie.network.country.name + ", ${movie.averageRuntime} " + stringResource(
-                        id = R.string.minutes
-                    ),
+                    text = "${movie.network.country.name}, ${movie.network.country.code}",
+                    style = Typography.labelLarge,
+                    textAlign = TextAlign.Start
+                )
+
+                Text(
+                    text = movie.status + ", ${movie.averageRuntime} ${stringResource(R.string.minutes)}",
                     style = Typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
