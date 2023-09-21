@@ -1,5 +1,6 @@
 package ru.resodostudios.flick.feature.person
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,14 +54,15 @@ import kotlin.math.abs
 @Composable
 internal fun PersonRoute(
     personViewModel: PersonViewModel = hiltViewModel(),
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onMovieClick: (Int) -> Unit
 ) {
-
     val personState by personViewModel.personUiState.collectAsStateWithLifecycle()
 
     PersonScreen(
         personState = personState,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onMovieClick = onMovieClick
     )
 }
 
@@ -68,7 +70,8 @@ internal fun PersonRoute(
 @Composable
 internal fun PersonScreen(
     personState: PersonUiState,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onMovieClick: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -107,7 +110,8 @@ internal fun PersonScreen(
                             }
                             item {
                                 PersonBody(
-                                    personExtended = personState.data
+                                    personExtended = personState.data,
+                                    onMovieClick = onMovieClick
                                 )
                             }
                         }
@@ -210,7 +214,10 @@ private fun PersonHeaderDate(birthday: String, deathday: String) {
 }
 
 @Composable
-private fun PersonBody(personExtended: PersonExtended) {
+private fun PersonBody(
+    personExtended: PersonExtended,
+    onMovieClick: (Int) -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -234,7 +241,8 @@ private fun PersonBody(personExtended: PersonExtended) {
                                     )
                                 }
                             },
-                            supportingContent = { Text(text = castCredit.embedded.character.name) }
+                            supportingContent = { Text(text = castCredit.embedded.character.name) },
+                            modifier = Modifier.clickable { onMovieClick(castCredit.embedded.movie.id) }
                         )
                     }
                 }
@@ -260,7 +268,8 @@ private fun PersonBody(personExtended: PersonExtended) {
                                     )
                                 }
                             },
-                            supportingContent = { Text(text = crewCredit.type) }
+                            supportingContent = { Text(text = crewCredit.type) },
+                            modifier = Modifier.clickable { onMovieClick(crewCredit.embedded.movie.id) }
                         )
                     }
                 }

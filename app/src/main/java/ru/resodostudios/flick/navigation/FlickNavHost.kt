@@ -42,7 +42,10 @@ fun FlickNavHost(
             },
             nestedGraphs = {
                 personScreen(
-                    onBackClick = navController::popBackStack
+                    onBackClick = navController::popBackStack,
+                    onMovieClick = { movieId ->
+                        navController.navigateToMovie(movieId)
+                    }
                 )
             }
         )

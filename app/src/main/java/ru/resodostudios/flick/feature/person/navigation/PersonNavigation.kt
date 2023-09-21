@@ -22,7 +22,8 @@ fun NavController.navigateToPerson(personId: Int) {
 }
 
 fun NavGraphBuilder.personScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onMovieClick: (Int) -> Unit
 ) {
     composable(
         route = "person_route/{$personIdArg}",
@@ -31,7 +32,8 @@ fun NavGraphBuilder.personScreen(
         )
     ) {
         PersonRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onMovieClick = onMovieClick
         )
     }
 }
