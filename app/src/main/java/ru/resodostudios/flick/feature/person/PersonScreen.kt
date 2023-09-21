@@ -42,6 +42,7 @@ import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.model.data.PersonExtended
+import ru.resodostudios.flick.core.ui.AdBanner
 import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
@@ -221,6 +222,8 @@ private fun PersonBody(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        AdBanner(id = R.string.banner_id)
+
         if (personExtended.castCredits.isNotEmpty()) {
             BodySection(
                 title = R.string.cast_credits,

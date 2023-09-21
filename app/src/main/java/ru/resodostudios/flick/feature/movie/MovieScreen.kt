@@ -43,6 +43,7 @@ import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
+import ru.resodostudios.flick.core.ui.AdBanner
 import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
@@ -234,6 +235,8 @@ private fun MovieBody(
                 overflow = TextOverflow.Ellipsis
             )
         }
+
+        AdBanner(id = R.string.banner_id)
 
         if (movieExtended.cast.isNotEmpty()) {
             BodySection(
