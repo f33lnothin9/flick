@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.designsystem.theme.Typography
@@ -266,12 +267,4 @@ private fun PersonBody(personExtended: PersonExtended) {
             )
         }
     }
-}
-
-fun formatDate(date: String): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-    val rawDate = inputFormat.parse(date)
-
-    return outputFormat.format(rawDate!!)
 }

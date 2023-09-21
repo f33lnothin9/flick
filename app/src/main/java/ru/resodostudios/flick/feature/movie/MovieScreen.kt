@@ -38,6 +38,7 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.Movie
@@ -47,7 +48,6 @@ import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.components.MovieTopBar
-import ru.resodostudios.flick.feature.person.formatDate
 
 @Composable
 internal fun MovieRoute(
