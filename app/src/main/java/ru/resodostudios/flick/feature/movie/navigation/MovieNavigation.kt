@@ -22,7 +22,8 @@ fun NavController.navigateToMovie(movieId: Int) {
 }
 
 fun NavGraphBuilder.movieScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onPersonClick: (Int) -> Unit
 ) {
     composable(
         route = "movie_route/{$movieIdArg}",
@@ -31,7 +32,8 @@ fun NavGraphBuilder.movieScreen(
         )
     ) {
         MovieRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onPersonClick = onPersonClick
         )
     }
 }

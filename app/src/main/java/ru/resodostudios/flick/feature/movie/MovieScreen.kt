@@ -1,5 +1,6 @@
 package ru.resodostudios.flick.feature.movie
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,15 +52,16 @@ import ru.resodostudios.flick.feature.person.formatDate
 @Composable
 internal fun MovieRoute(
     movieViewModel: MovieViewModel = hiltViewModel(),
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onPersonClick: (Int) -> Unit
 ) {
-
     val movieState by movieViewModel.movieUiState.collectAsStateWithLifecycle()
 
     MovieScreen(
         movieState = movieState,
         onEvent = movieViewModel::onEvent,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onPersonClick = onPersonClick
     )
 }
 
@@ -68,7 +70,8 @@ internal fun MovieRoute(
 internal fun MovieScreen(
     movieState: MovieUiState,
     onEvent: (FavoriteEvent) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onPersonClick: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -96,7 +99,8 @@ internal fun MovieScreen(
                             }
                             item {
                                 MovieBody(
-                                    movieExtended = movieState.data
+                                    movieExtended = movieState.data,
+                                    onPersonClick = onPersonClick
                                 )
                             }
                         }
@@ -204,7 +208,10 @@ private fun MovieHeader(movie: Movie) {
 }
 
 @Composable
-private fun MovieBody(movieExtended: MovieExtended) {
+private fun MovieBody(
+    movieExtended: MovieExtended,
+    onPersonClick: (Int) -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -213,7 +220,7 @@ private fun MovieBody(movieExtended: MovieExtended) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.summary),
+                text = stringResource(R.string.summary),
                 style = Typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -248,7 +255,8 @@ private fun MovieBody(movieExtended: MovieExtended) {
                                     )
                                 }
                             },
-                            supportingContent = { Text(text = cast.character.name) }
+                            supportingContent = { Text(text = cast.character.name) },
+                            modifier = Modifier.clickable { onPersonClick(cast.person.id) }
                         )
                     }
                 }
@@ -275,7 +283,8 @@ private fun MovieBody(movieExtended: MovieExtended) {
                                     )
                                 }
                             },
-                            supportingContent = { Text(text = crew.type) }
+                            supportingContent = { Text(text = crew.type) },
+                            modifier = Modifier.clickable { onPersonClick(crew.person.id) }
                         )
                     }
                 }
