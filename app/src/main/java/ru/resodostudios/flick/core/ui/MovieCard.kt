@@ -1,4 +1,4 @@
-package ru.resodostudios.flick.feature.movies.component
+package ru.resodostudios.flick.core.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
