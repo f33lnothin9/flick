@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,22 +18,17 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -47,6 +40,7 @@ import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.model.data.PersonExtended
+import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import java.text.SimpleDateFormat
@@ -219,99 +213,57 @@ private fun PersonBody(personExtended: PersonExtended) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        PersonBodyCastCredits(personExtended = personExtended)
-        PersonBodyCrewCredits(personExtended = personExtended)
-    }
-}
-
-@Composable
-fun PersonBodyCastCredits(personExtended: PersonExtended) {
-    if (personExtended.castCredits.isNotEmpty()) {
-        var castSize by rememberSaveable { mutableIntStateOf(288) }
-
-        if (personExtended.castCredits.size < 4) castSize =
-            72 * personExtended.castCredits.size
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(bottom = 16.dp, top = 8.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.cast_credits),
-                style = Typography.titleMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.padding(start = 16.dp)
-            )
-
-            LazyHorizontalGrid(
-                rows = GridCells.Adaptive(72.dp),
-                modifier = Modifier.height(castSize.dp)
-            ) {
-                items(personExtended.castCredits) { castCredit ->
-                    ListItem(
-                        headlineContent = { Text(text = castCredit.embedded.movie.name) },
-                        leadingContent = {
-                            Box {
-                                FlickAsyncImage(
-                                    url = castCredit.embedded.movie.image.medium,
-                                    contentDescription = "Movie image",
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(12.dp))
-                                        .size(56.dp),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                        },
-                        supportingContent = { Text(text = castCredit.embedded.character.name) }
-                    )
+        if (personExtended.castCredits.isNotEmpty()) {
+            BodySection(
+                title = R.string.cast_credits,
+                itemsSize = personExtended.castCredits.size,
+                content = {
+                    items(personExtended.castCredits) { castCredit ->
+                        ListItem(
+                            headlineContent = { Text(text = castCredit.embedded.movie.name) },
+                            leadingContent = {
+                                Box {
+                                    FlickAsyncImage(
+                                        url = castCredit.embedded.movie.image.medium,
+                                        contentDescription = "Movie image",
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(12.dp))
+                                            .size(56.dp),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                }
+                            },
+                            supportingContent = { Text(text = castCredit.embedded.character.name) }
+                        )
+                    }
                 }
-            }
+            )
         }
-    }
-}
-
-@Composable
-fun PersonBodyCrewCredits(personExtended: PersonExtended) {
-    if (personExtended.crewCredits.isNotEmpty()) {
-        var crewSize by rememberSaveable { mutableIntStateOf(288) }
-
-        if (personExtended.crewCredits.size < 4) crewSize =
-            72 * personExtended.crewCredits.size
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(bottom = 16.dp, top = 8.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.crew_credits),
-                style = Typography.titleMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.padding(start = 16.dp)
-            )
-
-            LazyHorizontalGrid(
-                rows = GridCells.Adaptive(72.dp),
-                modifier = Modifier.height(crewSize.dp)
-            ) {
-                items(personExtended.crewCredits) { crewCredit ->
-                    ListItem(
-                        headlineContent = { Text(text = crewCredit.embedded.movie.name) },
-                        leadingContent = {
-                            Box {
-                                FlickAsyncImage(
-                                    url = crewCredit.embedded.movie.image.medium,
-                                    contentDescription = "Movie image",
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(12.dp))
-                                        .size(56.dp),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                        },
-                        supportingContent = { Text(text = crewCredit.type) }
-                    )
+        if (personExtended.crewCredits.isNotEmpty()) {
+            BodySection(
+                title = R.string.crew_credits,
+                itemsSize = personExtended.crewCredits.size,
+                content = {
+                    items(personExtended.crewCredits) { crewCredit ->
+                        ListItem(
+                            headlineContent = { Text(text = crewCredit.embedded.movie.name) },
+                            leadingContent = {
+                                Box {
+                                    FlickAsyncImage(
+                                        url = crewCredit.embedded.movie.image.medium,
+                                        contentDescription = "Movie image",
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(12.dp))
+                                            .size(56.dp),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                }
+                            },
+                            supportingContent = { Text(text = crewCredit.type) }
+                        )
+                    }
                 }
-            }
+            )
         }
     }
 }
