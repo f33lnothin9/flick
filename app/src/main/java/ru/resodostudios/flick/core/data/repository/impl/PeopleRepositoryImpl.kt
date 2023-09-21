@@ -8,6 +8,7 @@ import ru.resodostudios.flick.core.common.network.Dispatcher
 import ru.resodostudios.flick.core.common.network.FlickDispatchers.IO
 import ru.resodostudios.flick.core.data.repository.PeopleRepository
 import ru.resodostudios.flick.core.model.data.CastCredits
+import ru.resodostudios.flick.core.model.data.CrewCredits
 import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.asExternalModel
@@ -36,6 +37,14 @@ class PeopleRepositoryImpl @Inject constructor(
         emit(
             datasource
                 .getCastCredits(id)
+                .map { it.asExternalModel() }
+        )
+    }.flowOn(ioDispatcher)
+
+    override fun getCrewCredits(id: Int): Flow<List<CrewCredits>> = flow {
+        emit(
+            datasource
+                .getCrewCredits(id)
                 .map { it.asExternalModel() }
         )
     }.flowOn(ioDispatcher)
