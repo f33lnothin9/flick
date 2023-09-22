@@ -21,5 +21,7 @@ object DatabaseModule {
         context,
         FlickDatabase::class.java,
         "flick-database"
-    ).build()
+    )
+        .addMigrations(DatabaseMigrations.MIGRATION_1_2)
+        .build()
 }
