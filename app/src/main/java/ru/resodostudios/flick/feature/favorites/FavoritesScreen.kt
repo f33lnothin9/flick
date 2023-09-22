@@ -24,24 +24,29 @@ import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
+import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.movie.MovieViewModel
+import ru.resodostudios.flick.feature.person.PersonViewModel
 
 @Composable
 internal fun FavoritesRoute(
     onMovieClick: (Int) -> Unit,
+    onPersonClick: (Int) -> Unit,
     favoriteViewModel: FavoritesViewModel = hiltViewModel(),
-    movieViewModel: MovieViewModel = hiltViewModel()
+    movieViewModel: MovieViewModel = hiltViewModel(),
+    personViewModel: PersonViewModel = hiltViewModel(),
 ) {
     val favoritesState by favoriteViewModel.favoritesUiState.collectAsStateWithLifecycle(
         initialValue = FavoritesUiState.Loading
     )
-
     FavoritesScreen(
         favoritesState = favoritesState,
-        onDeleteClick = movieViewModel::onEvent,
-        onMovieClick = onMovieClick
+        onMovieDelete = movieViewModel::onEvent,
+        onMovieClick = onMovieClick,
+        onPersonClick = onPersonClick,
+        onPersonDelete = personViewModel::onEvent
     )
 }
 
@@ -49,20 +54,27 @@ internal fun FavoritesRoute(
 internal fun FavoritesScreen(
     onMovieClick: (Int) -> Unit,
     favoritesState: FavoritesUiState,
-    onDeleteClick: (FavoriteEvent) -> Unit
+    onMovieDelete: (FavoriteEvent) -> Unit,
+    onPersonClick: (Int) -> Unit,
+    onPersonDelete: (FavoriteEvent) -> Unit
 ) {
 
     when (favoritesState) {
         FavoritesUiState.Loading -> LoadingState()
-        is FavoritesUiState.Success -> if (favoritesState.movies.isNotEmpty()) {
+        is FavoritesUiState.Success -> if (favoritesState.data.movies.isNotEmpty() || favoritesState.data.people.isNotEmpty()) {
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
                 columns = GridCells.Adaptive(300.dp)
             ) {
-                favorites(
-                    movies = favoritesState.movies,
+                favoritesMovies(
+                    movies = favoritesState.data.movies,
                     onMovieClick = onMovieClick,
-                    onDeleteClick = onDeleteClick
+                    onMovieDelete = onMovieDelete
+                )
+                favoritesPeople(
+                    people = favoritesState.data.people,
+                    onPersonClick = onPersonClick,
+                    onPersonDelete = onPersonDelete
                 )
             }
         } else {
@@ -74,10 +86,10 @@ internal fun FavoritesScreen(
     }
 }
 
-private fun LazyGridScope.favorites(
+private fun LazyGridScope.favoritesMovies(
     movies: List<FavoriteMovie>,
     onMovieClick: (Int) -> Unit,
-    onDeleteClick: (FavoriteEvent) -> Unit
+    onMovieDelete: (FavoriteEvent) -> Unit
 ) {
     items(movies) { movie ->
         ListItem(
@@ -93,7 +105,7 @@ private fun LazyGridScope.favorites(
                 )
             },
             trailingContent = {
-                IconButton(onClick = { onDeleteClick(FavoriteEvent.DeleteMovie(movie)) }) {
+                IconButton(onClick = { onMovieDelete(FavoriteEvent.DeleteMovie(movie)) }) {
                     Icon(
                         FlickIcons.Delete,
                         contentDescription = "Remove from Favorites"
@@ -108,6 +120,37 @@ private fun LazyGridScope.favorites(
                 )
             },
             modifier = Modifier.clickable { onMovieClick(movie.id) }
+        )
+    }
+}
+
+private fun LazyGridScope.favoritesPeople(
+    people: List<FavoritePerson>,
+    onPersonClick: (Int) -> Unit,
+    onPersonDelete: (FavoriteEvent) -> Unit
+) {
+    items(people) { person ->
+        ListItem(
+            headlineContent = { Text(text = person.name) },
+            leadingContent = {
+                FlickAsyncImage(
+                    url = person.image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .size(56.dp)
+                )
+            },
+            trailingContent = {
+                IconButton(onClick = { onPersonDelete(FavoriteEvent.DeletePerson(person)) }) {
+                    Icon(
+                        FlickIcons.Delete,
+                        contentDescription = "Remove from Favorites"
+                    )
+                }
+            },
+            modifier = Modifier.clickable { onPersonClick(person.id) }
         )
     }
 }

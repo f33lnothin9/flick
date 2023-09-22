@@ -21,7 +21,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,14 +37,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
+import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.designsystem.theme.Typography
+import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.model.data.PersonExtended
 import ru.resodostudios.flick.core.ui.AdBanner
 import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
+import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -59,11 +61,11 @@ internal fun PersonRoute(
     onMovieClick: (Int) -> Unit
 ) {
     val personState by personViewModel.personUiState.collectAsStateWithLifecycle()
-
     PersonScreen(
         personState = personState,
         onBackClick = onBackClick,
-        onMovieClick = onMovieClick
+        onMovieClick = onMovieClick,
+        onEvent = personViewModel::onEvent,
     )
 }
 
@@ -72,7 +74,8 @@ internal fun PersonRoute(
 internal fun PersonScreen(
     personState: PersonUiState,
     onBackClick: () -> Unit,
-    onMovieClick: (Int) -> Unit
+    onMovieClick: (Int) -> Unit,
+    onEvent: (FavoriteEvent) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -82,20 +85,40 @@ internal fun PersonScreen(
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
-                    TopAppBar(
-                        title = { },
-                        navigationIcon = {
-                            IconButton(
-                                onClick = onBackClick,
-                                content = {
+                    NoTitleTopAppBar(
+                        scrollBehavior = scrollBehavior,
+                        onNavIconClick = onBackClick,
+                        actions = {
+                            if (personState.data.isFavorite) {
+                                IconButton(
+                                    onClick = {
+                                        onEvent(
+                                            FavoriteEvent.DeletePerson(
+                                                FavoritePerson(
+                                                    id = personState.data.person.id,
+                                                    name = personState.data.person.name,
+                                                    image = personState.data.person.image.medium
+                                                )
+                                            )
+                                        )
+                                    }
+                                ) {
                                     Icon(
-                                        imageVector = FlickIcons.ArrowBack,
-                                        contentDescription = "Back"
+                                        imageVector = FlickIcons.FavoritesFilled,
+                                        contentDescription = "Remove from Favorites"
                                     )
                                 }
-                            )
-                        },
-                        scrollBehavior = scrollBehavior
+                            } else {
+                                IconButton(
+                                    onClick = { onEvent(FavoriteEvent.AddPerson(personState.data.person)) }
+                                ) {
+                                    Icon(
+                                        imageVector = FlickIcons.Favorites,
+                                        contentDescription = "Add to Favorites"
+                                    )
+                                }
+                            }
+                        }
                     )
                 },
                 contentWindowInsets = WindowInsets.waterfall,
@@ -115,6 +138,7 @@ internal fun PersonScreen(
                                     onMovieClick = onMovieClick
                                 )
                             }
+                            item { Spacer(modifier = Modifier.height(50.dp)) }
                         }
                     )
                 }

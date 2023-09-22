@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -40,7 +42,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
+import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
+import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.designsystem.theme.Typography
+import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
 import ru.resodostudios.flick.core.ui.AdBanner
@@ -48,7 +53,6 @@ import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.favorites.FavoriteEvent
-import ru.resodostudios.flick.feature.movie.components.MovieTopBar
 
 @Composable
 internal fun MovieRoute(
@@ -82,11 +86,42 @@ internal fun MovieScreen(
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
-                    MovieTopBar(
+                    NoTitleTopAppBar(
                         scrollBehavior = scrollBehavior,
                         onNavIconClick = onBackClick,
-                        movieExtended = movieState.data,
-                        onEvent = onEvent
+                        actions = {
+                            if (movieState.data.isFavorite) {
+                                IconButton(
+                                    onClick = {
+                                        onEvent(
+                                            FavoriteEvent.DeleteMovie(
+                                                FavoriteMovie(
+                                                    id = movieState.data.movie.id,
+                                                    name = movieState.data.movie.name,
+                                                    genres = movieState.data.movie.genres,
+                                                    rating = movieState.data.movie.rating.average,
+                                                    image = movieState.data.movie.image.medium
+                                                )
+                                            )
+                                        )
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = FlickIcons.FavoritesFilled,
+                                        contentDescription = "Remove from Favorites"
+                                    )
+                                }
+                            } else {
+                                IconButton(
+                                    onClick = { onEvent(FavoriteEvent.AddMovie(movieState.data.movie)) }
+                                ) {
+                                    Icon(
+                                        imageVector = FlickIcons.Favorites,
+                                        contentDescription = "Add to Favorites"
+                                    )
+                                }
+                            }
+                        }
                     )
                 },
                 contentWindowInsets = WindowInsets.waterfall,
@@ -104,6 +139,7 @@ internal fun MovieScreen(
                                     onPersonClick = onPersonClick
                                 )
                             }
+                            item { Spacer(modifier = Modifier.height(50.dp)) }
                         }
                     )
                 }
@@ -168,37 +204,50 @@ private fun MovieHeader(movie: Movie) {
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = movie.genres.take(3).joinToString(", "),
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                if (movie.genres.isNotEmpty()) {
+                    Text(
+                        text = movie.genres.take(3).joinToString(", "),
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
 
+                if (movie.premiered.isNotBlank()) {
+                    Text(
+                        text = formatDate(movie.premiered),
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
+
+                val countryInfo = listOf(movie.network.country.name, movie.network.country.code)
+                if (movie.network.country.name.isNotBlank()) {
+                    Text(
+                        text = countryInfo.joinToString(", "),
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
+
+                val statusInfo = listOf(
+                    movie.status,
+                    "${movie.averageRuntime} ${stringResource(R.string.minutes)}"
+                )
                 Text(
-                    text = formatDate(movie.premiered),
+                    text = statusInfo.joinToString(", "),
                     style = Typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
 
-                Text(
-                    text = "${movie.network.country.name}, ${movie.network.country.code}",
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
-
-                Text(
-                    text = movie.status + ", ${movie.averageRuntime} ${stringResource(R.string.minutes)}",
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
-
-                Text(
-                    text = movie.language,
-                    style = Typography.labelLarge,
-                    textAlign = TextAlign.Start
-                )
+                if (movie.language.isNotBlank()) {
+                    Text(
+                        text = movie.language,
+                        style = Typography.labelLarge,
+                        textAlign = TextAlign.Start
+                    )
+                }
             }
         }
     }
