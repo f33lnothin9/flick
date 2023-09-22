@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -41,6 +38,7 @@ import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
+import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.Person
@@ -105,8 +103,8 @@ internal fun PersonScreen(
                                     }
                                 ) {
                                     Icon(
-                                        imageVector = Icons.Outlined.Favorite,
-                                        contentDescription = "Favorite"
+                                        imageVector = FlickIcons.FavoritesFilled,
+                                        contentDescription = "Remove from Favorites"
                                     )
                                 }
                             } else {
@@ -114,8 +112,8 @@ internal fun PersonScreen(
                                     onClick = { onEvent(FavoriteEvent.AddPerson(personState.data.person)) }
                                 ) {
                                     Icon(
-                                        imageVector = Icons.Outlined.FavoriteBorder,
-                                        contentDescription = "Favorite"
+                                        imageVector = FlickIcons.Favorites,
+                                        contentDescription = "Add to Favorites"
                                     )
                                 }
                             }
