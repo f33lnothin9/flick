@@ -11,7 +11,7 @@ import ru.resodostudios.flick.core.database.dao.FavoriteMoviesDao
 object DaosModule {
 
     @Provides
-    fun providesTransactionsDao(
+    fun providesMoviesDao(
         database: FlickDatabase,
     ): FavoriteMoviesDao = database.movieDao()
 }
