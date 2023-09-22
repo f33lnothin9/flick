@@ -58,7 +58,6 @@ internal fun PersonRoute(
     onMovieClick: (Int) -> Unit
 ) {
     val personState by personViewModel.personUiState.collectAsStateWithLifecycle()
-
     PersonScreen(
         personState = personState,
         onBackClick = onBackClick,
