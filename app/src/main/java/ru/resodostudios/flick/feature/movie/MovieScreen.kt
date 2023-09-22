@@ -103,6 +103,7 @@ internal fun MovieScreen(
                                     onPersonClick = onPersonClick
                                 )
                             }
+                            item { Spacer(modifier = Modifier.height(50.dp)) }
                         }
                     )
                 }
