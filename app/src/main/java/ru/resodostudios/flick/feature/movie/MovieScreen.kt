@@ -14,8 +14,13 @@ import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -40,14 +45,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
+import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
 import ru.resodostudios.flick.core.designsystem.theme.Typography
+import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
 import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.favorites.FavoriteEvent
-import ru.resodostudios.flick.feature.movie.components.MovieTopBar
 
 @Composable
 internal fun MovieRoute(
@@ -81,11 +87,42 @@ internal fun MovieScreen(
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
-                    MovieTopBar(
+                    NoTitleTopAppBar(
                         scrollBehavior = scrollBehavior,
                         onNavIconClick = onBackClick,
-                        movieExtended = movieState.data,
-                        onEvent = onEvent
+                        actions = {
+                            if (movieState.data.isFavorite) {
+                                IconButton(
+                                    onClick = {
+                                        onEvent(
+                                            FavoriteEvent.DeleteMovie(
+                                                FavoriteMovie(
+                                                    id = movieState.data.movie.id,
+                                                    name = movieState.data.movie.name,
+                                                    genres = movieState.data.movie.genres,
+                                                    rating = movieState.data.movie.rating.average,
+                                                    image = movieState.data.movie.image.medium
+                                                )
+                                            )
+                                        )
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Favorite,
+                                        contentDescription = "Favorite"
+                                    )
+                                }
+                            } else {
+                                IconButton(
+                                    onClick = { onEvent(FavoriteEvent.AddMovie(movieState.data.movie)) }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.FavoriteBorder,
+                                        contentDescription = "Favorite"
+                                    )
+                                }
+                            }
+                        }
                     )
                 },
                 contentWindowInsets = WindowInsets.waterfall,

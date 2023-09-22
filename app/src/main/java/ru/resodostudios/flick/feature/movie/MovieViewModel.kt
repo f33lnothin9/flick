@@ -61,6 +61,8 @@ class MovieViewModel @Inject constructor(
                     favoritesRepository.deleteMovie(event.movie)
                 }
             }
+
+            else -> {}
         }
     }
 }

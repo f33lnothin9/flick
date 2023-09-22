@@ -10,13 +10,18 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import ru.resodostudios.flick.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetPersonExtendedUseCase
+import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.PersonExtended
+import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import ru.resodostudios.flick.feature.person.navigation.PersonArgs
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel @Inject constructor(
+    private val favoritesRepository: FavoritesRepository,
     getPersonExtendedUseCase: GetPersonExtendedUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -34,6 +39,30 @@ class PersonViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = PersonUiState.Loading,
         )
+
+    fun onEvent(event: FavoriteEvent) {
+        when (event) {
+            is FavoriteEvent.AddPerson -> {
+                val favoritePerson = FavoritePerson(
+                    id = event.person.id,
+                    image = event.person.image.medium,
+                    name = event.person.name
+                )
+
+                viewModelScope.launch {
+                    favoritesRepository.upsertPerson(favoritePerson)
+                }
+            }
+
+            is FavoriteEvent.DeletePerson -> {
+                viewModelScope.launch {
+                    favoritesRepository.deletePerson(event.person)
+                }
+            }
+
+            else -> {}
+        }
+    }
 }
 
 sealed interface PersonUiState {
