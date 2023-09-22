@@ -50,7 +50,8 @@ fun FlickNavHost(
             }
         )
         favoritesScreen(
-            onMovieClick = navController::navigateToMovie
+            onMovieClick = navController::navigateToMovie,
+            onPersonClick = navController::navigateToPerson
         )
         searchScreen(
             onBackClick = navController::popBackStack,

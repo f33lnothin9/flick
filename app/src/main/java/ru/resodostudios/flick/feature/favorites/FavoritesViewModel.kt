@@ -7,18 +7,18 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import ru.resodostudios.flick.core.data.repository.FavoritesRepository
-import ru.resodostudios.flick.core.model.data.FavoriteMovie
+import ru.resodostudios.flick.core.domain.GetFavoritesUseCase
+import ru.resodostudios.flick.core.model.data.Favorites
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    favoritesRepository: FavoritesRepository
+    getFavoritesUseCase: GetFavoritesUseCase
 ) : ViewModel() {
 
     val favoritesUiState: SharedFlow<FavoritesUiState> =
-        favoritesRepository.getMovies()
-            .map<List<FavoriteMovie>, FavoritesUiState>(FavoritesUiState::Success)
+        getFavoritesUseCase.invoke()
+            .map<Favorites, FavoritesUiState>(FavoritesUiState::Success)
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
@@ -31,6 +31,6 @@ sealed interface FavoritesUiState {
     data object Loading : FavoritesUiState
 
     data class Success(
-        val movies: List<FavoriteMovie>
+        val data: Favorites
     ) : FavoritesUiState
 }
