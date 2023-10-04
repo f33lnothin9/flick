@@ -110,6 +110,9 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie.compose)
+
+    // Google Fonts
+    implementation(libs.androidx.ui.text.google.fonts)
 }
 
 ksp {
