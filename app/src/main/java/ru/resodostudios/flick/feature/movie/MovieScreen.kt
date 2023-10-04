@@ -44,7 +44,6 @@ import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
-import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
@@ -175,7 +174,7 @@ private fun MovieHeader(movie: Movie) {
             Text(
                 modifier = Modifier.padding(top = 8.dp),
                 text = movie.name,
-                style = Typography.headlineSmall,
+                style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Bold
             )
@@ -193,7 +192,7 @@ private fun MovieHeader(movie: Movie) {
                             end = 8.dp,
                             bottom = 2.dp
                         ),
-                    style = Typography.labelLarge,
+                    style = MaterialTheme.typography.labelLarge,
                     maxLines = 1,
                     fontWeight = FontWeight.Bold
                 )
@@ -206,7 +205,7 @@ private fun MovieHeader(movie: Movie) {
                 if (movie.genres.isNotEmpty()) {
                     Text(
                         text = movie.genres.take(3).joinToString(", "),
-                        style = Typography.labelLarge,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Start,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -216,7 +215,7 @@ private fun MovieHeader(movie: Movie) {
                 if (movie.premiered.isNotBlank()) {
                     Text(
                         text = formatDate(movie.premiered),
-                        style = Typography.labelLarge,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Start
                     )
                 }
@@ -225,7 +224,7 @@ private fun MovieHeader(movie: Movie) {
                 if (movie.network.country.name.isNotBlank()) {
                     Text(
                         text = countryInfo.joinToString(", "),
-                        style = Typography.labelLarge,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Start
                     )
                 }
@@ -236,14 +235,14 @@ private fun MovieHeader(movie: Movie) {
                 )
                 Text(
                     text = statusInfo.joinToString(", "),
-                    style = Typography.labelLarge,
+                    style = MaterialTheme.typography.labelLarge,
                     textAlign = TextAlign.Start
                 )
 
                 if (movie.language.isNotBlank()) {
                     Text(
                         text = movie.language,
-                        style = Typography.labelLarge,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Start
                     )
                 }
@@ -270,7 +269,7 @@ private fun MovieBody(
         ) {
             Text(
                 text = stringResource(R.string.summary),
-                style = Typography.titleMedium,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.secondary
             )
             Text(
@@ -278,7 +277,7 @@ private fun MovieBody(
                     movieExtended.movie.summary,
                     HtmlCompat.FROM_HTML_MODE_COMPACT
                 ).toString(),
-                style = Typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
