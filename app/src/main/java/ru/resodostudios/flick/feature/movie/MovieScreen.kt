@@ -154,7 +154,7 @@ internal fun MovieScreen(
 @Composable
 private fun MovieHeader(movie: Movie) {
     Row(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.Top
     ) {
@@ -162,9 +162,9 @@ private fun MovieHeader(movie: Movie) {
             url = movie.image.medium,
             contentDescription = null,
             modifier = Modifier
-                .size(width = 125.dp, height = 176.dp)
+                .size(width = 130.dp, height = 181.dp)
                 .clip(RoundedCornerShape(12.dp)),
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.Crop
         )
 
         Column(
@@ -199,8 +199,7 @@ private fun MovieHeader(movie: Movie) {
             }
 
             Column(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalAlignment = Alignment.Start
             ) {
                 if (movie.genres.isNotEmpty()) {
                     Text(
