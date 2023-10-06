@@ -9,6 +9,7 @@ import ru.resodostudios.flick.core.common.network.FlickDispatchers
 import ru.resodostudios.flick.core.data.repository.MoviesRepository
 import ru.resodostudios.flick.core.model.data.Cast
 import ru.resodostudios.flick.core.model.data.Crew
+import ru.resodostudios.flick.core.model.data.ImageExtended
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.asExternalModel
@@ -30,6 +31,14 @@ class MoviesRepositoryImpl @Inject constructor(
     override fun getMovie(id: Int): Flow<Movie> = flow {
         emit(
             datasource.getMovie(id).asExternalModel()
+        )
+    }.flowOn(ioDispatcher)
+
+    override fun getMovieImages(id: Int): Flow<List<ImageExtended>> = flow {
+        emit(
+            datasource
+                .getMovieImages(id)
+                .map { it.asExternalModel() }
         )
     }.flowOn(ioDispatcher)
 
