@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -31,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -40,6 +44,7 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
+import ru.resodostudios.flick.core.common.convertPixelsToDp
 import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
@@ -336,6 +341,52 @@ private fun MovieBody(
                     }
                 }
             )
+        }
+
+        if (movieExtended.images.isNotEmpty()) {
+            val context = LocalContext.current
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(bottom = 16.dp, top = 8.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.images),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(start = 16.dp)
+                )
+
+                LazyHorizontalStaggeredGrid(
+                    rows = StaggeredGridCells.Adaptive(150.dp),
+                    modifier = Modifier
+                        .height(400.dp)
+                        .padding(top = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    content = {
+                        items(movieExtended.images) { imageExtended ->
+                            FlickAsyncImage(
+                                url = imageExtended.resolutions.original.url,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(start = 16.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .size(
+                                        height = convertPixelsToDp(
+                                            context = context,
+                                            pixels = imageExtended.resolutions.original.height.div(2f)
+                                        ),
+                                        width = convertPixelsToDp(
+                                            context = context,
+                                            pixels = imageExtended.resolutions.original.width.div(2f)
+                                        )
+                                    ),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
+                )
+            }
         }
     }
 }
