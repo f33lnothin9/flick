@@ -12,6 +12,7 @@ import ru.resodostudios.flick.core.network.model.NetworkCast
 import ru.resodostudios.flick.core.network.model.NetworkCastCredits
 import ru.resodostudios.flick.core.network.model.NetworkCrew
 import ru.resodostudios.flick.core.network.model.NetworkCrewCredits
+import ru.resodostudios.flick.core.network.model.NetworkImageExtended
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
 import ru.resodostudios.flick.core.network.model.NetworkSearchMovie
@@ -28,6 +29,11 @@ private interface RetrofitFlickNetworkApi {
     suspend fun getMovie(
         @Path("id") id: Int
     ): NetworkMovie
+
+    @GET("shows/{id}/images")
+    suspend fun getMovieImages(
+        @Path("id") id: Int
+    ): List<NetworkImageExtended>
 
     @GET("people")
     suspend fun getPeople(): List<NetworkPerson>
@@ -88,6 +94,9 @@ class RetrofitFlickNetwork @Inject constructor(
 
     override suspend fun getMovie(id: Int): NetworkMovie =
         networkApi.getMovie(id = id)
+
+    override suspend fun getMovieImages(id: Int): List<NetworkImageExtended> =
+        networkApi.getMovieImages(id = id)
 
     override suspend fun getPeople(): List<NetworkPerson> =
         networkApi.getPeople()
