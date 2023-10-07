@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ru.resodostudios.flick.core.designsystem.theme.Typography
 
 @Composable
 fun BodySection(
@@ -37,7 +36,7 @@ fun BodySection(
     ) {
         Text(
             text = stringResource(title),
-            style = Typography.titleMedium,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.padding(start = 16.dp)
         )

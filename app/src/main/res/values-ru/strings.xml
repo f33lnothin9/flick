@@ -7,14 +7,16 @@
     <string name="people">Люди</string>
     <string name="favorites">Избранное</string>
     <string name="search">Поиск</string>
-    <string name="about">О нас</string>
+    <string name="about">О приложении</string>
     <string name="country_empty">Страна не указана</string>
     <string name="summary">Описание</string>
     <string name="minutes">минут(-ы)</string>
     <string name="cast_credits">Роли</string>
     <string name="crew_credits">Роли в съёмочных группах</string>
+    <string name="images">Изображения</string>
     <string name="not_connected">⛔ Вы не подключены к интернету</string>
     <string name="version">Версия</string>
     <string name="crew">Съёмочная группа</string>
     <string name="cast">Актёры</string>
+    <string name="favorites_empty">В избранное ничего не добавлено</string>
 </resources>

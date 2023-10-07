@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import ru.resodostudios.flick.core.designsystem.component.FlickSubcomposeAsyncImage
-import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.Movie
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +54,7 @@ fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
                                 end = 8.dp,
                                 bottom = 2.dp
                             ),
-                        style = Typography.labelLarge,
+                        style = MaterialTheme.typography.labelLarge,
                         maxLines = 1,
                         fontWeight = FontWeight.Bold
                     )
@@ -70,7 +69,7 @@ fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
                     text = movie.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = Typography.titleMedium,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Start,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier
@@ -78,7 +77,7 @@ fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
 
                 Text(
                     text = movie.genres.take(2).joinToString(", "),
-                    style = Typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )

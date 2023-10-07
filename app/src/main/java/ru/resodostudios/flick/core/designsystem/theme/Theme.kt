@@ -91,7 +91,7 @@ fun FlickTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = FlickTypography,
         content = content
     )
 }

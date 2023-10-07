@@ -19,6 +19,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -39,7 +40,6 @@ import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
-import ru.resodostudios.flick.core.designsystem.theme.Typography
 import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.model.data.PersonExtended
@@ -175,7 +175,7 @@ private fun PersonHeader(person: Person) {
             Text(
                 modifier = Modifier.padding(top = 8.dp),
                 text = person.name,
-                style = Typography.headlineSmall,
+                style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Bold
             )
@@ -187,7 +187,7 @@ private fun PersonHeader(person: Person) {
                 if (person.country.name.isNotBlank()) {
                     Text(
                         text = person.country.name + ", ${person.country.code}",
-                        style = Typography.labelLarge,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Start
                     )
                 }
@@ -200,7 +200,7 @@ private fun PersonHeader(person: Person) {
                 if (person.gender.isNotBlank()) {
                     Text(
                         text = person.gender,
-                        style = Typography.labelLarge,
+                        style = MaterialTheme.typography.labelLarge,
                         textAlign = TextAlign.Start
                     )
                 }
@@ -232,7 +232,7 @@ private fun PersonHeaderDate(birthday: String, deathday: String) {
 
         Text(
             text = formatDate(birthday) + (if (deathday.isNotBlank()) " - " + formatDate(deathday) else "") + ", $age years",
-            style = Typography.labelLarge,
+            style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Start
         )
     }

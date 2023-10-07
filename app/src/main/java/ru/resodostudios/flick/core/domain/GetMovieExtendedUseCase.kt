@@ -17,12 +17,14 @@ class GetMovieExtendedUseCase @Inject constructor(
             moviesRepository.getMovie(id),
             moviesRepository.getCast(id),
             moviesRepository.getCrew(id),
+            moviesRepository.getMovieImages(id),
             favoritesRepository.getMovies()
-        ) { movie, cast, crew, favoriteMovies ->
+        ) { movie, cast, crew, images, favoriteMovies ->
             MovieExtended(
                 movie = movie,
                 cast = cast,
                 crew = crew,
+                images = images,
                 isFavorite = favoriteMovies.any { it.id == movie.id }
             )
         }
