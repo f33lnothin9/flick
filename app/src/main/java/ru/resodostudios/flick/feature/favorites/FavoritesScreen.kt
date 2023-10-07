@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -79,7 +80,7 @@ internal fun FavoritesScreen(
             }
         } else {
             EmptyState(
-                message = "Nothing in Favorites",
+                message = stringResource(R.string.favorites_empty),
                 animationId = R.raw.anim_empty
             )
         }

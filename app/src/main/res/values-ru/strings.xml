@@ -18,4 +18,5 @@
     <string name="version">Версия</string>
     <string name="crew">Съёмочная группа</string>
     <string name="cast">Актёры</string>
+    <string name="favorites_empty">В избранное ничего не добавлено</string>
 </resources>

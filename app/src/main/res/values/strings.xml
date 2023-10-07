@@ -18,6 +18,7 @@
     <string name="cast_credits">Cast Credits</string>
     <string name="crew_credits">Crew Credits</string>
     <string name="images">Images</string>
+    <string name="favorites_empty">Nothing in Favorites</string>
 
     <string name="not_connected">⛔ You aren’t connected to the internet</string>
 </resources>
