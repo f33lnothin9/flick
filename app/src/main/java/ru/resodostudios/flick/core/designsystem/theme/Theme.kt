@@ -1,6 +1,7 @@
 package ru.resodostudios.flick.core.designsystem.theme
 
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -10,7 +11,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val LightColors = lightColorScheme(
+private val LightColorScheme = lightColorScheme(
     primary = lightPrimary,
     onPrimary = lightOnPrimary,
     primaryContainer = lightPrimaryContainer,
@@ -42,7 +43,7 @@ private val LightColors = lightColorScheme(
     scrim = lightScrim,
 )
 
-private val DarkColors = darkColorScheme(
+private val DarkColorScheme = darkColorScheme(
     primary = darkPrimary,
     onPrimary = darkOnPrimary,
     primaryContainer = darkPrimaryContainer,
@@ -77,16 +78,16 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun FlickTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,
+    disableDynamicTheming: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        !disableDynamicTheming && supportsDynamicTheming() -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> DarkColors
-        else -> LightColors
+
+        else -> if (darkTheme) DarkColorScheme else LightColorScheme
     }
 
     MaterialTheme(
@@ -95,3 +96,6 @@ fun FlickTheme(
         content = content
     )
 }
+
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
+fun supportsDynamicTheming() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
