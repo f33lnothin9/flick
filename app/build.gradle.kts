@@ -111,10 +111,11 @@ dependencies {
     // Lottie
     implementation(libs.lottie.compose)
 
-    // Yandex Ads
-    implementation(libs.mobileads)
     // Google Fonts
     implementation(libs.androidx.ui.text.google.fonts)
+
+    // Yandex Ads
+    implementation(libs.mobileads)
 }
 
 ksp {
