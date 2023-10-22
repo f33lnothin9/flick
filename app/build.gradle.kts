@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -47,6 +48,23 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    protobuf {
+        protoc {
+            artifact = libs.protobuf.protoc.get().toString()
+        }
+        generateProtoTasks {
+            all().forEach { task ->
+                task.builtins {
+                    register("java") {
+                        option("lite")
+                    }
+                    register("kotlin") {
+                        option("lite")
+                    }
+                }
+            }
         }
     }
     buildToolsVersion = "34.0.0"
@@ -116,6 +134,12 @@ dependencies {
 
     // Yandex Ads
     implementation(libs.mobileads)
+
+    // DataStore
+    implementation(libs.androidx.dataStore.core)
+
+    // Protobuf
+    implementation(libs.protobuf.kotlin.lite)
 }
 
 ksp {
