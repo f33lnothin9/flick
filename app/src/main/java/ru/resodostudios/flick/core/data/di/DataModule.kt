@@ -8,10 +8,12 @@ import ru.resodostudios.flick.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.data.repository.MoviesRepository
 import ru.resodostudios.flick.core.data.repository.PeopleRepository
 import ru.resodostudios.flick.core.data.repository.SearchRepository
+import ru.resodostudios.flick.core.data.repository.UserDataRepository
 import ru.resodostudios.flick.core.data.repository.impl.FavoritesRepositoryImpl
 import ru.resodostudios.flick.core.data.repository.impl.MoviesRepositoryImpl
 import ru.resodostudios.flick.core.data.repository.impl.PeopleRepositoryImpl
 import ru.resodostudios.flick.core.data.repository.impl.SearchRepositoryImpl
+import ru.resodostudios.flick.core.data.repository.impl.UserDataRepositoryImpl
 import ru.resodostudios.flick.core.data.util.ConnectivityManagerNetworkMonitor
 import ru.resodostudios.flick.core.data.util.NetworkMonitor
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
@@ -45,6 +47,11 @@ interface DataModule {
     fun bindFavoritesRepository(
         favoritesRepositoryImpl: FavoritesRepositoryImpl
     ): FavoritesRepository
+
+    @Binds
+    fun bindUserDataRepository(
+        userDataRepositoryImpl: UserDataRepositoryImpl
+    ): UserDataRepository
 
     @Binds
     fun bindsNetworkMonitor(
