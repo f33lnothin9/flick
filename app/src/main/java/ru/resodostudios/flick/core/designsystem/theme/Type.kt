@@ -15,7 +15,7 @@ val provider = GoogleFont.Provider(
     certificates = R.array.com_google_android_gms_fonts_certs
 )
 
-val fontName = GoogleFont("PT Sans")
+val fontName = GoogleFont("Noto Sans")
 
 val fontFamily = FontFamily(
     Font(googleFont = fontName, fontProvider = provider)
