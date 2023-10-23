@@ -49,7 +49,7 @@ fun SettingsScreen(
     onChangeDynamicColorPreference: (useDynamicColor: Boolean) -> Unit,
     onChangeDarkThemeConfig: (darkThemeConfig: DarkThemeConfig) -> Unit
 ) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     when (settingsUiState) {
         SettingsUiState.Loading -> LoadingState()
@@ -83,6 +83,16 @@ fun SettingsScreen(
 private fun LazyListScope.settings(
 
 ) {
+    item {
+        Text(
+            text = stringResource(R.string.theme),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.secondary,
+            maxLines = 1,
+            modifier = Modifier.padding(start = 16.dp)
+        )
+    }
+
     item {
         Text(
             text = stringResource(R.string.about),
