@@ -6,6 +6,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -26,7 +27,7 @@ fun FlickTopAppBar(
     onActionClick: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(text = stringResource(id = titleRes)) },
+        title = { Text(text = stringResource(titleRes)) },
         navigationIcon = {
             IconButton(onClick = onNavigationClick) {
                 Icon(
@@ -65,5 +66,28 @@ fun NoTitleTopAppBar(
         },
         scrollBehavior = scrollBehavior,
         actions = actions
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FlickLargeTopAppBar(
+    @StringRes titleRes: Int,
+    navigationIcon: ImageVector,
+    navigationIconContentDescription: String?,
+    onNavigationClick: () -> Unit = {},
+    scrollBehavior: TopAppBarScrollBehavior
+) {
+    LargeTopAppBar(
+        title = { Text(text = stringResource(titleRes)) },
+        navigationIcon = {
+            IconButton(onClick = onNavigationClick) {
+                Icon(
+                    imageVector = navigationIcon,
+                    contentDescription = navigationIconContentDescription
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior
     )
 }

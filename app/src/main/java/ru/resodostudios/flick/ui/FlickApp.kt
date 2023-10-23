@@ -23,10 +23,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -41,7 +38,6 @@ import ru.resodostudios.flick.core.designsystem.component.FlickNavigationRail
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationRailItem
 import ru.resodostudios.flick.core.designsystem.component.FlickTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
-import ru.resodostudios.flick.feature.settings.SettingsBottomSheet
 import ru.resodostudios.flick.navigation.FlickNavHost
 import ru.resodostudios.flick.navigation.TopLevelDestination
 
@@ -54,7 +50,6 @@ fun FlickApp(
         windowSizeClass = windowSizeClass
     )
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
@@ -66,16 +61,6 @@ fun FlickApp(
                 duration = SnackbarDuration.Indefinite,
             )
         }
-    }
-
-    var showSettings by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    if (showSettings) {
-        SettingsBottomSheet(
-            onDismiss = { showSettings = false }
-        )
     }
 
     Scaffold(
@@ -126,7 +111,7 @@ fun FlickApp(
                             id = R.string.top_app_bar_action_icon_description,
                         ),
                         onNavigationClick = { appState.navigateToSearch() },
-                        onActionClick = { showSettings = true }
+                        onActionClick = { appState.navigateToSettings() }
                     )
                 }
 

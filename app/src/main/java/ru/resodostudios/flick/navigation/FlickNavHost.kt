@@ -11,6 +11,7 @@ import ru.resodostudios.flick.feature.people.navigation.peopleGraph
 import ru.resodostudios.flick.feature.person.navigation.navigateToPerson
 import ru.resodostudios.flick.feature.person.navigation.personScreen
 import ru.resodostudios.flick.feature.search.navigation.searchScreen
+import ru.resodostudios.flick.feature.settings.navigation.settingsScreen
 import ru.resodostudios.flick.ui.FlickAppState
 
 @Composable
@@ -61,6 +62,9 @@ fun FlickNavHost(
             onPersonClick = { personId ->
                 navController.navigateToPerson(personId)
             }
+        )
+        settingsScreen(
+            onBackClick = navController::popBackStack
         )
     }
 }

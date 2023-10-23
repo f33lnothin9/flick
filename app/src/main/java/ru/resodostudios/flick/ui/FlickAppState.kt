@@ -23,6 +23,7 @@ import ru.resodostudios.flick.feature.movies.navigation.navigateToMoviesGraph
 import ru.resodostudios.flick.feature.people.navigation.navigateToPeople
 import ru.resodostudios.flick.feature.people.navigation.peopleRoute
 import ru.resodostudios.flick.feature.search.navigation.navigateToSearch
+import ru.resodostudios.flick.feature.settings.navigation.navigateToSettings
 import ru.resodostudios.flick.navigation.TopLevelDestination
 import ru.resodostudios.flick.navigation.TopLevelDestination.FAVORITES
 import ru.resodostudios.flick.navigation.TopLevelDestination.MOVIES
@@ -103,5 +104,9 @@ class FlickAppState(
 
     fun navigateToSearch() {
         navController.navigateToSearch()
+    }
+
+    fun navigateToSettings() {
+        navController.navigateToSettings()
     }
 }
