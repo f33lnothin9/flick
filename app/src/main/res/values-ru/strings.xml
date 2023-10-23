@@ -2,11 +2,14 @@
 <resources>
     <string name="top_app_bar_action_icon_description">Настройки</string>
     <string name="top_app_bar_navigation_icon_description">Поиск</string>
+    <string name="large_top_app_bar_navigation_icon_description">Назад</string>
 
     <string name="movies">Кино</string>
     <string name="people">Люди</string>
     <string name="favorites">Избранное</string>
     <string name="search">Поиск</string>
+    <string name="settings">Настройки</string>
+
     <string name="about">О приложении</string>
     <string name="country_empty">Страна не указана</string>
     <string name="summary">Описание</string>
