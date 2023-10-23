@@ -11,6 +11,13 @@
     <string name="settings">Настройки</string>
 
     <string name="about">О приложении</string>
+    <string name="theme">Тема</string>
+    <string name="system">Как в системе</string>
+    <string name="light">Светлая</string>
+    <string name="dark">Тёмная</string>
+    <string name="dynamic_color">Динамическая цветовая схема</string>
+    <string name="version">Версия</string>
+
     <string name="country_empty">Страна не указана</string>
     <string name="summary">Описание</string>
     <string name="minutes">минут(-ы)</string>
@@ -18,8 +25,6 @@
     <string name="crew_credits">Роли в съёмочных группах</string>
     <string name="images">Изображения</string>
     <string name="not_connected">⛔ Вы не подключены к интернету</string>
-    <string name="theme">Тема</string>
-    <string name="version">Версия</string>
     <string name="crew">Съёмочная группа</string>
     <string name="cast">Актёры</string>
     <string name="favorites_empty">В избранное ничего не добавлено</string>

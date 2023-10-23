@@ -1,6 +1,8 @@
 package ru.resodostudios.flick.feature.settings
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -8,6 +10,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -16,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -71,7 +78,12 @@ fun SettingsScreen(
                         contentPadding = innerPadding,
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         content = {
-                            settings()
+                            settings(
+                                settings = settingsUiState.settings,
+                                supportDynamicColor = supportDynamicColor,
+                                onChangeDynamicColorPreference = onChangeDynamicColorPreference,
+                                onChangeDarkThemeConfig = onChangeDarkThemeConfig
+                            )
                         }
                     )
                 }
@@ -80,8 +92,12 @@ fun SettingsScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 private fun LazyListScope.settings(
-
+    settings: UserEditableSettings,
+    supportDynamicColor: Boolean,
+    onChangeDynamicColorPreference: (useDynamicColor: Boolean) -> Unit,
+    onChangeDarkThemeConfig: (darkThemeConfig: DarkThemeConfig) -> Unit
 ) {
     item {
         Text(
@@ -94,12 +110,54 @@ private fun LazyListScope.settings(
     }
 
     item {
+        val options = listOf(
+            stringResource(R.string.system),
+            stringResource(R.string.light),
+            stringResource(R.string.dark)
+        )
+        SingleChoiceSegmentedButtonRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+        ) {
+            options.forEachIndexed { index, label ->
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                    onClick = { onChangeDarkThemeConfig(DarkThemeConfig.entries[index]) },
+                    selected = settings.darkThemeConfig == DarkThemeConfig.entries[index]
+                ) {
+                    Text(label)
+                }
+            }
+        }
+    }
+    item {
+        AnimatedVisibility(visible = supportDynamicColor) {
+            ListItem(
+                headlineContent = {
+                    Text(
+                        text = stringResource(R.string.dynamic_color),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
+                trailingContent = {
+                    Switch(
+                        checked = settings.useDynamicColor,
+                        onCheckedChange = { onChangeDynamicColorPreference(it) }
+                    )
+                }
+            )
+        }
+    }
+
+    item {
         Text(
             text = stringResource(R.string.about),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.secondary,
             maxLines = 1,
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
         )
     }
 
