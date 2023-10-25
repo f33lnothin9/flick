@@ -38,6 +38,7 @@ import ru.resodostudios.flick.core.designsystem.component.FlickNavigationRail
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationRailItem
 import ru.resodostudios.flick.core.designsystem.component.FlickTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
+import ru.resodostudios.flick.feature.settings.navigation.settingsRoute
 import ru.resodostudios.flick.navigation.FlickNavHost
 import ru.resodostudios.flick.navigation.TopLevelDestination
 
@@ -67,7 +68,7 @@ fun FlickApp(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
-            if (appState.shouldShowBottomBar) {
+            if (appState.shouldShowBottomBar && appState.currentDestination?.route != settingsRoute) {
                 FlickBottomBar(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigateToTopLevelDestination,
@@ -76,7 +77,6 @@ fun FlickApp(
             }
         }
     ) { innerPadding ->
-
         Row(
             Modifier
                 .fillMaxSize()
@@ -103,13 +103,9 @@ fun FlickApp(
                     FlickTopAppBar(
                         titleRes = destination.titleTextId,
                         navigationIcon = FlickIcons.Search,
-                        navigationIconContentDescription = stringResource(
-                            id = R.string.top_app_bar_navigation_icon_description
-                        ),
+                        navigationIconContentDescription = stringResource(R.string.top_app_bar_navigation_icon_description),
                         actionIcon = FlickIcons.Settings,
-                        actionIconContentDescription = stringResource(
-                            id = R.string.top_app_bar_action_icon_description,
-                        ),
+                        actionIconContentDescription = stringResource(R.string.top_app_bar_action_icon_description),
                         onNavigationClick = { appState.navigateToSearch() },
                         onActionClick = { appState.navigateToSettings() }
                     )
