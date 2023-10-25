@@ -1,12 +1,13 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
-    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.protobuf)
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
@@ -140,6 +141,9 @@ dependencies {
 
     // Protobuf
     implementation(libs.protobuf.kotlin.lite)
+
+    // Google OSS
+    implementation(libs.google.oss.licenses)
 }
 
 ksp {
