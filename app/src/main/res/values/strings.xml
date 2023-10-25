@@ -18,6 +18,8 @@
     <string name="dark">Dark</string>
     <string name="dynamic_color">Dynamic Color</string>
     <string name="version">Version</string>
+    <string name="open_source_licenses">Open source licenses</string>
+    <string name="open_source_licenses_details">Licenses details for open source software</string>
 
     <string name="country_empty">Unknown country</string>
     <string name="summary">Summary</string>

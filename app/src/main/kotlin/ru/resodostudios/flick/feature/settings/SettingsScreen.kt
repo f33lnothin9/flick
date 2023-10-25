@@ -1,7 +1,8 @@
 package ru.resodostudios.flick.feature.settings
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.FlickLargeTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
@@ -76,7 +78,6 @@ fun SettingsScreen(
                     LazyColumn(
                         modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
                         contentPadding = innerPadding,
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
                         content = {
                             settings(
                                 settings = settingsUiState.settings,
@@ -105,7 +106,7 @@ private fun LazyListScope.settings(
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.secondary,
             maxLines = 1,
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
         )
     }
 
@@ -118,7 +119,7 @@ private fun LazyListScope.settings(
         SingleChoiceSegmentedButtonRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp)
         ) {
             options.forEachIndexed { index, label ->
                 SegmentedButton(
@@ -146,7 +147,8 @@ private fun LazyListScope.settings(
                         checked = settings.useDynamicColor,
                         onCheckedChange = { onChangeDynamicColorPreference(it) }
                     )
-                }
+                },
+                modifier = Modifier.padding(bottom = 16.dp)
             )
         }
     }
@@ -157,7 +159,18 @@ private fun LazyListScope.settings(
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.secondary,
             maxLines = 1,
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+        )
+    }
+
+    item {
+        val context = LocalContext.current
+        ListItem(
+            headlineContent = { Text(text = stringResource(R.string.open_source_licenses)) },
+            supportingContent = { Text(text = stringResource(R.string.open_source_licenses_details)) },
+            modifier = Modifier.clickable {
+                context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+            }
         )
     }
 
