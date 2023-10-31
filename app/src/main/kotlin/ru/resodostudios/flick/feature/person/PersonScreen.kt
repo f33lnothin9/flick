@@ -75,7 +75,7 @@ internal fun PersonScreen(
     personState: PersonUiState,
     onBackClick: () -> Unit,
     onMovieClick: (Int) -> Unit,
-    onEvent: (FavoriteEvent) -> Unit
+    onEvent: (ru.resodostudios.flick.feature.favorites.FavoriteEvent) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -93,7 +93,7 @@ internal fun PersonScreen(
                                 IconButton(
                                     onClick = {
                                         onEvent(
-                                            FavoriteEvent.DeletePerson(
+                                            ru.resodostudios.flick.feature.favorites.FavoriteEvent.DeletePerson(
                                                 FavoritePerson(
                                                     id = personState.data.person.id,
                                                     name = personState.data.person.name,
@@ -110,7 +110,7 @@ internal fun PersonScreen(
                                 }
                             } else {
                                 IconButton(
-                                    onClick = { onEvent(FavoriteEvent.AddPerson(personState.data.person)) }
+                                    onClick = { onEvent(ru.resodostudios.flick.feature.favorites.FavoriteEvent.AddPerson(personState.data.person)) }
                                 ) {
                                     Icon(
                                         imageVector = FlickIcons.Favorites,

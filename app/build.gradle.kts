@@ -38,7 +38,8 @@ android {
 }
 
 dependencies {
-    implementation(projects.feature.)
+    implementation(projects.feature.movies)
+    implementation(projects.feature.favorites)
     implementation(projects.feature.settings)
 
     implementation(projects.core.common)

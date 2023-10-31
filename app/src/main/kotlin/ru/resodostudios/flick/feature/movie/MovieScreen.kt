@@ -74,7 +74,7 @@ internal fun MovieRoute(
 @Composable
 internal fun MovieScreen(
     movieState: MovieUiState,
-    onEvent: (FavoriteEvent) -> Unit,
+    onEvent: (ru.resodostudios.flick.feature.favorites.FavoriteEvent) -> Unit,
     onBackClick: () -> Unit,
     onPersonClick: (Int) -> Unit
 ) {
@@ -94,7 +94,7 @@ internal fun MovieScreen(
                                 IconButton(
                                     onClick = {
                                         onEvent(
-                                            FavoriteEvent.DeleteMovie(
+                                            ru.resodostudios.flick.feature.favorites.FavoriteEvent.DeleteMovie(
                                                 FavoriteMovie(
                                                     id = movieState.data.movie.id,
                                                     name = movieState.data.movie.name,
@@ -113,7 +113,7 @@ internal fun MovieScreen(
                                 }
                             } else {
                                 IconButton(
-                                    onClick = { onEvent(FavoriteEvent.AddMovie(movieState.data.movie)) }
+                                    onClick = { onEvent(ru.resodostudios.flick.feature.favorites.FavoriteEvent.AddMovie(movieState.data.movie)) }
                                 ) {
                                     Icon(
                                         imageVector = FlickIcons.Favorites,

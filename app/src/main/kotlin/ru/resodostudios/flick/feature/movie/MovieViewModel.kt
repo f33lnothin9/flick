@@ -40,9 +40,9 @@ class MovieViewModel @Inject constructor(
             initialValue = MovieUiState.Loading,
         )
 
-    fun onEvent(event: FavoriteEvent) {
+    fun onEvent(event: ru.resodostudios.flick.feature.favorites.FavoriteEvent) {
         when (event) {
-            is FavoriteEvent.AddMovie -> {
+            is ru.resodostudios.flick.feature.favorites.FavoriteEvent.AddMovie -> {
                 val favoriteMovie = FavoriteMovie(
                     id = event.movie.id,
                     image = event.movie.image.medium,
@@ -56,7 +56,7 @@ class MovieViewModel @Inject constructor(
                 }
             }
 
-            is FavoriteEvent.DeleteMovie -> {
+            is ru.resodostudios.flick.feature.favorites.FavoriteEvent.DeleteMovie -> {
                 viewModelScope.launch {
                     favoritesRepository.deleteMovie(event.movie)
                 }

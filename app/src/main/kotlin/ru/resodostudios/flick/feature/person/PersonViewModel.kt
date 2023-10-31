@@ -40,9 +40,9 @@ class PersonViewModel @Inject constructor(
             initialValue = PersonUiState.Loading,
         )
 
-    fun onEvent(event: FavoriteEvent) {
+    fun onEvent(event: ru.resodostudios.flick.feature.favorites.FavoriteEvent) {
         when (event) {
-            is FavoriteEvent.AddPerson -> {
+            is ru.resodostudios.flick.feature.favorites.FavoriteEvent.AddPerson -> {
                 val favoritePerson = FavoritePerson(
                     id = event.person.id,
                     image = event.person.image.medium,
@@ -54,7 +54,7 @@ class PersonViewModel @Inject constructor(
                 }
             }
 
-            is FavoriteEvent.DeletePerson -> {
+            is ru.resodostudios.flick.feature.favorites.FavoriteEvent.DeletePerson -> {
                 viewModelScope.launch {
                     favoritesRepository.deletePerson(event.person)
                 }

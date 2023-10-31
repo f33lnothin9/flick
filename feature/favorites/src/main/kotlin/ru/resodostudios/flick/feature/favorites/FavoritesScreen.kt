@@ -26,8 +26,6 @@ import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.FavoritePerson
-import ru.resodostudios.flick.core.ui.EmptyState
-import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.movie.MovieViewModel
 import ru.resodostudios.flick.feature.person.PersonViewModel
 

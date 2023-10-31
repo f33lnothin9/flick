@@ -28,4 +28,5 @@ include(":core:network")
 include(":core:ui")
 
 include(":feature:movies")
+include(":feature:favorites")
 include(":feature:settings")
