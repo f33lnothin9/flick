@@ -28,5 +28,6 @@ include(":core:network")
 include(":core:ui")
 
 include(":feature:movies")
+include(":feature:people")
 include(":feature:favorites")
 include(":feature:settings")

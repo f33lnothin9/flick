@@ -20,11 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.model.data.Person
-import ru.resodostudios.flick.core.ui.EmptyState
-import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.people.PeopleUiState.Error
 import ru.resodostudios.flick.feature.people.PeopleUiState.Loading
 import ru.resodostudios.flick.feature.people.PeopleUiState.Success
