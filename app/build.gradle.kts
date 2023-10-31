@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.settings)
+
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.database)
@@ -59,8 +61,8 @@ dependencies {
     // Integration with activities
     implementation(libs.androidx.activity.compose)
 
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
@@ -68,9 +70,6 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Coil
@@ -78,7 +77,4 @@ dependencies {
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
-
-    // Google OSS
-    implementation(libs.google.oss.licenses)
 }

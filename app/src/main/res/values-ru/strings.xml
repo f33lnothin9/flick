@@ -8,18 +8,7 @@
     <string name="people">Люди</string>
     <string name="favorites">Избранное</string>
     <string name="search">Поиск</string>
-    <string name="settings">Настройки</string>
 
-    <string name="about">О приложении</string>
-    <string name="theme">Тема</string>
-    <string name="system">Как в системе</string>
-    <string name="light">Светлая</string>
-    <string name="dark">Тёмная</string>
-    <string name="dynamic_color">Динамическая цветовая схема</string>
-    <string name="version">Версия</string>
-
-    <string name="open_source_licenses">Лицензии на открытые исходные коды</string>
-    <string name="open_source_licenses_details">Детали лицензий на программное обеспечение с открытым исходным кодом</string>
     <string name="country_empty">Страна не указана</string>
     <string name="summary">Описание</string>
     <string name="minutes">минут(-ы)</string>

@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.FlickLargeTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.designsystem.theme.supportsDynamicTheming
@@ -61,7 +60,7 @@ fun SettingsScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     when (settingsUiState) {
-        SettingsUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
+        SettingsUiState.Loading -> LoadingState()
         is SettingsUiState.Success -> {
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -70,7 +69,7 @@ fun SettingsScreen(
                         titleRes = R.string.settings,
                         scrollBehavior = scrollBehavior,
                         navigationIcon = FlickIcons.ArrowBack,
-                        navigationIconContentDescription = stringResource(R.string.large_top_app_bar_navigation_icon_description),
+                        navigationIconContentDescription = stringResource(R.string.top_app_bar_navigation_icon_description),
                         onNavigationClick = onBackClick
                     )
                 },
