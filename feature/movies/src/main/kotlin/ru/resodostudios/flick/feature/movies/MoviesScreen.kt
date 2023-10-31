@@ -13,11 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.model.data.Movie
-import ru.resodostudios.flick.core.ui.EmptyState
-import ru.resodostudios.flick.core.ui.LoadingState
-import ru.resodostudios.flick.core.ui.MovieCard
 
 @Composable
 internal fun MoviesRoute(

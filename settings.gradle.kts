@@ -27,4 +27,5 @@ include(":core:model")
 include(":core:network")
 include(":core:ui")
 
+include(":feature:movies")
 include(":feature:settings")

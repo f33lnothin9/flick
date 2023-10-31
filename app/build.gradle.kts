@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.)
     implementation(projects.feature.settings)
 
     implementation(projects.core.common)
