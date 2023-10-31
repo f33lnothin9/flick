@@ -231,7 +231,9 @@ private fun PersonHeaderDate(birthday: String, deathday: String) {
         val age = ageCalendar.get(Calendar.YEAR) - 1970
 
         Text(
-            text = formatDate(birthday) + (if (deathday.isNotBlank()) " - " + formatDate(deathday) else "") + ", $age years",
+            text = formatDate(birthday) + (if (deathday.isNotBlank()) " - " + formatDate(
+                deathday
+            ) else "") + ", $age years",
             style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Start
         )

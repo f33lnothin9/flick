@@ -1,5 +1,3 @@
--keep class ru.resodostudios.flick.core.network.model.** { *; }
-
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.
 -keepattributes Signature, InnerClasses, EnclosingMethod
@@ -42,12 +40,3 @@
 # R8 full mode strips generic signatures from return types if not kept.
 -if interface * { @retrofit2.http.* public *** *(...); }
 -keep,allowoptimization,allowshrinking,allowobfuscation class <3>
-
-# Keep generic signature of Call, Response (R8 full mode strips signatures from non-kept items).
--keep,allowobfuscation,allowshrinking interface retrofit2.Call
--keep,allowobfuscation,allowshrinking class retrofit2.Response
-
-# Keep DataStore fields
--keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite* {
-   <fields>;
-}

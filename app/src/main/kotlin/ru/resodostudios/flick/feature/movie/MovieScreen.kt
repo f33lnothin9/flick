@@ -52,10 +52,6 @@ import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
-import ru.resodostudios.flick.core.ui.AdBanner
-import ru.resodostudios.flick.core.ui.BodySection
-import ru.resodostudios.flick.core.ui.EmptyState
-import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 
 @Composable
@@ -85,7 +81,7 @@ internal fun MovieScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     when (movieState) {
-        MovieUiState.Loading -> LoadingState()
+        MovieUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
         is MovieUiState.Success -> {
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -150,7 +146,7 @@ internal fun MovieScreen(
             )
         }
 
-        is MovieUiState.Error -> EmptyState(
+        is MovieUiState.Error -> ru.resodostudios.flick.core.ui.EmptyState(
             message = movieState.errorMessage,
             animationId = R.raw.anim_error_2
         )
@@ -288,10 +284,10 @@ private fun MovieBody(
             )
         }
 
-        AdBanner(id = R.string.banner_id)
+        ru.resodostudios.flick.core.ui.AdBanner(id = R.string.banner_id)
 
         if (movieExtended.cast.isNotEmpty()) {
-            BodySection(
+            ru.resodostudios.flick.core.ui.BodySection(
                 title = R.string.cast,
                 itemsSize = movieExtended.cast.size,
                 content = {
@@ -319,7 +315,7 @@ private fun MovieBody(
         }
 
         if (movieExtended.crew.isNotEmpty()) {
-            BodySection(
+            ru.resodostudios.flick.core.ui.BodySection(
                 title = R.string.crew,
                 itemsSize = movieExtended.crew.size,
                 content = {
@@ -377,7 +373,9 @@ private fun MovieBody(
                                     .size(
                                         height = convertPixelsToDp(
                                             context = context,
-                                            pixels = imageExtended.resolutions.original.height.div(2f)
+                                            pixels = imageExtended.resolutions.original.height.div(
+                                                2f
+                                            )
                                         ),
                                         width = convertPixelsToDp(
                                             context = context,

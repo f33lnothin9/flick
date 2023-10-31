@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Flick</string>
 
+    <string name="com.google.firebase.crashlytics.mapping_file_id" translatable="false">1</string>
+
     <string name="top_app_bar_action_icon_description">Settings</string>
     <string name="top_app_bar_navigation_icon_description">Search</string>
     <string name="large_top_app_bar_navigation_icon_description">Back</string>

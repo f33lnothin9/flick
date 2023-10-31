@@ -61,7 +61,7 @@ internal fun FavoritesScreen(
 ) {
 
     when (favoritesState) {
-        FavoritesUiState.Loading -> LoadingState()
+        FavoritesUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
         is FavoritesUiState.Success -> if (favoritesState.data.movies.isNotEmpty() || favoritesState.data.people.isNotEmpty()) {
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
@@ -79,7 +79,7 @@ internal fun FavoritesScreen(
                 )
             }
         } else {
-            EmptyState(
+            ru.resodostudios.flick.core.ui.EmptyState(
                 message = stringResource(R.string.favorites_empty),
                 animationId = R.raw.anim_empty
             )

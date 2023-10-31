@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.resodostudios.flick.core.data.repository.UserDataRepository
+import ru.resodostudios.core.data.repository.UserDataRepository
 import ru.resodostudios.flick.core.model.data.DarkThemeConfig
 import javax.inject.Inject
 

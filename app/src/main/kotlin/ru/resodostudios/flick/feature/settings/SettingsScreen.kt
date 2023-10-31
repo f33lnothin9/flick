@@ -61,7 +61,7 @@ fun SettingsScreen(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     when (settingsUiState) {
-        SettingsUiState.Loading -> LoadingState()
+        SettingsUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
         is SettingsUiState.Success -> {
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),

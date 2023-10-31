@@ -25,10 +25,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import ru.resodostudios.flick.MainActivityUiState.Loading
 import ru.resodostudios.flick.MainActivityUiState.Success
-import ru.resodostudios.flick.core.data.util.NetworkMonitor
+import ru.resodostudios.core.data.util.NetworkMonitor
 import ru.resodostudios.flick.core.designsystem.theme.FlickTheme
-import ru.resodostudios.flick.core.model.data.DarkThemeConfig
 import ru.resodostudios.flick.ui.FlickApp
+import ru.resodostudios.flick.core.model.data.DarkThemeConfig
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -113,6 +113,8 @@ private fun shouldUseDarkTheme(
         DarkThemeConfig.DARK -> true
     }
 }
+
+
 
 private val lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
 private val darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)

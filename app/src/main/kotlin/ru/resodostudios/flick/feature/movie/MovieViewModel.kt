@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ru.resodostudios.flick.core.data.repository.FavoritesRepository
+import ru.resodostudios.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetMovieExtendedUseCase
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.MovieExtended

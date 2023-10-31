@@ -1,25 +1,17 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.flick.android.application)
+    alias(libs.plugins.flick.android.application.compose)
+    alias(libs.plugins.flick.android.application.firebase)
+    alias(libs.plugins.flick.android.hilt)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.protobuf)
     id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
-    namespace = "ru.resodostudios.flick"
-    compileSdk = 34
-
     defaultConfig {
         applicationId = "ru.resodostudios.flick"
-        minSdk = 24
-        targetSdk = 34
         versionCode = 7
-        versionName = "1.2.2"
+        versionName = "1.3.0-alpha"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -30,73 +22,45 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
-    kotlin {
-        jvmToolchain(17)
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    protobuf {
-        protoc {
-            artifact = libs.protobuf.protoc.get().toString()
-        }
-        generateProtoTasks {
-            all().forEach { task ->
-                task.builtins {
-                    register("java") {
-                        option("lite")
-                    }
-                    register("kotlin") {
-                        option("lite")
-                    }
-                }
-            }
-        }
-    }
+    namespace = "ru.resodostudios.flick"
     buildToolsVersion = "34.0.0"
 }
 
 dependencies {
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
+    implementation(projects.core.common)
+    implementation(projects.core.data)
+    implementation(projects.core.database)
+    implementation(projects.core.datastore)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.domain)
+    implementation(projects.core.model)
+    implementation(projects.core.ui)
 
     implementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(platform(libs.androidx.compose.bom))
-
-    // Material Design 3
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.material3.windowSizeClass)
 
     // UI Tests
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.test.manifest)
 
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+
     // Integration with activities
     implementation(libs.androidx.activity.compose)
 
-    // Full set of material icons
-    implementation(libs.material.icons)
-
-    // Integration with ViewModels
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
@@ -109,43 +73,12 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.okhttp)
-
-    // Kotlin Serialization
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
-
     // Coil
-    implementation(libs.coil.compose)
+    implementation(libs.coil.kt.compose)
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
 
-    // Room
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-
-    // Lottie
-    implementation(libs.lottie.compose)
-
-    // Google Fonts
-    implementation(libs.androidx.ui.text.google.fonts)
-
-    // Yandex Ads
-    implementation(libs.mobileads)
-
-    // DataStore
-    implementation(libs.androidx.dataStore.core)
-
-    // Protobuf
-    implementation(libs.protobuf.kotlin.lite)
-
     // Google OSS
     implementation(libs.google.oss.licenses)
-}
-
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
 }

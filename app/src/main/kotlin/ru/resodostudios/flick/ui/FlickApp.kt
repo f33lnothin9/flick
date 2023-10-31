@@ -31,7 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.data.util.NetworkMonitor
+import ru.resodostudios.core.data.util.NetworkMonitor
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationBar
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationBarItem
 import ru.resodostudios.flick.core.designsystem.component.FlickNavigationRail

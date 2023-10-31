@@ -58,8 +58,8 @@ internal fun SearchScreen(
         onBackClick = onBackClick
     ) {
         when (searchState) {
-            SearchUiState.Loading -> LoadingState()
-            is SearchUiState.Error -> EmptyState(
+            SearchUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
+            is SearchUiState.Error -> ru.resodostudios.flick.core.ui.EmptyState(
                 message = searchState.errorMessage,
                 animationId = R.raw.anim_error_1
             )

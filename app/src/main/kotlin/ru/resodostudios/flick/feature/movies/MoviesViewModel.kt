@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import ru.resodostudios.flick.core.data.repository.MoviesRepository
+import ru.resodostudios.core.data.repository.MoviesRepository
 import ru.resodostudios.flick.core.model.data.Movie
 import javax.inject.Inject
 

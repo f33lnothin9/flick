@@ -37,7 +37,7 @@ internal fun MoviesScreen(
     onMovieClick: (Int) -> Unit
 ) {
     when (moviesState) {
-        MoviesUiState.Loading -> LoadingState()
+        MoviesUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
         is MoviesUiState.Success -> LazyVerticalGrid(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -51,7 +51,7 @@ internal fun MoviesScreen(
             )
         }
 
-        is MoviesUiState.Error -> EmptyState(
+        is MoviesUiState.Error -> ru.resodostudios.flick.core.ui.EmptyState(
             message = moviesState.errorMessage,
             animationId = R.raw.anim_error_2
         )
@@ -63,7 +63,7 @@ private fun LazyGridScope.movies(
     onMovieClick: (Int) -> Unit
 ) {
     items(movies) { movie ->
-        MovieCard(
+        ru.resodostudios.flick.core.ui.MovieCard(
             movie = movie,
             onMovieClick = onMovieClick
         )
