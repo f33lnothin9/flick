@@ -33,9 +33,7 @@ import ru.resodostudios.flick.feature.person.PersonViewModel
 internal fun FavoritesRoute(
     onMovieClick: (Int) -> Unit,
     onPersonClick: (Int) -> Unit,
-    favoriteViewModel: FavoritesViewModel = hiltViewModel(),
-    movieViewModel: MovieViewModel = hiltViewModel(),
-    personViewModel: PersonViewModel = hiltViewModel(),
+    favoriteViewModel: FavoritesViewModel = hiltViewModel()
 ) {
     val favoritesState by favoriteViewModel.favoritesUiState.collectAsStateWithLifecycle(
         initialValue = FavoritesUiState.Loading

@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.common.formatDate
+import ru.resodostudios.flick.core.ui.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
@@ -47,7 +47,6 @@ import ru.resodostudios.flick.core.ui.AdBanner
 import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
-import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

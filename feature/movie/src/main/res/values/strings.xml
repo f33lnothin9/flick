@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="summary">Summary</string>
+    <string name="minutes">minutes</string>
+    <string name="crew">Crew</string>
+    <string name="cast">Cast</string>
+    <string name="cast_credits">Cast Credits</string>
+    <string name="crew_credits">Crew Credits</string>
+    <string name="images">Images</string>
+</resources>

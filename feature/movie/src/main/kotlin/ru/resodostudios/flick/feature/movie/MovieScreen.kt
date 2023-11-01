@@ -1,5 +1,6 @@
 package ru.resodostudios.flick.feature.movie
 
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,24 +40,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ru.resodostudios.flick.R
-import ru.resodostudios.flick.core.common.convertPixelsToDp
-import ru.resodostudios.flick.core.common.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
-import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.core.model.data.MovieExtended
-import ru.resodostudios.flick.feature.favorites.FavoriteEvent
+import ru.resodostudios.flick.core.ui.EmptyState
+import ru.resodostudios.flick.core.ui.LoadingState
+import ru.resodostudios.flick.core.ui.R.raw.anim_error_2
+import ru.resodostudios.flick.core.ui.formatDate
+import ru.resodostudios.flick.feature.favorites.FavoritesViewModel
+import ru.resodostudios.flick.core.ui.AdBanner
 
 @Composable
 internal fun MovieRoute(
     movieViewModel: MovieViewModel = hiltViewModel(),
+    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onPersonClick: (Int) -> Unit
 ) {
@@ -64,7 +68,8 @@ internal fun MovieRoute(
 
     MovieScreen(
         movieState = movieState,
-        onEvent = movieViewModel::onEvent,
+        onMovieRemove = favoritesViewModel::removeMovie,
+        onMovieFavorite = favoritesViewModel::addMovie,
         onBackClick = onBackClick,
         onPersonClick = onPersonClick
     )
@@ -74,14 +79,15 @@ internal fun MovieRoute(
 @Composable
 internal fun MovieScreen(
     movieState: MovieUiState,
-    onEvent: (ru.resodostudios.flick.feature.favorites.FavoriteEvent) -> Unit,
+    onMovieRemove: (Movie) -> Unit,
+    onMovieFavorite: (Movie) -> Unit,
     onBackClick: () -> Unit,
     onPersonClick: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     when (movieState) {
-        MovieUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
+        MovieUiState.Loading -> LoadingState()
         is MovieUiState.Success -> {
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -93,17 +99,7 @@ internal fun MovieScreen(
                             if (movieState.data.isFavorite) {
                                 IconButton(
                                     onClick = {
-                                        onEvent(
-                                            ru.resodostudios.flick.feature.favorites.FavoriteEvent.DeleteMovie(
-                                                FavoriteMovie(
-                                                    id = movieState.data.movie.id,
-                                                    name = movieState.data.movie.name,
-                                                    genres = movieState.data.movie.genres,
-                                                    rating = movieState.data.movie.rating.average,
-                                                    image = movieState.data.movie.image.medium
-                                                )
-                                            )
-                                        )
+                                        onMovieRemove(movieState.data.movie)
                                     }
                                 ) {
                                     Icon(
@@ -113,7 +109,9 @@ internal fun MovieScreen(
                                 }
                             } else {
                                 IconButton(
-                                    onClick = { onEvent(ru.resodostudios.flick.feature.favorites.FavoriteEvent.AddMovie(movieState.data.movie)) }
+                                    onClick = {
+                                        onMovieFavorite(movieState.data.movie)
+                                    }
                                 ) {
                                     Icon(
                                         imageVector = FlickIcons.Favorites,
@@ -146,9 +144,9 @@ internal fun MovieScreen(
             )
         }
 
-        is MovieUiState.Error -> ru.resodostudios.flick.core.ui.EmptyState(
+        is MovieUiState.Error -> EmptyState(
             message = movieState.errorMessage,
-            animationId = R.raw.anim_error_2
+            animationId = anim_error_2
         )
     }
 }
@@ -284,7 +282,7 @@ private fun MovieBody(
             )
         }
 
-        ru.resodostudios.flick.core.ui.AdBanner(id = R.string.banner_id)
+        AdBanner(id = R.string.banner_id)
 
         if (movieExtended.cast.isNotEmpty()) {
             ru.resodostudios.flick.core.ui.BodySection(
@@ -390,4 +388,9 @@ private fun MovieBody(
             }
         }
     }
+}
+
+fun convertPixelsToDp(context: Context, pixels: Float): Dp {
+    val screenPixelDensity = context.resources.displayMetrics.density
+    return (pixels / screenPixelDensity).dp
 }

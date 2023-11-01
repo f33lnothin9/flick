@@ -10,18 +10,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import ru.resodostudios.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetMovieExtendedUseCase
-import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.MovieExtended
-import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import ru.resodostudios.flick.feature.movie.navigation.MovieArgs
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val favoritesRepository: FavoritesRepository,
     getMovieExtendedUseCase: GetMovieExtendedUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -39,32 +34,6 @@ class MovieViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = MovieUiState.Loading,
         )
-
-    fun onEvent(event: ru.resodostudios.flick.feature.favorites.FavoriteEvent) {
-        when (event) {
-            is ru.resodostudios.flick.feature.favorites.FavoriteEvent.AddMovie -> {
-                val favoriteMovie = FavoriteMovie(
-                    id = event.movie.id,
-                    image = event.movie.image.medium,
-                    rating = event.movie.rating.average,
-                    name = event.movie.name,
-                    genres = event.movie.genres
-                )
-
-                viewModelScope.launch {
-                    favoritesRepository.upsertMovie(favoriteMovie)
-                }
-            }
-
-            is ru.resodostudios.flick.feature.favorites.FavoriteEvent.DeleteMovie -> {
-                viewModelScope.launch {
-                    favoritesRepository.deleteMovie(event.movie)
-                }
-            }
-
-            else -> {}
-        }
-    }
 }
 
 sealed interface MovieUiState {

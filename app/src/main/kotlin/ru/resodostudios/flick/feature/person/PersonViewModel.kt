@@ -15,7 +15,6 @@ import ru.resodostudios.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetPersonExtendedUseCase
 import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.PersonExtended
-import ru.resodostudios.flick.feature.favorites.FavoriteEvent
 import ru.resodostudios.flick.feature.person.navigation.PersonArgs
 import javax.inject.Inject
 

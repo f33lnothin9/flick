@@ -7,12 +7,17 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import ru.resodostudios.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetFavoritesUseCase
+import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.Favorites
+import ru.resodostudios.flick.core.model.data.Movie
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
+    private val favoritesRepository: FavoritesRepository,
     getFavoritesUseCase: GetFavoritesUseCase
 ) : ViewModel() {
 
@@ -24,6 +29,34 @@ class FavoritesViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = FavoritesUiState.Loading,
             )
+
+    fun addMovie(movie: Movie) {
+        val favoriteMovie = FavoriteMovie(
+            id = movie.id,
+            image = movie.image.medium,
+            rating = movie.rating.average,
+            name = movie.name,
+            genres = movie.genres
+        )
+
+        viewModelScope.launch {
+            favoritesRepository.upsertMovie(favoriteMovie)
+        }
+    }
+
+    fun removeMovie(movie: Movie) {
+        val favoriteMovie = FavoriteMovie(
+            id = movie.id,
+            image = movie.image.medium,
+            rating = movie.rating.average,
+            name = movie.name,
+            genres = movie.genres
+        )
+
+        viewModelScope.launch {
+            favoritesRepository.deleteMovie(favoriteMovie)
+        }
+    }
 }
 
 sealed interface FavoritesUiState {
