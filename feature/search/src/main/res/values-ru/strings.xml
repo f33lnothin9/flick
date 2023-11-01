@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="movies_search_label">Кино</string>
+    <string name="people_search_label">Люди</string>
+    <string name="search">Поиск кино и актеров</string>
+</resources>

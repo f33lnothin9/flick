@@ -18,13 +18,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ru.resodostudios.flick.R
 import ru.resodostudios.flick.core.designsystem.component.SearchBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.model.data.SearchMovie
 import ru.resodostudios.flick.core.model.data.SearchPerson
-import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
+import ru.resodostudios.flick.core.ui.EmptyState
+import ru.resodostudios.flick.core.ui.R.raw.anim_error_2
 
 @Composable
 internal fun SearchRoute(
@@ -58,10 +58,10 @@ internal fun SearchScreen(
         onBackClick = onBackClick
     ) {
         when (searchState) {
-            SearchUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
-            is SearchUiState.Error -> ru.resodostudios.flick.core.ui.EmptyState(
+            SearchUiState.Loading -> LoadingState()
+            is SearchUiState.Error -> EmptyState(
                 message = searchState.errorMessage,
-                animationId = R.raw.anim_error_1
+                animationId = anim_error_2
             )
 
             is SearchUiState.Success -> LazyVerticalGrid(
@@ -91,7 +91,7 @@ private fun LazyGridScope.searchMovies(
 ) {
     item {
         Text(
-            text = stringResource(R.string.movies),
+            text = stringResource(R.string.movies_search_label),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 32.dp, top = 16.dp, bottom = 8.dp),
             style = MaterialTheme.typography.labelLarge
@@ -121,7 +121,7 @@ private fun LazyGridScope.searchPeople(
 ) {
     item {
         Text(
-            text = stringResource(R.string.people),
+            text = stringResource(R.string.people_search_label),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 32.dp, top = 16.dp, bottom = 8.dp),
             style = MaterialTheme.typography.labelLarge

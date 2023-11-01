@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="movies_search_label">Movies</string>
+    <string name="people_search_label">People</string>
+    <string name="search">Search movies &amp; people</string>
+</resources>
