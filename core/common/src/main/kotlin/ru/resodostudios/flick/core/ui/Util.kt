@@ -10,4 +10,3 @@ fun formatDate(date: String): String {
 
     return outputFormat.format(rawDate!!)
 }
-

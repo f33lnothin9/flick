@@ -1,4 +1,4 @@
-package ru.resodostudios.core.data.repository.impl
+package ru.resodostudios.core.data.repository.network
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +13,7 @@ import ru.resodostudios.flick.core.network.FlickNetworkDataSource
 import ru.resodostudios.flick.core.network.model.asExternalModel
 import javax.inject.Inject
 
-class SearchRepositoryImpl @Inject constructor(
+class NetworkSearchRepository @Inject constructor(
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
     private val datasource: FlickNetworkDataSource
 ) : SearchRepository {

@@ -1,4 +1,4 @@
-package ru.resodostudios.core.data.repository.impl
+package ru.resodostudios.core.data.repository.offline
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -13,7 +13,7 @@ import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.FavoritePerson
 import javax.inject.Inject
 
-class FavoritesRepositoryImpl @Inject constructor(
+class OfflineFavoritesRepository @Inject constructor(
     private val moviesDao: FavoriteMoviesDao,
     private val peopleDao: FavoritePeopleDao
 ) : FavoritesRepository {

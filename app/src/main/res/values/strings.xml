@@ -22,6 +22,4 @@
     <string name="favorites_empty">Nothing in Favorites</string>
 
     <string name="not_connected">⛔ You aren’t connected to the internet</string>
-
-    <string name="banner_id" translatable="false">R-M-2566736-1</string>
 </resources>

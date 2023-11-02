@@ -42,6 +42,7 @@ dependencies {
     implementation(projects.feature.people)
     implementation(projects.feature.favorites)
     implementation(projects.feature.movie)
+    implementation(projects.feature.person)
     implementation(projects.feature.search)
     implementation(projects.feature.settings)
 
@@ -50,7 +51,6 @@ dependencies {
     implementation(projects.core.database)
     implementation(projects.core.datastore)
     implementation(projects.core.designsystem)
-    implementation(projects.core.domain)
     implementation(projects.core.model)
     implementation(projects.core.ui)
 
@@ -65,9 +65,6 @@ dependencies {
 
     // Integration with activities
     implementation(libs.androidx.activity.compose)
-
-    implementation(libs.androidx.lifecycle.runtimeCompose)
-    implementation(libs.androidx.lifecycle.viewModelCompose)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)

@@ -56,6 +56,8 @@ import ru.resodostudios.flick.core.ui.R.raw.anim_error_2
 import ru.resodostudios.flick.core.ui.formatDate
 import ru.resodostudios.flick.feature.favorites.FavoritesViewModel
 import ru.resodostudios.flick.core.ui.AdBanner
+import ru.resodostudios.flick.core.ui.BodySection
+import ru.resodostudios.flick.core.ui.R.string.banner_id
 
 @Composable
 internal fun MovieRoute(
@@ -282,10 +284,10 @@ private fun MovieBody(
             )
         }
 
-        AdBanner(id = R.string.banner_id)
+        AdBanner(id = banner_id)
 
         if (movieExtended.cast.isNotEmpty()) {
-            ru.resodostudios.flick.core.ui.BodySection(
+            BodySection(
                 title = R.string.cast,
                 itemsSize = movieExtended.cast.size,
                 content = {
@@ -313,7 +315,7 @@ private fun MovieBody(
         }
 
         if (movieExtended.crew.isNotEmpty()) {
-            ru.resodostudios.flick.core.ui.BodySection(
+            BodySection(
                 title = R.string.crew,
                 itemsSize = movieExtended.crew.size,
                 content = {

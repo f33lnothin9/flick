@@ -11,8 +11,10 @@ import kotlinx.coroutines.launch
 import ru.resodostudios.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetFavoritesUseCase
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
+import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.Favorites
 import ru.resodostudios.flick.core.model.data.Movie
+import ru.resodostudios.flick.core.model.data.Person
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,6 +57,30 @@ class FavoritesViewModel @Inject constructor(
 
         viewModelScope.launch {
             favoritesRepository.deleteMovie(favoriteMovie)
+        }
+    }
+
+    fun addPerson(person: Person) {
+        val favoritePerson = FavoritePerson(
+            id = person.id,
+            image = person.image.medium,
+            name = person.name
+        )
+
+        viewModelScope.launch {
+            favoritesRepository.upsertPerson(favoritePerson)
+        }
+    }
+
+    fun removePerson(person: Person) {
+        val favoritePerson = FavoritePerson(
+            id = person.id,
+            image = person.image.medium,
+            name = person.name
+        )
+
+        viewModelScope.launch {
+            favoritesRepository.deletePerson(favoritePerson)
         }
     }
 }

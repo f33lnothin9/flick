@@ -1,4 +1,4 @@
-package ru.resodostudios.core.data.repository.impl
+package ru.resodostudios.core.data.repository.offline
 
 import kotlinx.coroutines.flow.Flow
 import ru.resodostudios.core.data.repository.UserDataRepository
@@ -7,7 +7,7 @@ import ru.resodostudios.flick.core.model.data.DarkThemeConfig
 import ru.resodostudios.flick.core.model.data.UserData
 import javax.inject.Inject
 
-class UserDataRepositoryImpl @Inject constructor(
+class OfflineUserDataRepository @Inject constructor(
     private val flickPreferencesDataSource: FlickPreferencesDataSource
 ) : UserDataRepository {
 

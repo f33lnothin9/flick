@@ -9,11 +9,11 @@ import ru.resodostudios.core.data.repository.MoviesRepository
 import ru.resodostudios.core.data.repository.PeopleRepository
 import ru.resodostudios.core.data.repository.SearchRepository
 import ru.resodostudios.core.data.repository.UserDataRepository
-import ru.resodostudios.core.data.repository.impl.FavoritesRepositoryImpl
-import ru.resodostudios.core.data.repository.impl.MoviesRepositoryImpl
-import ru.resodostudios.core.data.repository.impl.PeopleRepositoryImpl
-import ru.resodostudios.core.data.repository.impl.SearchRepositoryImpl
-import ru.resodostudios.core.data.repository.impl.UserDataRepositoryImpl
+import ru.resodostudios.core.data.repository.offline.OfflineFavoritesRepository
+import ru.resodostudios.core.data.repository.network.NetworkMoviesRepository
+import ru.resodostudios.core.data.repository.network.NetworkPeopleRepository
+import ru.resodostudios.core.data.repository.network.NetworkSearchRepository
+import ru.resodostudios.core.data.repository.offline.OfflineUserDataRepository
 import ru.resodostudios.core.data.util.ConnectivityManagerNetworkMonitor
 import ru.resodostudios.core.data.util.NetworkMonitor
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
@@ -30,27 +30,27 @@ interface DataModule {
 
     @Binds
     fun bindMoviesRepository(
-        moviesRepositoryImpl: MoviesRepositoryImpl
+        moviesRepositoryImpl: NetworkMoviesRepository
     ): MoviesRepository
 
     @Binds
     fun bindSearchRepository(
-        searchRepositoryImpl: SearchRepositoryImpl
+        searchRepositoryImpl: NetworkSearchRepository
     ): SearchRepository
 
     @Binds
     fun bindPeopleRepository(
-        peopleRepositoryImpl: PeopleRepositoryImpl
+        peopleRepositoryImpl: NetworkPeopleRepository
     ): PeopleRepository
 
     @Binds
     fun bindFavoritesRepository(
-        favoritesRepositoryImpl: FavoritesRepositoryImpl
+        favoritesRepositoryImpl: OfflineFavoritesRepository
     ): FavoritesRepository
 
     @Binds
     fun bindUserDataRepository(
-        userDataRepositoryImpl: UserDataRepositoryImpl
+        userDataRepositoryImpl: OfflineUserDataRepository
     ): UserDataRepository
 
     @Binds
