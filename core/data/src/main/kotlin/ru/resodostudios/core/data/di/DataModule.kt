@@ -22,11 +22,6 @@ import ru.resodostudios.flick.core.network.retrofit.RetrofitFlickNetwork
 interface DataModule {
 
     @Binds
-    fun bindRetrofit(
-        retrofit: RetrofitFlickNetwork
-    ): FlickNetworkDataSource
-
-    @Binds
     fun bindMoviesRepository(
         moviesRepositoryImpl: NetworkMoviesRepository
     ): MoviesRepository
@@ -50,4 +45,9 @@ interface DataModule {
     fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor,
     ): NetworkMonitor
+
+    @Binds
+    fun bindRetrofit(
+        retrofit: RetrofitFlickNetwork
+    ): FlickNetworkDataSource
 }

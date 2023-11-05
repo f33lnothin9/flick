@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.flick.android.library)
     alias(libs.plugins.flick.android.hilt)
@@ -10,6 +12,14 @@ android {
     }
     defaultConfig {
         proguardFiles("consumer-rules.pro")
+
+        val localPropertiesFile = rootProject.file("local.properties")
+        val localProperties = Properties()
+        localProperties.load(localPropertiesFile.inputStream())
+
+        val apiKey = localProperties.getProperty("API_KEY")
+
+        buildConfigField("String", "API_KEY", "\"$apiKey\"")
     }
     namespace = "ru.resodostudios.flick.core.network"
     testOptions {
