@@ -27,6 +27,7 @@ include(":core:model")
 include(":core:network")
 include(":core:ui")
 
+include(":feature:home")
 include(":feature:movies")
 include(":feature:people")
 //include(":feature:favorites")

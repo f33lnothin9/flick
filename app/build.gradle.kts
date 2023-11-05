@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.home)
     implementation(projects.feature.movies)
     implementation(projects.feature.people)
     //implementation(projects.feature.favorites)
