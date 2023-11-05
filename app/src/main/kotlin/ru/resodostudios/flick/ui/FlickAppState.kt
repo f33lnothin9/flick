@@ -16,8 +16,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import ru.resodostudios.core.data.util.NetworkMonitor
-import ru.resodostudios.flick.feature.favorites.navigation.favoritesNavigationRoute
-import ru.resodostudios.flick.feature.favorites.navigation.navigateToFavorites
 import ru.resodostudios.flick.feature.movies.navigation.moviesRoute
 import ru.resodostudios.flick.feature.movies.navigation.navigateToMoviesGraph
 import ru.resodostudios.flick.feature.people.navigation.navigateToPeople
@@ -66,7 +64,6 @@ class FlickAppState(
         @Composable get() = when (currentDestination?.route) {
             moviesRoute -> MOVIES
             peopleRoute -> PEOPLE
-            favoritesNavigationRoute -> FAVORITES
             else -> null
         }
 
@@ -98,7 +95,7 @@ class FlickAppState(
         when (topLevelDestination) {
             MOVIES -> navController.navigateToMoviesGraph(topLevelNavOptions)
             PEOPLE -> navController.navigateToPeople(topLevelNavOptions)
-            FAVORITES -> navController.navigateToFavorites(topLevelNavOptions)
+            else -> {}
         }
     }
 

@@ -14,6 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.core.model.data.Movie
+import ru.resodostudios.flick.core.ui.EmptyState
+import ru.resodostudios.flick.core.ui.LoadingState
+import ru.resodostudios.flick.core.ui.R.raw.anim_error_2
+import ru.resodostudios.flick.core.ui.MovieCard
 
 @Composable
 internal fun MoviesRoute(
@@ -33,7 +37,7 @@ internal fun MoviesScreen(
     onMovieClick: (Int) -> Unit
 ) {
     when (moviesState) {
-        MoviesUiState.Loading -> ru.resodostudios.flick.core.ui.LoadingState()
+        MoviesUiState.Loading -> LoadingState()
         is MoviesUiState.Success -> LazyVerticalGrid(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -47,9 +51,9 @@ internal fun MoviesScreen(
             )
         }
 
-        is MoviesUiState.Error -> ru.resodostudios.flick.core.ui.EmptyState(
+        is MoviesUiState.Error -> EmptyState(
             message = moviesState.errorMessage,
-            animationId = R.raw.anim_error_2
+            animationId = anim_error_2
         )
     }
 }
@@ -59,7 +63,7 @@ private fun LazyGridScope.movies(
     onMovieClick: (Int) -> Unit
 ) {
     items(movies) { movie ->
-        ru.resodostudios.flick.core.ui.MovieCard(
+        MovieCard(
             movie = movie,
             onMovieClick = onMovieClick
         )

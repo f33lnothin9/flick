@@ -26,6 +26,7 @@ import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.model.data.FavoriteMovie
 import ru.resodostudios.flick.core.model.data.FavoritePerson
+import ru.resodostudios.flick.core.model.data.Movie
 import ru.resodostudios.flick.feature.movie.MovieViewModel
 import ru.resodostudios.flick.feature.person.PersonViewModel
 
@@ -40,7 +41,7 @@ internal fun FavoritesRoute(
     )
     FavoritesScreen(
         favoritesState = favoritesState,
-        onMovieDelete = movieViewModel::onEvent,
+        onMovieDelete = favoriteViewModel::favoriteMovieToggle,
         onMovieClick = onMovieClick,
         onPersonClick = onPersonClick,
         onPersonDelete = personViewModel::onEvent
@@ -51,7 +52,7 @@ internal fun FavoritesRoute(
 internal fun FavoritesScreen(
     onMovieClick: (Int) -> Unit,
     favoritesState: FavoritesUiState,
-    onMovieDelete: (FavoriteEvent) -> Unit,
+    onMovieDelete: (Movie, Boolean) -> Unit,
     onPersonClick: (Int) -> Unit,
     onPersonDelete: (FavoriteEvent) -> Unit
 ) {
@@ -86,7 +87,7 @@ internal fun FavoritesScreen(
 private fun LazyGridScope.favoritesMovies(
     movies: List<FavoriteMovie>,
     onMovieClick: (Int) -> Unit,
-    onMovieDelete: (FavoriteEvent) -> Unit
+    onMovieDelete: (Movie, Boolean) -> Unit
 ) {
     items(movies) { movie ->
         ListItem(

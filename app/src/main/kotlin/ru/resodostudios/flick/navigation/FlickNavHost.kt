@@ -2,7 +2,6 @@ package ru.resodostudios.flick.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
-import ru.resodostudios.flick.feature.favorites.navigation.favoritesScreen
 import ru.resodostudios.flick.feature.movie.navigation.movieScreen
 import ru.resodostudios.flick.feature.movie.navigation.navigateToMovie
 import ru.resodostudios.flick.feature.movies.navigation.MOVIES_GRAPH_ROUTE_PATTERN
@@ -49,10 +48,6 @@ fun FlickNavHost(
                     }
                 )
             }
-        )
-        favoritesScreen(
-            onMovieClick = navController::navigateToMovie,
-            onPersonClick = navController::navigateToPerson
         )
         searchScreen(
             onBackClick = navController::popBackStack,

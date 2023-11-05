@@ -8,5 +8,5 @@ android {
 }
 
 dependencies {
-    implementation(projects.feature.favorites)
+    //implementation(projects.feature.favorites)
 }

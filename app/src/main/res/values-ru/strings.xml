@@ -12,8 +12,6 @@
     <string name="country_empty">Страна не указана</string>
     <string name="summary">Описание</string>
     <string name="minutes">минут(-ы)</string>
-    <string name="cast_credits">Роли</string>
-    <string name="crew_credits">Роли в съёмочных группах</string>
     <string name="images">Изображения</string>
     <string name="not_connected">⛔ Вы не подключены к интернету</string>
     <string name="crew">Съёмочная группа</string>

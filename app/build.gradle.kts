@@ -40,7 +40,7 @@ android {
 dependencies {
     implementation(projects.feature.movies)
     implementation(projects.feature.people)
-    implementation(projects.feature.favorites)
+    //implementation(projects.feature.favorites)
     implementation(projects.feature.movie)
     implementation(projects.feature.person)
     implementation(projects.feature.search)
@@ -48,7 +48,7 @@ dependencies {
 
     implementation(projects.core.common)
     implementation(projects.core.data)
-    implementation(projects.core.database)
+    //implementation(projects.core.database)
     implementation(projects.core.datastore)
     implementation(projects.core.designsystem)
     implementation(projects.core.model)
@@ -56,6 +56,9 @@ dependencies {
 
     implementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(platform(libs.androidx.compose.bom))
+
+    implementation(libs.androidx.lifecycle.viewModelCompose)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
 
     // UI Tests
     androidTestImplementation(libs.ui.test.junit4)

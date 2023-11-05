@@ -25,6 +25,9 @@ import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.feature.people.PeopleUiState.Error
 import ru.resodostudios.flick.feature.people.PeopleUiState.Loading
 import ru.resodostudios.flick.feature.people.PeopleUiState.Success
+import ru.resodostudios.flick.core.ui.LoadingState
+import ru.resodostudios.flick.core.ui.EmptyState
+import ru.resodostudios.flick.core.ui.R.raw.anim_error_1
 
 @Composable
 internal fun PeopleRoute(
@@ -44,7 +47,7 @@ internal fun PeopleScreen(
     onPersonClick: (Int) -> Unit
 ) {
     when (peopleState) {
-        Loading -> ru.resodostudios.flick.core.ui.LoadingState()
+        Loading -> LoadingState()
         is Success -> if (peopleState.people.isNotEmpty()) {
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(300.dp),
@@ -57,9 +60,9 @@ internal fun PeopleScreen(
             }
         }
 
-        is Error -> ru.resodostudios.flick.core.ui.EmptyState(
+        is Error -> EmptyState(
             message = peopleState.errorMessage,
-            animationId = R.raw.anim_error_1
+            animationId = anim_error_1
         )
     }
 }
@@ -72,7 +75,7 @@ private fun LazyGridScope.people(
         ListItem(
             headlineContent = { Text(text = person.name) },
             supportingContent = {
-                Text(text = person.country.name.ifBlank { stringResource(R.string.country_empty) })
+                Text(text = person.country.name)
             },
             leadingContent = {
                 Box {

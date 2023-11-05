@@ -10,11 +10,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.resodostudios.core.data.repository.FavoritesRepository
 import ru.resodostudios.flick.core.domain.GetFavoritesUseCase
-import ru.resodostudios.flick.core.model.data.FavoriteMovie
-import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.Favorites
 import ru.resodostudios.flick.core.model.data.Movie
-import ru.resodostudios.flick.core.model.data.Person
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,55 +29,9 @@ class FavoritesViewModel @Inject constructor(
                 initialValue = FavoritesUiState.Loading,
             )
 
-    fun addMovie(movie: Movie) {
-        val favoriteMovie = FavoriteMovie(
-            id = movie.id,
-            image = movie.image.medium,
-            rating = movie.rating.average,
-            name = movie.name,
-            genres = movie.genres
-        )
-
+    fun favoriteMovieToggle(movie: Movie, isFavorite: Boolean) {
         viewModelScope.launch {
-            favoritesRepository.upsertMovie(favoriteMovie)
-        }
-    }
-
-    fun removeMovie(movie: Movie) {
-        val favoriteMovie = FavoriteMovie(
-            id = movie.id,
-            image = movie.image.medium,
-            rating = movie.rating.average,
-            name = movie.name,
-            genres = movie.genres
-        )
-
-        viewModelScope.launch {
-            favoritesRepository.deleteMovie(favoriteMovie)
-        }
-    }
-
-    fun addPerson(person: Person) {
-        val favoritePerson = FavoritePerson(
-            id = person.id,
-            image = person.image.medium,
-            name = person.name
-        )
-
-        viewModelScope.launch {
-            favoritesRepository.upsertPerson(favoritePerson)
-        }
-    }
-
-    fun removePerson(person: Person) {
-        val favoritePerson = FavoritePerson(
-            id = person.id,
-            image = person.image.medium,
-            name = person.name
-        )
-
-        viewModelScope.launch {
-            favoritesRepository.deletePerson(favoritePerson)
+            favoritesRepository.setFavoriteMovie(movie, isFavorite)
         }
     }
 }

@@ -4,12 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.resodostudios.core.data.repository.FavoritesRepository
 import ru.resodostudios.core.data.repository.MoviesRepository
 import ru.resodostudios.core.data.repository.PeopleRepository
 import ru.resodostudios.core.data.repository.SearchRepository
 import ru.resodostudios.core.data.repository.UserDataRepository
-import ru.resodostudios.core.data.repository.offline.OfflineFavoritesRepository
 import ru.resodostudios.core.data.repository.network.NetworkMoviesRepository
 import ru.resodostudios.core.data.repository.network.NetworkPeopleRepository
 import ru.resodostudios.core.data.repository.network.NetworkSearchRepository
@@ -42,11 +40,6 @@ interface DataModule {
     fun bindPeopleRepository(
         peopleRepositoryImpl: NetworkPeopleRepository
     ): PeopleRepository
-
-    @Binds
-    fun bindFavoritesRepository(
-        favoritesRepositoryImpl: OfflineFavoritesRepository
-    ): FavoritesRepository
 
     @Binds
     fun bindUserDataRepository(

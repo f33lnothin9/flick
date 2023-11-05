@@ -54,7 +54,6 @@ import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.core.ui.R.raw.anim_error_2
 import ru.resodostudios.flick.core.ui.formatDate
-import ru.resodostudios.flick.feature.favorites.FavoritesViewModel
 import ru.resodostudios.flick.core.ui.AdBanner
 import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.R.string.banner_id
@@ -62,7 +61,6 @@ import ru.resodostudios.flick.core.ui.R.string.banner_id
 @Composable
 internal fun MovieRoute(
     movieViewModel: MovieViewModel = hiltViewModel(),
-    favoritesViewModel: FavoritesViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onPersonClick: (Int) -> Unit
 ) {
@@ -70,8 +68,6 @@ internal fun MovieRoute(
 
     MovieScreen(
         movieState = movieState,
-        onMovieRemove = favoritesViewModel::removeMovie,
-        onMovieFavorite = favoritesViewModel::addMovie,
         onBackClick = onBackClick,
         onPersonClick = onPersonClick
     )
@@ -81,8 +77,6 @@ internal fun MovieRoute(
 @Composable
 internal fun MovieScreen(
     movieState: MovieUiState,
-    onMovieRemove: (Movie) -> Unit,
-    onMovieFavorite: (Movie) -> Unit,
     onBackClick: () -> Unit,
     onPersonClick: (Int) -> Unit
 ) {
@@ -101,7 +95,7 @@ internal fun MovieScreen(
                             if (movieState.data.isFavorite) {
                                 IconButton(
                                     onClick = {
-                                        onMovieRemove(movieState.data.movie)
+
                                     }
                                 ) {
                                     Icon(
@@ -112,7 +106,7 @@ internal fun MovieScreen(
                             } else {
                                 IconButton(
                                     onClick = {
-                                        onMovieFavorite(movieState.data.movie)
+
                                     }
                                 ) {
                                     Icon(

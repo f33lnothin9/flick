@@ -35,17 +35,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import ru.resodostudios.flick.core.ui.formatDate
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
 import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
-import ru.resodostudios.flick.core.model.data.FavoritePerson
 import ru.resodostudios.flick.core.model.data.Person
 import ru.resodostudios.flick.core.model.data.PersonExtended
 import ru.resodostudios.flick.core.ui.AdBanner
 import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
+import ru.resodostudios.flick.core.ui.R.raw.anim_error_2
+import ru.resodostudios.flick.core.ui.R.string.banner_id
+import ru.resodostudios.flick.core.ui.formatDate
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -62,8 +63,7 @@ internal fun PersonRoute(
     PersonScreen(
         personState = personState,
         onBackClick = onBackClick,
-        onMovieClick = onMovieClick,
-        onEvent = personViewModel::onEvent,
+        onMovieClick = onMovieClick
     )
 }
 
@@ -72,8 +72,7 @@ internal fun PersonRoute(
 internal fun PersonScreen(
     personState: PersonUiState,
     onBackClick: () -> Unit,
-    onMovieClick: (Int) -> Unit,
-    onEvent: (ru.resodostudios.flick.feature.favorites.FavoriteEvent) -> Unit
+    onMovieClick: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -90,15 +89,7 @@ internal fun PersonScreen(
                             if (personState.data.isFavorite) {
                                 IconButton(
                                     onClick = {
-                                        onEvent(
-                                            ru.resodostudios.flick.feature.favorites.FavoriteEvent.DeletePerson(
-                                                FavoritePerson(
-                                                    id = personState.data.person.id,
-                                                    name = personState.data.person.name,
-                                                    image = personState.data.person.image.medium
-                                                )
-                                            )
-                                        )
+
                                     }
                                 ) {
                                     Icon(
@@ -108,7 +99,9 @@ internal fun PersonScreen(
                                 }
                             } else {
                                 IconButton(
-                                    onClick = { onEvent(ru.resodostudios.flick.feature.favorites.FavoriteEvent.AddPerson(personState.data.person)) }
+                                    onClick = {
+
+                                    }
                                 ) {
                                     Icon(
                                         imageVector = FlickIcons.Favorites,
@@ -145,7 +138,7 @@ internal fun PersonScreen(
 
         is PersonUiState.Error -> EmptyState(
             message = personState.errorMessage,
-            animationId = R.raw.anim_error_2
+            animationId = anim_error_2
         )
     }
 }
@@ -246,7 +239,7 @@ private fun PersonBody(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        AdBanner(id = R.string.banner_id)
+        AdBanner(id = banner_id)
 
         if (personExtended.castCredits.isNotEmpty()) {
             BodySection(

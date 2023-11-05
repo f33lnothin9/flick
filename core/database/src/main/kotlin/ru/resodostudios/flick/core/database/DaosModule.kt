@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.resodostudios.flick.core.database.dao.FavoriteMoviesDao
+import ru.resodostudios.flick.core.database.dao.FavoriteMovieDao
 import ru.resodostudios.flick.core.database.dao.FavoritePeopleDao
 
 @Module
@@ -14,7 +14,7 @@ object DaosModule {
     @Provides
     fun providesMoviesDao(
         database: FlickDatabase,
-    ): FavoriteMoviesDao = database.moviesDao()
+    ): FavoriteMovieDao = database.moviesDao()
 
     @Provides
     fun providesPeopleDao(

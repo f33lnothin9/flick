@@ -4,7 +4,7 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ru.resodostudios.flick.core.database.dao.FavoriteMoviesDao
+import ru.resodostudios.flick.core.database.dao.FavoriteMovieDao
 import ru.resodostudios.flick.core.database.dao.FavoritePeopleDao
 import ru.resodostudios.flick.core.database.model.FavoriteMovieEntity
 import ru.resodostudios.flick.core.database.model.FavoritePersonEntity
@@ -26,7 +26,7 @@ import ru.resodostudios.flick.core.database.util.ListConverter
 )
 abstract class FlickDatabase : RoomDatabase() {
 
-    abstract fun moviesDao(): FavoriteMoviesDao
+    abstract fun moviesDao(): FavoriteMovieDao
 
     abstract fun peopleDao(): FavoritePeopleDao
 }
