@@ -17,8 +17,10 @@ android {
         val localProperties = Properties()
         localProperties.load(localPropertiesFile.inputStream())
 
+        val backendUrl = localProperties.getProperty("BACKEND_URL")
         val apiKey = localProperties.getProperty("API_KEY")
 
+        buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
         buildConfigField("String", "API_KEY", "\"$apiKey\"")
     }
     namespace = "ru.resodostudios.flick.core.network"

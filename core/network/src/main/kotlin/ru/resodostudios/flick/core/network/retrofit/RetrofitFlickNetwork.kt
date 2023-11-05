@@ -76,7 +76,7 @@ private interface RetrofitFlickNetworkApi {
     ): List<NetworkCrewCredits>
 }
 
-private const val FLICK_BASE_URL = "https://api.tvmaze.com/"
+private const val FLICK_BASE_URL = BuildConfig.BACKEND_URL
 private const val API_KEY = BuildConfig.API_KEY
 
 @Singleton
