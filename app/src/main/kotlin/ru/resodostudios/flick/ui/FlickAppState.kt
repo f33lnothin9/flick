@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import ru.resodostudios.core.data.util.NetworkMonitor
+import ru.resodostudios.flick.feature.home.navigation.homeRoute
+import ru.resodostudios.flick.feature.home.navigation.navigateToHomeGraph
 import ru.resodostudios.flick.feature.movies.navigation.moviesRoute
 import ru.resodostudios.flick.feature.movies.navigation.navigateToMoviesGraph
 import ru.resodostudios.flick.feature.people.navigation.navigateToPeople
@@ -23,8 +25,7 @@ import ru.resodostudios.flick.feature.people.navigation.peopleRoute
 import ru.resodostudios.flick.feature.search.navigation.navigateToSearch
 import ru.resodostudios.flick.feature.settings.navigation.navigateToSettings
 import ru.resodostudios.flick.navigation.TopLevelDestination
-import ru.resodostudios.flick.navigation.TopLevelDestination.MOVIES
-import ru.resodostudios.flick.navigation.TopLevelDestination.PEOPLE
+import ru.resodostudios.flick.navigation.TopLevelDestination.*
 
 @Composable
 fun rememberFlickAppState(
@@ -61,6 +62,7 @@ class FlickAppState(
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
+            homeRoute -> HOME
             moviesRoute -> MOVIES
             peopleRoute -> PEOPLE
             else -> null
@@ -92,9 +94,10 @@ class FlickAppState(
         }
 
         when (topLevelDestination) {
+            HOME -> navController.navigateToHomeGraph(topLevelNavOptions)
             MOVIES -> navController.navigateToMoviesGraph(topLevelNavOptions)
+            TV_SHOWS -> TODO()
             PEOPLE -> navController.navigateToPeople(topLevelNavOptions)
-            else -> {}
         }
     }
 
