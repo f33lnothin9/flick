@@ -7,21 +7,17 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.resodostudios.flick.core.network.BuildConfig
 import ru.resodostudios.flick.core.network.FlickNetworkDataSource
-import ru.resodostudios.flick.core.network.model.NetworkCast
 import ru.resodostudios.flick.core.network.model.NetworkCastCredits
-import ru.resodostudios.flick.core.network.model.NetworkCrew
 import ru.resodostudios.flick.core.network.model.NetworkCrewCredits
 import ru.resodostudios.flick.core.network.model.NetworkImageExtended
 import ru.resodostudios.flick.core.network.model.NetworkMovie
 import ru.resodostudios.flick.core.network.model.NetworkPerson
 import ru.resodostudios.flick.core.network.model.NetworkSearchMovie
-import ru.resodostudios.flick.core.network.model.NetworkSearchPeople
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -53,21 +49,6 @@ private interface RetrofitFlickNetworkApi {
     suspend fun searchMovies(
         @Query("q") query: String
     ): List<NetworkSearchMovie>
-
-    @GET("search/people")
-    suspend fun searchPeople(
-        @Query("q") query: String
-    ): List<NetworkSearchPeople>
-
-    @GET("shows/{id}/cast")
-    suspend fun getCast(
-        @Path("id") id: Int
-    ): List<NetworkCast>
-
-    @GET("shows/{id}/crew")
-    suspend fun getCrew(
-        @Path("id") id: Int
-    ): List<NetworkCrew>
 
     @GET("people/{id}/castcredits?embed[]=show&embed[]=character")
     suspend fun getCastCredits(
@@ -120,15 +101,6 @@ class RetrofitFlickNetwork @Inject constructor(
 
     override suspend fun searchMovies(query: String): List<NetworkSearchMovie> =
         networkApi.searchMovies(query = query)
-
-    override suspend fun searchPeople(query: String): List<NetworkSearchPeople> =
-        networkApi.searchPeople(query = query)
-
-    override suspend fun getCast(id: Int): List<NetworkCast> =
-        networkApi.getCast(id = id)
-
-    override suspend fun getCrew(id: Int): List<NetworkCrew> =
-        networkApi.getCrew(id = id)
 
     override suspend fun getCastCredits(id: Int): List<NetworkCastCredits> =
         networkApi.getCastCredits(id = id)

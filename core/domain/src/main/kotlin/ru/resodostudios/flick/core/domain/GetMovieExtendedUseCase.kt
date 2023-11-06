@@ -13,14 +13,10 @@ class GetMovieExtendedUseCase @Inject constructor(
     operator fun invoke(id: Int): Flow<MovieExtended> {
         return combine(
             moviesRepository.getMovie(id),
-            moviesRepository.getCast(id),
-            moviesRepository.getCrew(id),
             moviesRepository.getMovieImages(id)
-        ) { movie, cast, crew, images ->
+        ) { movie, images ->
             MovieExtended(
                 movie = movie,
-                cast = cast,
-                crew = crew,
                 images = images,
                 isFavorite = false
             )

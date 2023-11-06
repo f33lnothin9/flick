@@ -7,6 +7,4 @@ import ru.resodostudios.flick.core.model.data.SearchPerson
 interface SearchRepository {
 
     fun searchMovies(query: String): Flow<List<SearchMovie>>
-
-    fun searchPeople(query: String): Flow<List<SearchPerson>>
 }

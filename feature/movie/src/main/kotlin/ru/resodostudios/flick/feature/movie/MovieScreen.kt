@@ -280,62 +280,6 @@ private fun MovieBody(
 
         AdBanner(id = banner_id)
 
-        if (movieExtended.cast.isNotEmpty()) {
-            BodySection(
-                title = R.string.cast,
-                itemsSize = movieExtended.cast.size,
-                content = {
-                    items(movieExtended.cast) { cast ->
-                        ListItem(
-                            headlineContent = { Text(text = cast.person.name) },
-                            leadingContent = {
-                                Box {
-                                    FlickAsyncImage(
-                                        url = cast.person.image.medium,
-                                        contentDescription = "Person image",
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .size(56.dp),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                }
-                            },
-                            supportingContent = { Text(text = cast.character.name) },
-                            modifier = Modifier.clickable { onPersonClick(cast.person.id) }
-                        )
-                    }
-                }
-            )
-        }
-
-        if (movieExtended.crew.isNotEmpty()) {
-            BodySection(
-                title = R.string.crew,
-                itemsSize = movieExtended.crew.size,
-                content = {
-                    items(movieExtended.crew) { crew ->
-                        ListItem(
-                            headlineContent = { Text(text = crew.person.name) },
-                            leadingContent = {
-                                Box {
-                                    FlickAsyncImage(
-                                        url = crew.person.image.medium,
-                                        contentDescription = "Person image",
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .size(56.dp),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                }
-                            },
-                            supportingContent = { Text(text = crew.type) },
-                            modifier = Modifier.clickable { onPersonClick(crew.person.id) }
-                        )
-                    }
-                }
-            )
-        }
-
         if (movieExtended.images.isNotEmpty()) {
             val context = LocalContext.current
 

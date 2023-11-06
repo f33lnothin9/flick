@@ -32,20 +32,4 @@ class NetworkPeopleRepository @Inject constructor(
             datasource.getPerson(id).asExternalModel()
         )
     }.flowOn(ioDispatcher)
-
-    override fun getCastCredits(id: Int): Flow<List<CastCredits>> = flow {
-        emit(
-            datasource
-                .getCastCredits(id)
-                .map { it.asExternalModel() }
-        )
-    }.flowOn(ioDispatcher)
-
-    override fun getCrewCredits(id: Int): Flow<List<CrewCredits>> = flow {
-        emit(
-            datasource
-                .getCrewCredits(id)
-                .map { it.asExternalModel() }
-        )
-    }.flowOn(ioDispatcher)
 }

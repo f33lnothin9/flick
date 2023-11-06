@@ -44,7 +44,7 @@ dependencies {
     //implementation(projects.feature.favorites)
     implementation(projects.feature.movie)
     implementation(projects.feature.person)
-    implementation(projects.feature.search)
+    //implementation(projects.feature.search)
     implementation(projects.feature.settings)
 
     implementation(projects.core.common)

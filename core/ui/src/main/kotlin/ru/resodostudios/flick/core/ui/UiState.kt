@@ -60,7 +60,7 @@ fun EmptyState(message: String?, animationId: Int) {
             )
             Text(
                 text = message.toString(),
-                maxLines = 2,
+                maxLines = 4,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 overflow = TextOverflow.Ellipsis

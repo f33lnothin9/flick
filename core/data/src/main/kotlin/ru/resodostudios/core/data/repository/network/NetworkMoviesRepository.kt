@@ -41,20 +41,4 @@ class NetworkMoviesRepository @Inject constructor(
                 .map { it.asExternalModel() }
         )
     }.flowOn(ioDispatcher)
-
-    override fun getCast(id: Int): Flow<List<Cast>> = flow {
-        emit(
-            datasource
-                .getCast(id)
-                .map { it.asExternalModel() }
-        )
-    }.flowOn(ioDispatcher)
-
-    override fun getCrew(id: Int): Flow<List<Crew>> = flow {
-        emit(
-            datasource
-                .getCrew(id)
-                .map { it.asExternalModel() }
-        )
-    }.flowOn(ioDispatcher)
 }

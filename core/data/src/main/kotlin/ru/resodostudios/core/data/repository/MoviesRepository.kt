@@ -13,8 +13,4 @@ interface MoviesRepository {
     fun getMovie(id: Int): Flow<Movie>
 
     fun getMovieImages(id: Int): Flow<List<ImageExtended>>
-
-    fun getCast(id: Int): Flow<List<Cast>>
-
-    fun getCrew(id: Int): Flow<List<Crew>>
 }

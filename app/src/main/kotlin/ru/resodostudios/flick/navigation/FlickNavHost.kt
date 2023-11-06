@@ -10,7 +10,6 @@ import ru.resodostudios.flick.feature.movies.navigation.moviesGraph
 import ru.resodostudios.flick.feature.people.navigation.peopleGraph
 import ru.resodostudios.flick.feature.person.navigation.navigateToPerson
 import ru.resodostudios.flick.feature.person.navigation.personScreen
-import ru.resodostudios.flick.feature.search.navigation.searchScreen
 import ru.resodostudios.flick.feature.settings.navigation.settingsScreen
 import ru.resodostudios.flick.ui.FlickAppState
 
@@ -53,15 +52,6 @@ fun FlickNavHost(
                         navController.navigateToMovie(movieId)
                     }
                 )
-            }
-        )
-        searchScreen(
-            onBackClick = navController::popBackStack,
-            onMovieClick = { movieId ->
-                navController.navigateToMovie(movieId)
-            },
-            onPersonClick = { personId ->
-                navController.navigateToPerson(personId)
             }
         )
         settingsScreen(

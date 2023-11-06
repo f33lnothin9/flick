@@ -25,12 +25,4 @@ class NetworkSearchRepository @Inject constructor(
                 .map { it.asExternalModel() }
         )
     }.flowOn(ioDispatcher)
-
-    override fun searchPeople(query: String): Flow<List<SearchPerson>> = flow {
-        emit(
-            datasource
-                .searchPeople(query)
-                .map { it.asExternalModel() }
-        )
-    }.flowOn(ioDispatcher)
 }

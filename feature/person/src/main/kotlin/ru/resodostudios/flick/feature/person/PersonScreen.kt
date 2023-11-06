@@ -86,29 +86,7 @@ internal fun PersonScreen(
                         scrollBehavior = scrollBehavior,
                         onNavIconClick = onBackClick,
                         actions = {
-                            if (personState.data.isFavorite) {
-                                IconButton(
-                                    onClick = {
 
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = FlickIcons.FavoritesFilled,
-                                        contentDescription = "Remove from Favorites"
-                                    )
-                                }
-                            } else {
-                                IconButton(
-                                    onClick = {
-
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = FlickIcons.Favorites,
-                                        contentDescription = "Add to Favorites"
-                                    )
-                                }
-                            }
                         }
                     )
                 },
@@ -120,7 +98,7 @@ internal fun PersonScreen(
                         content = {
                             item {
                                 PersonHeader(
-                                    person = personState.data.person
+                                    person = personState.data
                                 )
                             }
                             item {
@@ -151,7 +129,7 @@ private fun PersonHeader(person: Person) {
         verticalAlignment = Alignment.Top
     ) {
         FlickAsyncImage(
-            url = person.image.original,
+            url = "",
             contentDescription = null,
             modifier = Modifier
                 .size(width = 125.dp, height = 176.dp)
@@ -175,26 +153,7 @@ private fun PersonHeader(person: Person) {
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                if (person.country.name.isNotBlank()) {
-                    Text(
-                        text = person.country.name + ", ${person.country.code}",
-                        style = MaterialTheme.typography.labelLarge,
-                        textAlign = TextAlign.Start
-                    )
-                }
 
-                PersonHeaderDate(
-                    birthday = person.birthday,
-                    deathday = person.deathday
-                )
-
-                if (person.gender.isNotBlank()) {
-                    Text(
-                        text = person.gender,
-                        style = MaterialTheme.typography.labelLarge,
-                        textAlign = TextAlign.Start
-                    )
-                }
             }
         }
     }
@@ -233,7 +192,7 @@ private fun PersonHeaderDate(birthday: String, deathday: String) {
 
 @Composable
 private fun PersonBody(
-    personExtended: PersonExtended,
+    personExtended: Person,
     onMovieClick: (Int) -> Unit
 ) {
     Column(
@@ -241,59 +200,5 @@ private fun PersonBody(
     ) {
         AdBanner(id = banner_id)
 
-        if (personExtended.castCredits.isNotEmpty()) {
-            BodySection(
-                title = R.string.cast_credits,
-                itemsSize = personExtended.castCredits.size,
-                content = {
-                    items(personExtended.castCredits) { castCredit ->
-                        ListItem(
-                            headlineContent = { Text(text = castCredit.embedded.movie.name) },
-                            leadingContent = {
-                                Box {
-                                    FlickAsyncImage(
-                                        url = castCredit.embedded.movie.image.medium,
-                                        contentDescription = "Movie image",
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .size(56.dp),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                }
-                            },
-                            supportingContent = { Text(text = castCredit.embedded.character.name) },
-                            modifier = Modifier.clickable { onMovieClick(castCredit.embedded.movie.id) }
-                        )
-                    }
-                }
-            )
-        }
-        if (personExtended.crewCredits.isNotEmpty()) {
-            BodySection(
-                title = R.string.crew_credits,
-                itemsSize = personExtended.crewCredits.size,
-                content = {
-                    items(personExtended.crewCredits) { crewCredit ->
-                        ListItem(
-                            headlineContent = { Text(text = crewCredit.embedded.movie.name) },
-                            leadingContent = {
-                                Box {
-                                    FlickAsyncImage(
-                                        url = crewCredit.embedded.movie.image.medium,
-                                        contentDescription = "Movie image",
-                                        modifier = Modifier
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .size(56.dp),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                }
-                            },
-                            supportingContent = { Text(text = crewCredit.type) },
-                            modifier = Modifier.clickable { onMovieClick(crewCredit.embedded.movie.id) }
-                        )
-                    }
-                }
-            )
-        }
     }
 }

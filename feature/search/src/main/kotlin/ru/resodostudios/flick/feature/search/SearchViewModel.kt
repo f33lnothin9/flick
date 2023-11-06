@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import ru.resodostudios.flick.core.domain.GetSearchContentsUseCase
 import ru.resodostudios.flick.core.model.data.SearchResult
 import javax.inject.Inject
 

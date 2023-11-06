@@ -73,14 +73,12 @@ private fun LazyGridScope.people(
 ) {
     items(people) { person ->
         ListItem(
-            headlineContent = { Text(text = person.name) },
-            supportingContent = {
-                Text(text = person.country.name)
-            },
+            headlineContent = { Text(text = person.originalName) },
+            supportingContent = { Text(text = person.name) },
             leadingContent = {
                 Box {
                     FlickAsyncImage(
-                        url = person.image.medium,
+                        url = "",
                         contentDescription = "Person image",
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
