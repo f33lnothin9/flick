@@ -23,7 +23,6 @@ import ru.resodostudios.flick.feature.people.navigation.peopleRoute
 import ru.resodostudios.flick.feature.search.navigation.navigateToSearch
 import ru.resodostudios.flick.feature.settings.navigation.navigateToSettings
 import ru.resodostudios.flick.navigation.TopLevelDestination
-import ru.resodostudios.flick.navigation.TopLevelDestination.FAVORITES
 import ru.resodostudios.flick.navigation.TopLevelDestination.MOVIES
 import ru.resodostudios.flick.navigation.TopLevelDestination.PEOPLE
 

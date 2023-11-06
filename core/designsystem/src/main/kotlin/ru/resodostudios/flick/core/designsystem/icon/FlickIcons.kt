@@ -11,12 +11,20 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.LocalMovies
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.res.painterResource
+import ru.resodostudios.flick.core.designsystem.R
 
 object FlickIcons {
-    val Movies = Icons.Outlined.LocalMovies
-    val MoviesFilled = Icons.Filled.LocalMovies
-    val People = Icons.Outlined.Face
-    val PeopleFilled = Icons.Filled.Face
+    val Home = R.drawable.ic_outlined_home
+    val HomeFilled = R.drawable.ic_filled_home
+    val Movies = R.drawable.ic_outlined_movie
+    val MoviesFilled = R.drawable.ic_filled_movie
+    val People = R.drawable.ic_outlined_face
+    val PeopleFilled = R.drawable.ic_filled_face
+    val TvShow = R.drawable.ic_outlined_tv
+    val TvShowFilled = R.drawable.ic_filled_tv
     val Favorites = Icons.Outlined.FavoriteBorder
     val FavoritesFilled = Icons.Filled.Favorite
     val Settings = Icons.Outlined.Settings

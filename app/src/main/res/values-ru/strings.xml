@@ -4,8 +4,11 @@
     <string name="top_app_bar_navigation_icon_description">Поиск</string>
     <string name="large_top_app_bar_navigation_icon_description">Назад</string>
 
+    <string name="home">Главная</string>
     <string name="movies">Кино</string>
+    <string name="tv_shows">Сериалы</string>
     <string name="people">Люди</string>
+
     <string name="favorites">Избранное</string>
     <string name="search">Поиск</string>
 

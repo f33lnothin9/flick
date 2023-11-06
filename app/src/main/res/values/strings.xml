@@ -7,8 +7,11 @@
     <string name="top_app_bar_navigation_icon_description">Search</string>
     <string name="large_top_app_bar_navigation_icon_description">Back</string>
 
+    <string name="home">Home</string>
     <string name="movies">Movies</string>
+    <string name="tv_shows">TV Shows</string>
     <string name="people">People</string>
+
     <string name="favorites">Favorites</string>
     <string name="search">Search</string>
 

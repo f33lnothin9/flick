@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
@@ -131,13 +132,13 @@ private fun FlickBottomBar(
                 onClick = { onNavigateToDestination(destination) },
                 icon = {
                     Icon(
-                        imageVector = destination.unselectedIcon,
+                        painter = painterResource(id = destination.unselectedIcon),
                         contentDescription = null
                     )
                 },
                 selectedIcon = {
                     Icon(
-                        imageVector = destination.selectedIcon,
+                        painter = painterResource(id = destination.selectedIcon),
                         contentDescription = null
                     )
                 },
@@ -167,13 +168,13 @@ private fun FlickNavRail(
                         onClick = { onNavigateToDestination(destination) },
                         icon = {
                             Icon(
-                                imageVector = destination.unselectedIcon,
+                                painter = painterResource(id = destination.unselectedIcon),
                                 contentDescription = null
                             )
                         },
                         selectedIcon = {
                             Icon(
-                                imageVector = destination.selectedIcon,
+                                painter = painterResource(id = destination.selectedIcon),
                                 contentDescription = null
                             )
                         },
