@@ -1,11 +1,13 @@
 package ru.resodostudios.flick.core.model.data
 
 data class Person(
-    val birthday: String,
-    val country: Country,
-    val deathday: String,
-    val gender: String,
+    val adult: Boolean,
+    val gender: Int,
     val id: Int,
-    val image: Image,
-    val name: String
+    val knownFor: List<KnownFor>,
+    val knownForDepartment: String,
+    val name: String,
+    val originalName: String,
+    val popularity: Double,
+    val profilePath: String
 )
