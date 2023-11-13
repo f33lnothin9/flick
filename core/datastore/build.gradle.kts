@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.flick.android.library)
     alias(libs.plugins.flick.android.hilt)
-    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -16,25 +15,8 @@ android {
     }
 }
 
-protobuf {
-    protoc {
-        artifact = libs.protobuf.protoc.get().toString()
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                register("java") {
-                    option("lite")
-                }
-                register("kotlin") {
-                    option("lite")
-                }
-            }
-        }
-    }
-}
-
 dependencies {
+    api(projects.core.datastoreProto)
     implementation(projects.core.common)
     implementation(projects.core.model)
     implementation(libs.androidx.dataStore.core)
