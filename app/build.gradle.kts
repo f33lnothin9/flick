@@ -22,10 +22,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     packaging {
@@ -34,7 +31,6 @@ android {
         }
     }
     namespace = "ru.resodostudios.flick"
-    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
