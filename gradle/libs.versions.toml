@@ -18,13 +18,12 @@ kotlin = "1.9.23"
 kotlinxSerializationJson = "1.6.3"
 lottie = "6.4.0"
 material3 = "1.2.1"
-mobileAds = "7.0.0"
+mobileAds = "7.0.1"
 navigation = "2.7.7"
 okHttp = "4.12.0"
 protobuf = "3.25.2"
 protobufPlugin = "0.9.4"
-retrofit = "2.9.0"
-retrofit2KotlinxSerializationConverter = "1.0.0"
+retrofit = "2.11.0"
 room = "2.6.1"
 splashscreen = "1.0.1"
 ksp = "1.9.23-1.0.20"
@@ -65,8 +64,8 @@ protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref 
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit-kotlin-serialization = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverter" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-kotlin-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
