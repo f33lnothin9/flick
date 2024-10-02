@@ -24,6 +24,5 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.coil.kt.compose)
-    implementation(libs.mobileads)
     implementation(libs.lottie.compose)
 }

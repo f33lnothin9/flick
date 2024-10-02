@@ -1,8 +1,6 @@
 package ru.resodostudios.flick.feature.person
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,13 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,15 +31,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.resodostudios.flick.core.designsystem.component.FlickAsyncImage
 import ru.resodostudios.flick.core.designsystem.component.NoTitleTopAppBar
-import ru.resodostudios.flick.core.designsystem.icon.FlickIcons
 import ru.resodostudios.flick.core.model.data.Person
-import ru.resodostudios.flick.core.model.data.PersonExtended
-import ru.resodostudios.flick.core.ui.AdBanner
-import ru.resodostudios.flick.core.ui.BodySection
 import ru.resodostudios.flick.core.ui.EmptyState
 import ru.resodostudios.flick.core.ui.LoadingState
 import ru.resodostudios.flick.core.ui.R.raw.anim_error_2
-import ru.resodostudios.flick.core.ui.R.string.banner_id
 import ru.resodostudios.flick.core.ui.formatDate
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -198,7 +187,6 @@ private fun PersonBody(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        AdBanner(id = banner_id)
 
     }
 }
