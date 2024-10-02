@@ -7,6 +7,7 @@ import ru.resodostudios.flick.configureKotlinAndroid
 import ru.resodostudios.flick.configurePrintApksTask
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
+
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
@@ -18,10 +19,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 34
             }
-            extensions.configure<ApplicationAndroidComponentsExtension> {
-                configurePrintApksTask(this)
-            }
         }
     }
-
 }

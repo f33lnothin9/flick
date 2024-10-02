@@ -1,21 +1,17 @@
 [versions]
 androidGradlePlugin = "8.7.0"
 androidxAppCompat = "1.6.1"
-androidxComposeCompiler = "1.5.12"
 androidxCore = "1.13.0"
 androidxDataStore = "1.1.0"
 androidxLifecycle = "2.7.0"
 activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 coil = "2.6.0"
-coroutines = "1.8.0"
 firebaseBom = "32.8.1"
 googleOss = "17.0.1"
 googleOssPlugin = "0.10.6"
 hilt = "2.51.1"
 hiltNavigation = "1.2.0"
-kotlin = "1.9.23"
-kotlinxSerializationJson = "1.6.3"
 lottie = "6.4.0"
 material3 = "1.2.1"
 mobileAds = "7.0.1"
@@ -26,7 +22,10 @@ protobufPlugin = "0.9.4"
 retrofit = "2.11.0"
 room = "2.6.1"
 splashscreen = "1.0.1"
-ksp = "1.9.23-1.0.20"
+kotlin = "2.0.20"
+kotlinxCoroutines = "1.9.0"
+kotlinxSerializationJson = "1.7.3"
+ksp = "2.0.20-1.0.25"
 gmsPlugin = "4.4.1"
 firebaseCrashlyticsPlugin = "2.9.9"
 
@@ -55,7 +54,7 @@ google-oss-licenses = { group = "com.google.android.gms", name = "play-services-
 google-oss-licenses-plugin = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "googleOssPlugin" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp" }
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
@@ -75,12 +74,14 @@ firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashly
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 firebase-crashlytics-gradlePlugin = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsPlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
@@ -91,14 +92,13 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 # Plugins defined by this project
-flick-android-application = { id = "flick.android.application", version = "unspecified" }
-flick-android-application-compose = { id = "flick.android.application.compose", version = "unspecified" }
-flick-android-application-firebase = { id = "flick.android.application.firebase", version = "unspecified" }
-flick-android-application-flavors = { id = "flick.android.application.flavors", version = "unspecified" }
-flick-android-feature = { id = "flick.android.feature", version = "unspecified" }
-flick-android-hilt = { id = "flick.android.hilt", version = "unspecified" }
-flick-android-library = { id = "flick.android.library", version = "unspecified" }
-flick-android-library-compose = { id = "flick.android.library.compose", version = "unspecified" }
-flick-android-room = { id = "flick.android.room", version = "unspecified" }
-flick-android-test = { id = "flick.android.test", version = "unspecified" }
-flick-jvm-library = { id = "flick.jvm.library", version = "unspecified" }
+flick-android-application = { id = "flick.android.application" }
+flick-android-application-compose = { id = "flick.android.application.compose" }
+flick-android-application-firebase = { id = "flick.android.application.firebase" }
+flick-android-feature = { id = "flick.android.feature" }
+flick-android-hilt = { id = "flick.android.hilt" }
+flick-android-library = { id = "flick.android.library" }
+flick-android-library-compose = { id = "flick.android.library.compose" }
+flick-android-room = { id = "flick.android.room" }
+flick-android-test = { id = "flick.android.test" }
+flick-jvm-library = { id = "flick.jvm.library" }
