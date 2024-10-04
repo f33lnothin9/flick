@@ -1,13 +1,13 @@
 plugins {
     alias(libs.plugins.flick.android.library)
-    alias(libs.plugins.flick.android.hilt)
+    alias(libs.plugins.flick.hilt)
 }
 
 android {
     defaultConfig {
         consumerProguardFiles("consumer-proguard-rules.pro")
     }
-    namespace = "ru.resodostudios.flick.core.datastore"
+    namespace = "ru.resodostudio.flick.core.datastore"
     testOptions {
         unitTests {
             isReturnDefaultValues = true
@@ -17,9 +17,8 @@ android {
 
 dependencies {
     api(projects.core.datastoreProto)
+    api(projects.core.model)
+    api(libs.androidx.dataStore)
+
     implementation(projects.core.common)
-    implementation(projects.core.model)
-    implementation(libs.androidx.dataStore.core)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.protobuf.kotlin.lite)
 }

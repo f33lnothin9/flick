@@ -1,12 +1,8 @@
 plugins {
-    alias(libs.plugins.flick.android.library)
-    alias(libs.plugins.flick.android.hilt)
-}
-
-android {
-    namespace = "ru.resodostudios.flick.core.common"
+    alias(libs.plugins.flick.jvm.library)
+    alias(libs.plugins.flick.hilt)
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
 }

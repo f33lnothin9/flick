@@ -5,9 +5,8 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.kotlin
-import ru.resodostudios.flick.configureKotlinAndroid
-import ru.resodostudios.flick.configurePrintApksTask
-import ru.resodostudios.flick.disableUnnecessaryAndroidTests
+import ru.resodostudio.flick.configureKotlinAndroid
+import ru.resodostudio.flick.disableUnnecessaryAndroidTests
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -22,7 +21,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 defaultConfig.targetSdk = 34
             }
             extensions.configure<LibraryAndroidComponentsExtension> {
-                configurePrintApksTask(this)
                 disableUnnecessaryAndroidTests(target)
             }
             dependencies {

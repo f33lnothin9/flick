@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.resodostudios.flick.core.datastore.proto"
+    namespace = "ru.resodostudio.flick.core.datastore.proto"
 }
 
 protobuf {
@@ -26,5 +26,5 @@ protobuf {
 }
 
 dependencies {
-    implementation(libs.protobuf.kotlin.lite)
+    api(libs.protobuf.kotlin.lite)
 }

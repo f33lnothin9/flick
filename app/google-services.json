@@ -7,9 +7,28 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:761413046260:android:dcb3dd4110f9b9419833a1",
+        "mobilesdk_app_id": "1:761413046260:android:6a20c0b5c82366459833a1",
         "android_client_info": {
-          "package_name": "ru.resodostudios.flick"
+          "package_name": "ru.resodostudio.flick"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5V__AkAAYPqjQMqW7d8T3HxDAHDEktGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761413046260:android:48f86425832ad6c89833a1",
+        "android_client_info": {
+          "package_name": "ru.resodostudio.flick.debug"
         }
       },
       "oauth_client": [],

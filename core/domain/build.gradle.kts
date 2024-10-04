@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.flick.android.library)
-    alias(libs.plugins.flick.android.hilt)
+    alias(libs.plugins.flick.hilt)
 }
 
 android {
-    namespace = "ru.resodostudios.flick.core.domain"
+    namespace = "ru.resodostudio.flick.core.domain"
 }
 
 dependencies {

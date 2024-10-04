@@ -2,7 +2,7 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.flick.android.library)
-    alias(libs.plugins.flick.android.hilt)
+    alias(libs.plugins.flick.hilt)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -23,7 +23,7 @@ android {
         buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
         buildConfigField("String", "API_KEY", "\"$apiKey\"")
     }
-    namespace = "ru.resodostudios.flick.core.network"
+    namespace = "ru.resodostudio.flick.core.network"
     testOptions {
         unitTests {
             isIncludeAndroidResources = true

@@ -4,9 +4,9 @@ plugins {
 }
 
 android {
-    namespace = "ru.resodostudios.flick.feature.people"
+    namespace = "ru.resodostudio.flick.feature.people"
 }
 
 dependencies {
-
+    implementation(projects.core.data)
 }

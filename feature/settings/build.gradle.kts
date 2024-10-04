@@ -4,10 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "ru.resodostudios.flick.feature.settings"
+    namespace = "ru.resodostudio.flick.feature.settings"
 }
 
 dependencies {
+    implementation(projects.core.data)
+
     implementation(libs.androidx.appcompat)
     implementation(libs.google.oss.licenses) {
         exclude(group = "androidx.appcompat")

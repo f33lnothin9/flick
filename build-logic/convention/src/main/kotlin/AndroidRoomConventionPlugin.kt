@@ -1,5 +1,6 @@
+import androidx.room.gradle.RoomExtension
 import com.google.devtools.ksp.gradle.KspExtension
-import ru.resodostudios.flick.libs
+import ru.resodostudio.flick.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.InputDirectory
@@ -14,25 +15,21 @@ class AndroidRoomConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
+            pluginManager.apply("androidx.room")
             pluginManager.apply("com.google.devtools.ksp")
 
             extensions.configure<KspExtension> {
-                arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
+                arg("room.generateKotlin", "true")
+            }
+
+            extensions.configure<RoomExtension> {
+                schemaDirectory("$projectDir/schemas")
             }
 
             dependencies {
                 add("implementation", libs.findLibrary("room.runtime").get())
-                add("implementation", libs.findLibrary("room.ktx").get())
                 add("ksp", libs.findLibrary("room.compiler").get())
             }
         }
-    }
-
-    class RoomSchemaArgProvider(
-        @get:InputDirectory
-        @get:PathSensitive(PathSensitivity.RELATIVE)
-        val schemaDir: File,
-    ) : CommandLineArgumentProvider {
-        override fun asArguments() = listOf("room.schemaLocation=${schemaDir.path}")
     }
 }
