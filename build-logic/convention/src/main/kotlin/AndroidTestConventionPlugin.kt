@@ -5,6 +5,7 @@ import org.gradle.kotlin.dsl.configure
 import ru.resodostudio.flick.configureKotlinAndroid
 
 class AndroidTestConventionPlugin : Plugin<Project> {
+
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
