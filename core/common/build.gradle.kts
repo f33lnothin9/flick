@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.resodostudios.flick.core.common"
+    namespace = "ru.resodostudio.flick.core.common"
 }
 
 dependencies {

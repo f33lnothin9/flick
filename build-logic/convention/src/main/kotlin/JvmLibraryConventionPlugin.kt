@@ -1,6 +1,6 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import ru.resodostudios.flick.configureKotlinJvm
+import ru.resodostudio.flick.configureKotlinJvm
 
 class JvmLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {

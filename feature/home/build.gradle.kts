@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.resodostudios.flick.feature.home"
+    namespace = "ru.resodostudio.flick.feature.home"
 }
 
 dependencies {

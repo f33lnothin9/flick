@@ -1,10 +1,8 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import ru.resodostudios.flick.configureKotlinAndroid
-import ru.resodostudios.flick.configurePrintApksTask
+import ru.resodostudio.flick.configureKotlinAndroid
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
 

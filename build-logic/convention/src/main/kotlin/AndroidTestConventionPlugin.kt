@@ -2,7 +2,7 @@ import com.android.build.gradle.TestExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import ru.resodostudios.flick.configureKotlinAndroid
+import ru.resodostudio.flick.configureKotlinAndroid
 
 class AndroidTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {

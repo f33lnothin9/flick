@@ -1,4 +1,4 @@
-import ru.resodostudios.flick.libs
+import ru.resodostudio.flick.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

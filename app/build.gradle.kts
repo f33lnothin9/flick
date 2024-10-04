@@ -1,3 +1,5 @@
+import ru.resodostudio.flick.FlickBuildType
+
 plugins {
     alias(libs.plugins.flick.android.application)
     alias(libs.plugins.flick.android.application.compose)
@@ -9,9 +11,9 @@ plugins {
 
 android {
     defaultConfig {
-        applicationId = "ru.resodostudios.flick"
-        versionCode = 7
-        versionName = "1.3.0-alpha"
+        applicationId = "ru.resodostudio.flick"
+        versionCode = 1
+        versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -20,9 +22,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = FlickBuildType.DEBUG.applicationIdSuffix
+        }
         release {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isShrinkResources = true
+            applicationIdSuffix = FlickBuildType.RELEASE.applicationIdSuffix
+            signingConfig = signingConfigs.named("debug").get()
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
         }
     }
     packaging {
@@ -30,7 +38,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    namespace = "ru.resodostudios.flick"
+    namespace = "ru.resodostudio.flick"
 }
 
 dependencies {

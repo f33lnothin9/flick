@@ -7,7 +7,7 @@ android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    namespace = "ru.resodostudios.flick.core.ui"
+    namespace = "ru.resodostudio.flick.core.ui"
 }
 
 dependencies {

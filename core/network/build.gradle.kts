@@ -23,7 +23,7 @@ android {
         buildConfigField("String", "BACKEND_URL", "\"$backendUrl\"")
         buildConfigField("String", "API_KEY", "\"$apiKey\"")
     }
-    namespace = "ru.resodostudios.flick.core.network"
+    namespace = "ru.resodostudio.flick.core.network"
     testOptions {
         unitTests {
             isIncludeAndroidResources = true

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         consumerProguardFiles("consumer-proguard-rules.pro")
     }
-    namespace = "ru.resodostudios.flick.core.datastore"
+    namespace = "ru.resodostudio.flick.core.datastore"
     testOptions {
         unitTests {
             isReturnDefaultValues = true

@@ -4,7 +4,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "ru.resodostudios.flick.buildlogic"
+group = "ru.resodostudio.flick.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

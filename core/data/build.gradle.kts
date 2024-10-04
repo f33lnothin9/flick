@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.resodostudios.core.data"
+    namespace = "ru.resodostudio.core.data"
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
