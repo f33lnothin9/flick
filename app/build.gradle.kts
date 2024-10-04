@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.flick.android.application)
     alias(libs.plugins.flick.android.application.compose)
     alias(libs.plugins.flick.android.application.firebase)
-    alias(libs.plugins.flick.android.hilt)
+    alias(libs.plugins.flick.hilt)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.android.gms.oss-licenses-plugin")
 }

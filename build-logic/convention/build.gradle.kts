@@ -58,10 +58,6 @@ gradlePlugin {
             id = "flick.android.test"
             implementationClass = "AndroidTestConventionPlugin"
         }
-        register("androidHilt") {
-            id = "flick.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
-        }
         register("androidRoom") {
             id = "flick.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
@@ -69,6 +65,10 @@ gradlePlugin {
         register("androidFirebase") {
             id = "flick.android.application.firebase"
             implementationClass = "AndroidApplicationFirebaseConventionPlugin"
+        }
+        register("hilt") {
+            id = "flick.hilt"
+            implementationClass = "HiltConventionPlugin"
         }
         register("jvmLibrary") {
             id = "flick.jvm.library"

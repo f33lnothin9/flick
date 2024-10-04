@@ -1,10 +1,11 @@
 [versions]
 androidGradlePlugin = "8.7.0"
+androidxActivityCompose = "1.9.2"
 androidxAppCompat = "1.6.1"
 androidxCore = "1.13.0"
 androidxDataStore = "1.1.0"
+androidxHiltNavigationCompose = "1.2.0"
 androidxLifecycle = "2.7.0"
-activityCompose = "1.9.0"
 composeBom = "2024.04.01"
 coil = "2.6.0"
 firebaseBom = "33.4.0"
@@ -14,7 +15,6 @@ gmsPlugin = "4.4.2"
 googleOss = "17.0.1"
 googleOssPlugin = "0.10.6"
 hilt = "2.52"
-hiltNavigation = "1.2.0"
 lottie = "6.4.0"
 material3 = "1.2.1"
 navigation = "2.7.7"
@@ -31,13 +31,13 @@ ksp = "2.0.20-1.0.25"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityCompose" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
-androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
@@ -55,9 +55,11 @@ firebase-performance = { group = "com.google.firebase", name = "firebase-perf" }
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
 google-oss-licenses-plugin = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "googleOssPlugin" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp" }
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
@@ -98,9 +100,9 @@ flick-android-application = { id = "flick.android.application" }
 flick-android-application-compose = { id = "flick.android.application.compose" }
 flick-android-application-firebase = { id = "flick.android.application.firebase" }
 flick-android-feature = { id = "flick.android.feature" }
-flick-android-hilt = { id = "flick.android.hilt" }
 flick-android-library = { id = "flick.android.library" }
 flick-android-library-compose = { id = "flick.android.library.compose" }
 flick-android-room = { id = "flick.android.room" }
 flick-android-test = { id = "flick.android.test" }
+flick-hilt = { id = "flick.hilt" }
 flick-jvm-library = { id = "flick.jvm.library" }

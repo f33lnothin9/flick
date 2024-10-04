@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.flick.android.library)
-    alias(libs.plugins.flick.android.hilt)
+    alias(libs.plugins.flick.hilt)
 }
 
 android {

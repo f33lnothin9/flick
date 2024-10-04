@@ -1,5 +1,7 @@
+import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import ru.resodostudio.flick.libs
 
@@ -8,7 +10,10 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("flick.android.library")
-                apply("flick.android.hilt")
+                apply("flick.hilt")
+            }
+            extensions.configure<LibraryExtension> {
+                testOptions.animationsDisabled = true
             }
 
             dependencies {
