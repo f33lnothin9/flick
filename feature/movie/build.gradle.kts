@@ -8,5 +8,6 @@ android {
 }
 
 dependencies {
-    //implementation(projects.feature.favorites)
+    implementation(projects.core.data)
+    implementation(projects.core.domain)
 }

@@ -17,9 +17,8 @@ android {
 
 dependencies {
     api(projects.core.datastoreProto)
+    api(projects.core.model)
+    api(libs.androidx.dataStore)
+
     implementation(projects.core.common)
-    implementation(projects.core.model)
-    implementation(libs.androidx.dataStore.core)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.protobuf.kotlin.lite)
 }

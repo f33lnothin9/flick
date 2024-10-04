@@ -59,32 +59,11 @@ dependencies {
     implementation(projects.core.model)
     implementation(projects.core.ui)
 
-    implementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-
-    implementation(libs.androidx.lifecycle.viewModelCompose)
-    implementation(libs.androidx.lifecycle.runtimeCompose)
-
-    // UI Tests
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.test.manifest)
-
-    implementation(libs.androidx.compose.material3.windowSizeClass)
-
-    // Integration with activities
     implementation(libs.androidx.activity.compose)
-
-    // Navigation
-    implementation(libs.androidx.navigation.compose)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    // Coil
-    implementation(libs.coil.kt.compose)
-
-    // Splash Screen
+    implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.coil.kt.compose)
 }

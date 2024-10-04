@@ -6,7 +6,3 @@ plugins {
 android {
     namespace = "ru.resodostudio.flick.feature.home"
 }
-
-dependencies {
-
-}
