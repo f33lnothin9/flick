@@ -8,8 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -29,9 +27,9 @@ import ru.resodostudio.core.data.util.NetworkMonitor
 import ru.resodostudio.flick.core.designsystem.theme.FlickTheme
 import ru.resodostudio.flick.ui.FlickApp
 import ru.resodostudio.flick.core.model.data.DarkThemeConfig
+import ru.resodostudio.flick.ui.rememberFlickAppState
 import javax.inject.Inject
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -49,9 +47,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState
-                    .onEach {
-                        uiState = it
-                    }
+                    .onEach { uiState = it }
                     .collect()
             }
         }
@@ -81,14 +77,15 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
+            val appState = rememberFlickAppState(
+                networkMonitor = networkMonitor,
+            )
+
             FlickTheme(
                 darkTheme = darkTheme,
-                disableDynamicTheming = shouldDisableDynamicTheming(uiState)
+                disableDynamicTheming = shouldDisableDynamicTheming(uiState),
             ) {
-                FlickApp(
-                    networkMonitor = networkMonitor,
-                    windowSizeClass = calculateWindowSizeClass(this)
-                )
+                FlickApp(appState)
             }
         }
     }

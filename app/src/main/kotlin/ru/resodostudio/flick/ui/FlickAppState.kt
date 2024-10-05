@@ -1,8 +1,7 @@
 package ru.resodostudio.flick.ui
 
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
@@ -24,12 +23,14 @@ import ru.resodostudio.flick.feature.people.navigation.navigateToPeople
 import ru.resodostudio.flick.feature.people.navigation.peopleRoute
 import ru.resodostudio.flick.feature.settings.navigation.navigateToSettings
 import ru.resodostudio.flick.navigation.TopLevelDestination
-import ru.resodostudio.flick.navigation.TopLevelDestination.*
+import ru.resodostudio.flick.navigation.TopLevelDestination.HOME
+import ru.resodostudio.flick.navigation.TopLevelDestination.MOVIES
+import ru.resodostudio.flick.navigation.TopLevelDestination.PEOPLE
+import ru.resodostudio.flick.navigation.TopLevelDestination.TV_SHOWS
 
 @Composable
 fun rememberFlickAppState(
     networkMonitor: NetworkMonitor,
-    windowSizeClass: WindowSizeClass,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController()
 ): FlickAppState {
@@ -38,26 +39,23 @@ fun rememberFlickAppState(
         navController,
         coroutineScope,
         networkMonitor,
-        windowSizeClass
     ) {
         FlickAppState(
             navController,
             coroutineScope,
-            windowSizeClass,
-            networkMonitor
+            networkMonitor,
         )
     }
 }
 
+@Stable
 class FlickAppState(
     val navController: NavHostController,
-    val coroutineScope: CoroutineScope,
-    val windowSizeClass: WindowSizeClass,
-    networkMonitor: NetworkMonitor
+    coroutineScope: CoroutineScope,
+    networkMonitor: NetworkMonitor,
 ) {
     val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
+        @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
@@ -66,12 +64,6 @@ class FlickAppState(
             peopleRoute -> PEOPLE
             else -> null
         }
-
-    val shouldShowBottomBar: Boolean
-        get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
-
-    val shouldShowNavRail: Boolean
-        get() = !shouldShowBottomBar
 
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
