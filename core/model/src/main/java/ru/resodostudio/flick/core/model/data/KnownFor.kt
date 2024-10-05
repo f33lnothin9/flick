@@ -2,7 +2,7 @@ package ru.resodostudio.flick.core.model.data
 
 data class KnownFor(
     val adult: Boolean,
-    val backdropPath: String,
+    val backdropPath: String?,
     val firstAirDate: String?,
     val genreIds: List<Int>,
     val id: Int,

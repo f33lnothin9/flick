@@ -61,8 +61,8 @@ private interface RetrofitFlickNetworkApi {
     ): List<NetworkCrewCredits>
 }
 
-private const val FLICK_BASE_URL = _root_ide_package_.ru.resodostudio.flick.core.network.BuildConfig.BACKEND_URL
-private const val API_KEY = _root_ide_package_.ru.resodostudio.flick.core.network.BuildConfig.API_KEY
+private const val FLICK_BASE_URL = BuildConfig.BACKEND_URL
+private const val API_KEY = BuildConfig.API_KEY
 
 @Serializable
 private data class NetworkResult<T>(

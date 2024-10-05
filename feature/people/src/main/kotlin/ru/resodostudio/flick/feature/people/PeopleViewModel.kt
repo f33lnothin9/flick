@@ -22,7 +22,6 @@ class PeopleViewModel @Inject constructor(
 
     val peopleUiState: StateFlow<PeopleUiState> = peopleRepository.getPeople()
         .map<List<Person>, PeopleUiState>(PeopleUiState::Success)
-        .onStart { emit(Loading) }
         .catch { emit(Error(it.localizedMessage?.toString() ?: "")) }
         .stateIn(
             scope = viewModelScope,

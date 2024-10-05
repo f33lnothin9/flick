@@ -92,7 +92,6 @@ fun SettingsScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 private fun LazyListScope.settings(
     settings: UserEditableSettings,
     supportDynamicColor: Boolean,
@@ -178,7 +177,7 @@ private fun LazyListScope.settings(
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         ListItem(
             headlineContent = { Text(text = stringResource(R.string.version)) },
-            supportingContent = { Text(text = packageInfo.versionName) }
+            supportingContent = { packageInfo.versionName?.let { Text(text = it) } }
         )
     }
 }
