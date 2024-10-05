@@ -111,7 +111,5 @@ private fun shouldUseDarkTheme(
     }
 }
 
-
-
 private val lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
 private val darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)

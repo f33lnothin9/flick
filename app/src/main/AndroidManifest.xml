@@ -5,10 +5,17 @@
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.ACCESS_ADSERVICES_AD_ID"
+        tools:node="remove" />
 
     <application
         android:name=".FlickApplication"
         android:allowBackup="true"
+        android:allowCrossUidActivitySwitchFromBelow="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Starting"
-        tools:targetApi="tiramisu">
+        tools:targetApi="35">
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -32,6 +39,10 @@
         <meta-data
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
+
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            tools:node="remove" />
     </application>
 
 </manifest>
