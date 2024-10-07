@@ -7,7 +7,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.resodostudio.flick.core.network.BuildConfig
@@ -36,7 +35,6 @@ private interface RetrofitFlickNetworkApi {
         @Path("id") id: Int
     ): List<NetworkImageExtended>
 
-    @Headers("Authorization: Bearer $API_KEY")
     @GET("person/popular")
     suspend fun getPeople(): NetworkResult<List<NetworkPerson>>
 
@@ -62,7 +60,6 @@ private interface RetrofitFlickNetworkApi {
 }
 
 private const val FLICK_BASE_URL = BuildConfig.BACKEND_URL
-private const val API_KEY = BuildConfig.API_KEY
 
 @Serializable
 private data class NetworkResult<T>(

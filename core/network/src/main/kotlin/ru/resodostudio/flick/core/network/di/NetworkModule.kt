@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
+import ru.resodostudio.flick.core.network.BuildConfig.API_KEY
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -24,6 +25,12 @@ object NetworkModule {
     @Singleton
     fun providesOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .header("Authorization", "Bearer $API_KEY")
+                    .build()
+                chain.proceed(request)
+            }
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
             .build()
